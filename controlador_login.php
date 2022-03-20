@@ -32,8 +32,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         //Se comprueba si los datos leídos son correctos.
         if(!$result)
         {   
-            $error = 'datos_incorrectos';
-            header("Location: index.php?error=".$error);        
+            print 'false';       
         }
         else
         {
@@ -56,7 +55,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
                 
                 $_SESSION['nombre'] =  'error';
             }
-        	header('Location: ../Investigador/menu_investigador.php');
+        	print 'true';
+            //header('Location: ../Investigador/menu_investigador.php');
         }
     }
 }

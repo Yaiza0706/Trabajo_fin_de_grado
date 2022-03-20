@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="res/css/style.css">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="ComprobarDatos.js"></script>
     <title>Login</title>
   </head>
   <body>
@@ -14,33 +15,28 @@
       <section id="login-container">
           <h1> Bienvenido </h1>
           <h4>Introduce el correo electrónico y la contraseña para la conexión.</h4>
-          <form action="controlador_login.php" method="post">
+          <form> <!-- action="controlador_login.php" method="post" -->
             <div>
               <!--<label for="email"> Usuario : </label> -->
-              <input type="text" name="email" placeholder="Correo electrónico">
+              <input type="text" name="email" id="email" placeholder="Correo electrónico">
             </div>
             <div>
               <!--<label for="contraseña"> Contraseña: </label>-->
-              <input type="password" name="contraseña" placeholder="Contraseña">
+              <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
             </div>
             
-              <?php if (isset($_GET['error'])):?>
+
                 <div class = "error">
-                  <?php if ($_GET['error'] == 'no_datos'): ?>
-                  <h5> Por favor, rellene todos los campos.</h5>
-                  <?php endif ?>
-                  <?php if ($_GET['error'] == 'datos_incorrectos'): ?>
-                  <h5> Por favor, introduzca un usuario y contraseña correctos. </h5>
-                  <?php endif ?>
+                  <h5 id=error>⠀</h5>
                 </div>
-              <?php endif ?>
-            <div>
-              <button class="button-login" type="submit" name="login">Iniciar sesión</button>
+
+          </form>
+          <div>
+              <button class="button-login" name="login" onclick="ComprobarLogin()">Iniciar sesión</button>
             </div>
             <div>
                 <a href="../Registro/vista_registro.php">Crear nuevo usuario</a>
             </div>
-          </form>
       </section>
     </section>
   </body>
