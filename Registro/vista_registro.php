@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="res/css/style.css">
+    <link rel="stylesheet" href="../res/css/style.css">
     <title>Crear cuenta</title>
   </head>
   <body>
     <section class="main-page">
       <section id="form-container">
           <h1> Introduzca los datos del usuario nuevo. </h1>
-          <form action="registro.php" method="post">
+          <form action="controlador_registro.php" method="post">
             <div>
             <!--
               <label for="nombre"> Nombre : </label>
@@ -42,6 +42,17 @@
             <div>
               <button class="button-form" type="submit" name="submit">Crear nuevo usuario</button>
             </div>
+            <?php if (isset($_GET['error'])):?>
+               <div class = "error">
+                 <?php if ($_GET['error'] == 'no_datos'): ?>
+                 <h5> Por favor, rellene todos los campos.</h5>
+                 <?php endif ?>
+
+                 <?php if ($_GET['error'] == 'longitud_incorrecta'): ?>
+                 <h5> Longitud incorrecta.</h5>
+                 <?php endif ?>
+               </div>
+             <?php endif ?>
           </form>
       </section>
     </section>

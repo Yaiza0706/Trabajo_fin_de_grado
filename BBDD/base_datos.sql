@@ -16,7 +16,7 @@ autores VARCHAR(200) NOT NULL );
 
 CREATE TABLE tipo_usuario (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(20) NOT NULL,
+nombre VARCHAR(50) NOT NULL,
 descripcion VARCHAR(200));
 
 CREATE TABLE estado_usuario (
@@ -44,13 +44,13 @@ logo_menu VARCHAR(100) );
 
 CREATE TABLE equipo (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(20) NOT NULL,
-apellidos VARCHAR(50) NOT NULL,
+nombre VARCHAR(50) NOT NULL,
+apellidos VARCHAR(100) NOT NULL,
 titulacion VARCHAR(100) NOT NULL,
 web VARCHAR(100) NOT NULL,
 id_tipo_usuario INT, FOREIGN KEY (id_tipo_usuario) REFERENCES tipo_usuario(id),
 mail VARCHAR(50) NOT NULL,
-contraseña VARCHAR(20) NOT NULL,
+contraseña VARCHAR(2000) NOT NULL,
 id_estado_usuario INT NOT NULL, FOREIGN KEY (id_estado_usuario) REFERENCES estado_usuario(id),
 id_proyecto INT NOT NULL, FOREIGN KEY (id_proyecto) REFERENCES proyecto(id));
 
@@ -102,6 +102,10 @@ CREATE TABLE rel_financiacion_logo(
     UNIQUE (id_financiacion, id_logo));
     
 INSERT INTO tipo_usuario(nombre)
+VALUE('Admin');
+INSERT INTO tipo_usuario(nombre)
+VALUE('Investigador principal');
+INSERT INTO tipo_usuario(nombre)
 VALUE('Investigador');
 
 INSERT INTO estado_usuario(nombre)
@@ -111,6 +115,22 @@ VALUE('Activo');
 
 INSERT INTO proyecto(titulo_proyecto)
 VALUE('Proyecto vacío');
+
+INSERT INTO tipo_publicacion(nombre)
+VALUE('Artículo');
+
+INSERT INTO tipo_publicacion(nombre)
+VALUE('Letter');
+
+INSERT INTO equipo(nombre, apellidos, titulacion, web, id_tipo_usuario, mail, contraseña, id_estado_usuario, id_proyecto)
+VALUE('Admin','Rubio Chavida','Ingeniería telemática','yaiza.com','1','admin@edu.uah.es','1234567','2','1');
+
+INSERT INTO equipo(nombre, apellidos, titulacion, web, id_tipo_usuario, mail, contraseña, id_estado_usuario, id_proyecto)
+VALUE('Investigador principal','Rubio Chavida','Ingeniería telemática','yaiza.com','2','ip@edu.uah.es','1234567','2','1');
+
+INSERT INTO equipo(nombre, apellidos, titulacion, web, id_tipo_usuario, mail, contraseña, id_estado_usuario, id_proyecto)
+VALUE('Investigador','Rubio Chavida','Ingeniería telemática','yaiza.com','3','investigador@edu.uah.es','1234567','2','1');
+
 
 
 

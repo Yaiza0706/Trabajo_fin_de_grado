@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="res/css/style.css">
+    
     <title>Login</title>
   </head>
   <body>
@@ -37,7 +38,7 @@
               <button class="button-login" type="submit" name="login">Iniciar sesión</button>
             </div>
             <div>
-                <a href="formulario.html">Crear nuevo usuario</a>
+                <a href="../Registro/vista_registro.php">Crear nuevo usuario</a>
             </div>
           </form>
       </section>

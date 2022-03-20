@@ -28,10 +28,19 @@ class bbdd
 		{
     		echo("ERROR: No se puede hacer la consulta: " . $this->conexion->error);
   		} 
-		$resultado->execute();
-
-		$res = $resultado->fetch();
-		return $res;
+		$resultado->execute() or trigger_error($resultado->error, E_USER_ERROR);
+		$exe = $resultado->get_result() or trigger_error($resultado->error, E_USER_ERROR);
+		
+		if ($exe->num_rows>0) 
+		{
+			$row_data = $exe->fetch_all(MYSQLI_ASSOC);
+			return $row_data;
+		}
+		 else 
+		 {	
+			return -1;
+		}
+		
 	}
 
 	public function verificar_login($usuario, $contraseña)
