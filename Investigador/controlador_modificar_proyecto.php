@@ -1,20 +1,22 @@
 <?php
 require_once('../base_datos.php');
 
-$no_hay_usuario = false;
+$no_hay_proyectos = false;
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET') 
 {
     //Se realiza la conexion con la base de datos.
     $base_datos = new bbdd();
     $base_datos->conectar();
 
-    //Se muestran todas las financiaciones existentes
-    $sql = "SELECT * FROM equipo";
+    //Se muestran todos los proyectos existentes
+    $sql = "SELECT * FROM proyecto";
     $result = $base_datos->consulta($sql);
     if(!$result)
     {
-        $no_hay_usuario = true;
+        $no_hay_proyectos = true;
     }
 }
 
 ?>
+
+

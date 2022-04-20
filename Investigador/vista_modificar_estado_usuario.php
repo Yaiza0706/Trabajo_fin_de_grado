@@ -1,29 +1,28 @@
-<?php session_start();?>
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../res/css/style.css">
-    <title>Sesión iniciada</title>
-  </head>
-  <body>
-    <header id="main-header">
+<?php require_once('controlador_modificar_estado_usuario.php'); ?>
 
-        <div>
-            <ul>
-            <li><a href="menu_investigador.php">Atrás</a>
-            </ul>
-        </div>
-    </header>
-    
-<section class="main-page">
-
-            <h6> Bienvenido <?php echo $_SESSION["nombre"]; ?> . Sesión iniciada correctamente.  </h1>
-            <h1> Usuario tipo :  <?php echo $_SESSION["id_tipo_usuario"]?> <?php echo $_SESSION["nombre2"]; ?> . <?php echo $_SESSION["nombre2"]; ?> . </h1>
-         
-    </section>
-  </body>
-</html>
-
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <?php
+                foreach ($result as $equipo){
+                    echo "<tr>";
+                    echo "<td>".$equipo["id"]."</td>";
+                    echo "<td>".$equipo["nombre"]."</td>";
+                    echo "<td>".$equipo["id_estado_usuario"]."</td>";
+                    echo '<td><button class="button small" onclick = "EditarEstadoUsuario('.$equipo["id"].')"> Editar </button></td>';
+                    echo "</tr>";
+                }
+            ?>
+        </tbody>
+    </table>
+</div>
 

@@ -17,19 +17,21 @@
           <h4>Introduce el correo electrónico y la contraseña para la conexión.</h4>
           <form> <!-- action="controlador_login.php" method="post" -->
             <div>
-              <!--<label for="email"> Usuario : </label> -->
-              <input type="text" name="email" id="email" placeholder="Correo electrónico">
+              <label for="email"> Correo electrónico : </label> 
             </div>
             <div>
-              <!--<label for="contraseña"> Contraseña: </label>-->
+              <input type="text" name="email" id="email" placeholder="Correo electrónico">
+            </div>
+
+            <div>
+              <label for="contraseña"> Contraseña : </label> 
+            </div>
+            <div>
               <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
             </div>
-            
-
-                <div class = "error">
-                  <h5 id=error>⠀</h5>
-                </div>
-
+            <div class = "error">
+              <h5 id= "error">⠀</h5>
+            </div>
           </form>
           <div>
               <button class="button-login" name="login" onclick="ComprobarLogin()">Iniciar sesión</button>

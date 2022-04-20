@@ -1,8 +1,28 @@
 <?php
 require_once('../base_datos.php');
+$id_equipo = 0;
+$no_existe = false;
 
-//Se comprueba peticion post
-if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') 
+if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET') 
+{
+    //Se obtiene el valor del id de la persona que se va a editar
+    $id_equipo = $_GET["id"];
+    
+    //Se realiza la conexion con la base de datos.
+    $base_datos = new bbdd();
+    $base_datos->conectar();
+
+    //Se leen todos los datos del usuario con el id recibido
+    $sql = "SELECT * FROM equipo WHERE id = " . $id_equipo;
+    $result = $base_datos->consulta($sql);
+    if($result == -1)
+    {
+        $no_existe = true;
+    }else{
+        $equipo = $result[0];
+    }
+
+} else if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') 
 {
     //Se guardan los datos introducidos en variables locales
 
@@ -10,10 +30,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
     $estado_usuario = 1;   //Se añadirán a todos los nuevos usuarios como no activos.
     $proyecto = 1  ;       //Se añadirán a todos los nuevos usuarios en un proyecto vacío.
 
-    if (isset( $_POST['nombre'] ))
-    {
-        $nombre = $_POST['nombre'];
-    }
+    $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $titulacion = $_POST['titulacion'];
     $web = $_POST['web'];
@@ -31,9 +48,13 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
     if(!$result)
     {
-        $sql = "INSERT INTO equipo(nombre, apellidos, titulacion, web, id_tipo_usuario, mail, contraseña, id_estado_usuario, id_proyecto) 
-        VALUES('$nombre', '$apellido', '$titulacion', '$web', '$tipo_usuario', '$email', '$contraseña', '$estado_usuario', '$proyecto')";
-    
+
+        //Se actualizan los nuevos valores introducidos
+        $sql = "UPDATE equipo
+        SET nombre = '$nombre', apellidos = '$apellidos', titulacion = '$titulacion', web = '$web', id_tipo_usuario = '$id_tipo_usuario', mail = '$mail',
+        contraseña = '$contraseña', id_estado_usuario = '$id_estado_usuario', id_proyecto = '$id_proyecto'
+        WHERE id = '$id_financiacion'";
+
         $test = $base_datos->consulta($sql);
         if(!$test)
         {   
@@ -44,8 +65,12 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             echo json_encode(['result' => 'ok']);
         }
     }
-    else{
+    else
+    {
         echo json_encode(['result' => 'email_existente']);
     }
 }
+
 ?>
+
+

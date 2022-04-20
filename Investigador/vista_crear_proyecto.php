@@ -1,71 +1,59 @@
-<?php require_once('controlador_crear_proyecto.php'); ?>
+<head>
+  <script>
+    $( function() {
+      $( "#datepicker" ).datepicker();
+    } );
+  </script>
+</head>
 
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
- <head>
-   <meta charset="utf-8">
-   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="../res/css/style.css">
-   <title>Crear proyecto</title>
- </head>
- <body>
- <body>
-    <section class="main-page">
-      <section id="form-container">
-          <h1> Introduzca los datos del proyecto nuevo. </h1>
-          <form action="controlador_crear_proyecto.php" method="post">
-            <div>
-            <!--
-              <label for="nombre"> Nombre : </label>
-              <label for="apellido"> Apellidos : </label>
-              <label for="titulacion"> Titulacion : </label>
-              <label for="web"> Web : </label> 
-              <label for="email"> Email : </label>
-              <label for="contraseña"> Contraseña : </label>
-            -->
-            </div>
-            <div>
-              <input type="text" name="titulo_pagina" placeholder="Título página">
-            </div>
-             <div>
-              <input type="text" name="titulo_proyecto" placeholder="Título proyecto">
-            </div>
-            <div>
-              <input type="text" name="logo" placeholder="Link logo">
-            </div>
-            <div>
-              <input type="text" name="expediente" placeholder="Número expediente">
-            </div>
-            <div>
-              <input type="text" name="inicio" placeholder="Fecha inicio">
-            </div>
-            <div>
-              <input type="text" name="cif" placeholder="CIF">
-            </div>
-            <div>
-              <input type="text" name="duracion" placeholder="Duración">
-            </div>
-            <div>
-              <input type="text" name="resumen" placeholder="Resumen">
-            </div>
-            <div>
-              <input type="text" name="logo_menu" placeholder="Link logo menú">
-            </div>
-            <div>
-              <button class="button-form" type="submit" name="submit">Crear nuevo proyecto</button>
-            </div>
-            <?php if (isset($_GET['error'])):?>
-               <div class = "error">
-                 <?php if ($_GET['error'] == 'no_datos'): ?>
-                 <h5> Por favor, rellene todos los campos.</h5>
-                 <?php endif ?>
-                 
-               </div>
-             <?php endif ?>
-          </form>
-      </section>
-    </section>
-  </body>
-            
-  
-</html>
+<section class="main-page">
+  <div> ⠀ </div>
+  <div> ⠀ </div>
+  <section id="form-container">
+      <h3> Introduzca los datos del proyecto nuevo. </h3>
+      <div> ⠀ </div>
+      <form id = "datos" enctype = "multipart/form-data">
+        <div>
+          <label for="titulo_pagina"> Acrónimo: <input type="text" name="titulo_pagina" id = "titulo_pagina" placeholder="Título página"> </label>  
+        </div>
+        <div>
+          <label for="titulo_proyecto"> Nombre proyecto:<input type="text" name="titulo_proyecto" id = "titulo_proyecto" placeholder="Título proyecto"> </label>
+        </div>
+        <div>
+          <label for="expediente"> Número expediente: <input type="text" name="expediente" id = "expediente" placeholder="Número expediente"> </label>
+        </div> 
+        <div>
+          <label for="datepicker"> Fecha inicio: <input type="text" id="datepicker" placeholder="Fecha inicio" ></label>
+        </div>
+        <div>
+          <label for="cif"> CIF: <input type="text" name="cif" id = "cif" placeholder="CIF"> </label>
+        </div>
+        <div>
+          <label for="duracion">  Duración: <input type="text" name="duracion" id = "duracion" placeholder="Duración"> </label>
+        </div>
+        <div>
+          <label for="resumen"> Resumen: </label>
+          <textarea type="text" name="resumen" id = "resumen" placeholder="Resumen" rows = "4" cols = "50"> </textarea>
+        </div>
+        <div>
+          <label for="logo"> Logo: </label>
+          <input type="file" id="img" name="img" accept="image/*">
+        </div>
+        <h7> ⠀ </h7>
+
+        <!-- 
+        <div>
+          <label for="logo_menu"> Logo menú: </label>
+          <input type="file" id="img" name="img" accept="image/*">
+        </div>-->
+        <div> ⠀ </div>
+        <div class = "error">
+          <h5 id="error">⠀</h5>
+        </div>
+      </form>
+      <div>
+          <button class="button-form" onclick='ComprobarProyecto("nuevo")'>Crear nuevo proyecto</button>
+        </div>
+  </section>
+</section>
+

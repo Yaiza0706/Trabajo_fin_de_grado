@@ -90,7 +90,6 @@ button:hover
     cursor: pointer;
 }
 
-
 #main-header {
 	background: rgb(2, 0, 119);
 	color: rgb(149, 199, 199);
@@ -102,9 +101,7 @@ button:hover
 	color: white;
 }
 
-/*
- * Logo
- */
+
 #logo-header {
 	float: left;
 	padding: 15px 0 0 20px;

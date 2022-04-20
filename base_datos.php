@@ -13,7 +13,7 @@ class bbdd
 	{
 		if (!isset($this->conexion))
 		{
-			$this->conexion =new mysqli(HOST, USER, PASSWORD, DATABASE);
+			$this->conexion = new mysqli(HOST, USER, PASSWORD, DATABASE);
 		}
 		if (!$this->conexion)
 		 {
@@ -29,9 +29,13 @@ class bbdd
     		echo("ERROR: No se puede hacer la consulta: " . $this->conexion->error);
   		} 
 		$resultado->execute() or trigger_error($resultado->error, E_USER_ERROR);
-		$exe = $resultado->get_result() or trigger_error($resultado->error, E_USER_ERROR);
+		$exe = $resultado->get_result() ;
+		if($exe == NULL)
+		{
+			return -1;
+		}
 		
-		if ($exe->num_rows>0) 
+		else if ($exe->num_rows>0) 
 		{
 			$row_data = $exe->fetch_all(MYSQLI_ASSOC);
 			return $row_data;
@@ -49,6 +53,24 @@ class bbdd
         $resultado = $this->conexion->prepare("SELECT * FROM equipo WHERE mail = ? and contraseña = ? ");
         //De esta forma se evitan las inyecciones sql.
 		$resultado->bind_param("ss", $usuario , $contraseña);
+		$resultado->execute();
+		$res = $resultado->fetch();
+		if ($res)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public function verificar_email($usuario)
+	{    
+		//Se buscan si ya existe un usuario con ese email.
+        $resultado = $this->conexion->prepare("SELECT * FROM equipo WHERE mail = ? ");
+        //De esta forma se evitan las inyecciones sql.
+		$resultado->bind_param("s", $usuario);
 		$resultado->execute();
 		$res = $resultado->fetch();
 		if ($res)
