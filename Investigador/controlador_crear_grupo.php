@@ -10,14 +10,28 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $titulo_grupo = $_POST['titulo_grupo'];
     }
 
-    if (isset( $_POST['logo_grupo'] ))
+
+    if(isset($_FILES['logo_grupo']['name']))
     {
-        $logo_grupo = $_POST['logo_grupo'];
+        $filename = pathinfo($_FILES['logo_grupo']['name']);
+        $image_path = 'logo_grupo'.'_'.microtime(true).'.'.$filename['extension'];
+        $logo_grupo_ruta = "../imagenes_subidas/".$image_path;
+
+        if(!move_uploaded_file($_FILES['logo_grupo']['tmp_name'],$logo_grupo_ruta))
+        {
+            echo json_encode(['result' => 'error']);
+        }
     }
+
 
     if (isset( $_POST['descripcion'] ))
     {
         $descripcion = $_POST['descripcion'];
+    }
+
+    if (isset( $_POST['web'] ))
+    {
+        $web = $_POST['web'];
     }
   
     //Se realiza la conexion con la base de datos.
@@ -25,8 +39,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
     $base_datos->conectar();
 
      //Se añaden los valores que el usuario ha introducido a la base de datos
-    $sql = "INSERT INTO grupos(logo_grupo, titulo, descripcion) 
-    VALUES('$logo_grupo', '$titulo_grupo', '$descripcion')";
+    $sql = "INSERT INTO grupos(logo_grupo, titulo, descripcion, web) 
+    VALUES('$logo_grupo_ruta', '$titulo_grupo', '$descripcion' , '$web')";
 
     $result = $base_datos->consulta($sql);
 

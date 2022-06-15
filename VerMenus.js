@@ -159,3 +159,21 @@ function ModificarEquipo()
         }
     })
 }
+
+function ModificarEstadoUsuario()
+{
+    $.ajax
+    ({
+        url:"../Investigador/vista_modificar_estado_usuario.php",
+        dataType: "html",
+        type:"GET", //tipo de peticion
+        success:function(response) //se utiliza si el servidor retorna informacion
+        {
+            $("#ventana_principal").html(response);
+            $(document).attr("title", "Modificar Estado Usuario"); 
+        },
+        error: function (req, status, err){
+            $("#error").text("Ha ocurrido un error.");
+        }
+    })
+}

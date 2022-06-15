@@ -47,24 +47,6 @@ class bbdd
 		
 	}
 
-	public function verificar_login($usuario, $contraseña)
-	{
-		//Se buscan los datos introducidos en la base de datos.
-        $resultado = $this->conexion->prepare("SELECT * FROM equipo WHERE mail = ? and contraseña = ? ");
-        //De esta forma se evitan las inyecciones sql.
-		$resultado->bind_param("ss", $usuario , $contraseña);
-		$resultado->execute();
-		$res = $resultado->fetch();
-		if ($res)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
 	public function verificar_email($usuario)
 	{    
 		//Se buscan si ya existe un usuario con ese email.
@@ -81,6 +63,10 @@ class bbdd
 		{
 			return false;
 		}
+	}
+	public function ultimo_id()
+	{
+		return $this->conexion->insert_id;
 	}
 }
 ?>

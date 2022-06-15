@@ -29,6 +29,11 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
     {
         $autores = $_POST['autores'];
     }
+
+    if (isset( $_POST['web'] ))
+    {
+        $web = $_POST['web'];
+    }
  
     //Se realiza la conexion con la base de datos.
     $base_datos = new bbdd();
@@ -40,9 +45,15 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
     if ($id_tipo_publicacion == "Letter")
         $id_tipo_publicacion = 2;
 
+    if ($id_tipo_publicacion == "Patente")
+        $id_tipo_publicacion = 3;
+
+    if ($id_tipo_publicacion == "Congreso")
+        $id_tipo_publicacion = 4;
+
     //Se añaden los valores que el usuario ha introducido a la base de datos
-    $sql = "INSERT INTO resultados(titulo, año_publicacion, id_tipo_publicacion, revista, autores) 
-    VALUES('$titulo', '$año_publicacion', '$id_tipo_publicacion', '$revista' , '$autores')";
+    $sql = "INSERT INTO resultados(titulo, año_publicacion, id_tipo_publicacion, revista, autores, web) 
+    VALUES('$titulo', '$año_publicacion', '$id_tipo_publicacion', '$revista' , '$autores' , '$web')";
 
     $result = $base_datos->consulta($sql);
     if(!$result)

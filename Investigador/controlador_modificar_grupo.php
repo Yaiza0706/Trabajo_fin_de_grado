@@ -11,7 +11,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
     //Se muestran todos los grupos existentes
     $sql = "SELECT * FROM grupos";
     $result = $base_datos->consulta($sql);
-    if(!$result)
+    if($result == -1)
     {
         $no_hay_grupos = true;
     }

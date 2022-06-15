@@ -1,5 +1,14 @@
 <?php require_once('controlador_modificar_resultado.php'); ?>
 
+<?php if($no_hay_resultados) { ?>
+    <div> ⠀ </div>
+    <div> ⠀ </div>
+    <h3> No hay resultados para mostrar. </h3>
+
+<?php } else { ?>
+
+    <div> ⠀ </div>
+    <div> ⠀ </div>
 <div class="table-wrapper">
     <table>
         <thead>
@@ -23,3 +32,5 @@
         </tbody>
     </table>
 </div>
+
+<?php }?>

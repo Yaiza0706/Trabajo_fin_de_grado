@@ -8,7 +8,6 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
     $tipo_usuario = 1;     //Se añadirán a todos los nuevos usuarios como investigadores.
     $estado_usuario = 1;   //Se añadirán a todos los nuevos usuarios como no activos.
-    $proyecto = 1  ;       //Se añadirán a todos los nuevos usuarios en un proyecto vacío.
 
     if (isset( $_POST['nombre'] ))
     {
@@ -31,8 +30,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
     if(!$result)
     {
-        $sql = "INSERT INTO equipo(nombre, apellidos, titulacion, web, id_tipo_usuario, mail, contraseña, id_estado_usuario, id_proyecto) 
-        VALUES('$nombre', '$apellido', '$titulacion', '$web', '$tipo_usuario', '$email', '$contraseña', '$estado_usuario', '$proyecto')";
+        $sql = "INSERT INTO equipo(nombre, apellidos, titulacion, web, id_tipo_usuario, mail, contraseña, id_estado_usuario) 
+        VALUES('$nombre', '$apellido', '$titulacion', '$web', '$tipo_usuario', '$email', '$contraseña_hash', '$estado_usuario')";
     
         $test = $base_datos->consulta($sql);
         if(!$test)

@@ -1,5 +1,17 @@
 <?php require_once('controlador_modificar_proyecto.php'); ?>
 
+
+<?php if($no_hay_proyectos) { ?>
+    <div> ⠀ </div>
+    <div> ⠀ </div>
+    <h3> No hay proyectos para mostrar. </h3>
+
+<?php } else { ?>
+
+
+    <div> ⠀ </div>
+    <div> ⠀ </div>
+
 <div class="table-wrapper">
     <table>
         <thead>
@@ -23,3 +35,5 @@
         </tbody>
     </table>
 </div>
+
+<?php }?>

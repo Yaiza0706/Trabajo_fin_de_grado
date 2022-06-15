@@ -6,7 +6,7 @@
 
 
 
-    <section id="ventana_principal">
+  <section class="main-page">
   <div> ⠀ </div>
   <div> ⠀ </div>
   <section id="form-container">
@@ -28,7 +28,7 @@
         <label for="nombre"> Email : <input type="text" name="email" id ="email" placeholder="Correo electrónico" value="<?= $equipo["mail"] ?>" > </label>
       </div>
       <div>
-        <label for="nombre"> Contraseña : <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña" value="<?= $equipo["contraseña"] ?>" > </label>
+        <label for="nombre"> Contraseña : <input type="password" name="contraseña" id="contraseña" placeholder="Escriba la contraseña" > </label>
       </div>
       <div> ⠀ </div>
       <div class = "error">

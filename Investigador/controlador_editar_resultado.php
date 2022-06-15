@@ -55,6 +55,11 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
     {
         $autores = $_POST['autores'];
     }
+
+    if (isset( $_POST['web'] ))
+    {
+        $web = $_POST['web'];
+    }
     //Se realiza la conexion con la base de datos.
     $base_datos = new bbdd();
     $base_datos->conectar();
@@ -65,9 +70,15 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
     if ($id_tipo_publicacion == "Letter")
         $id_tipo_publicacion = 2;
 
+    if ($id_tipo_publicacion == "Patente")
+        $id_tipo_publicacion = 3;
+
+    if ($id_tipo_publicacion == "Congreso")
+        $id_tipo_publicacion = 4;
+
     //Se actualizan los nuevos valores introducidos
     $sql = "UPDATE resultados
-    SET titulo = '$titulo', año_publicacion = '$año_publicacion', id_tipo_publicacion = '$id_tipo_publicacion',revista = '$revista', autores = '$autores'
+    SET titulo = '$titulo', año_publicacion = '$año_publicacion', id_tipo_publicacion = '$id_tipo_publicacion',revista = '$revista', autores = '$autores', web = '$web', 
     WHERE id = '$id_resultado'";
     $result = $base_datos->consulta($sql);
 

@@ -13,12 +13,24 @@
       <div>
         <label for="titulo_grupo"> Título grupo : <input type="text" name="titulo_grupo" id = "titulo_grupo"placeholder="Título grupo" value="<?= $grupos["titulo"] ?>"> </label>
       </div>
+    
       <div>
-        <label for="logo_grupo"> Link logo grupo : <input type="text" name="logo_grupo" id = "logo_grupo" placeholder="Logo grupo" value="<?= $grupos["logo_grupo"] ?>">  </label>    
+        <label for="logo_grupo"> Logo grupo: </label>
+        <input type="file" id="logo_grupo" name="logo_grupo" accept="image/*">
+        <div> ⠀ </div>
+        <img src="<?= $grupos["logo_grupo"] ?>">
       </div>
+      
+        <h7> ⠀ </h7>
+
       <div>
         <label for="descripcion"> Descripción: <input type="text" name="descripcion" id = "descripcion" placeholder="Descripción" value="<?= $grupos["descripcion"] ?>"> </label>
       </div>
+
+      <div>
+        <label for="web"> Página web: <input type="text" name="web" id = "web" placeholder="Web" value="<?= $grupos["web"] ?>">  </label>
+      </div>
+
       <div> ⠀ </div>
       <div class = "error">
         <h5 id="error">⠀</h5>

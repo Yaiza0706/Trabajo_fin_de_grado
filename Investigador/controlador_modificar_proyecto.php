@@ -11,7 +11,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
     //Se muestran todos los proyectos existentes
     $sql = "SELECT * FROM proyecto";
     $result = $base_datos->consulta($sql);
-    if(!$result)
+    if($result == -1)
     {
         $no_hay_proyectos = true;
     }

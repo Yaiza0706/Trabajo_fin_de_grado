@@ -1,5 +1,11 @@
 <?php require_once('controlador_modificar_estado_usuario.php'); ?>
+<div> ⠀ </div>
+<div> ⠀ </div>
 
+<h3> Edite el estado del usuario correspondiente: </h3>
+<h5> 1. No activo </h5>
+<h5> 2. Activo </h5>
+<div> ⠀ </div>
 <div class="table-wrapper">
     <table>
         <thead>

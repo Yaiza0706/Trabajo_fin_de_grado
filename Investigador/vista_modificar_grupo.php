@@ -1,5 +1,14 @@
 <?php require_once('controlador_modificar_grupo.php'); ?>
 
+<?php if($no_hay_grupos) { ?>
+    <div> ⠀ </div>
+    <div> ⠀ </div>
+    <h3> No hay grupos para mostrar. </h3>
+
+<?php } else { ?>
+
+    <div> ⠀ </div>
+    <div> ⠀ </div>
 <div class="table-wrapper">
     <table>
         <thead>
@@ -23,3 +32,4 @@
         </tbody>
     </table>
 </div>
+<?php } ?>

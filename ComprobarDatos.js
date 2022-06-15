@@ -1,3 +1,30 @@
+array_años = [];
+array_presupuestos = [];
+
+function anadir_elemento_tabla(id_tabla, año, presupuesto)
+{
+    //1º Cogemos los datos de la tabla
+    var table = document.getElementById(id_tabla);
+    var año = $("#periodo_año").val();
+    var presupuesto = $("#periodo_presupuesto").val();
+
+    array_años.push(parseInt( año));
+    array_presupuestos.push(parseInt(presupuesto));
+    // Create an empty <tr> element and add it to the 1st position of the table:
+    num_row = table.rows.length;
+    var row = table.insertRow(table.rows.length);
+
+    // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+
+    // Add some text to the new cells:;
+    var i = 1;
+    cell1.innerHTML = '<tbody> <tr><td>' +año+ '</td>' ;
+    cell2.innerHTML = '<td>' + presupuesto + '</td> </tr> </tbody>';
+}
+
+
 function ComprobarLogin() 
 {
     var error = 0;
@@ -38,6 +65,7 @@ function ComprobarLogin()
                 }
                 else
                 {
+                    console.log(response);
                     $("#error").text("El usuario o la contraseña no son correctos");
                 }
             },
@@ -47,6 +75,57 @@ function ComprobarLogin()
         })
     }
  }
+
+ function ComprobarEstadoUsuario(id_equipo=0)
+ {
+    var error = 0;
+    var id_estado_usuario = $("#estado_usuario").val();
+
+    // Se comprueba que se hayan introducido valores.
+    if (esta_vacio(id_estado_usuario))
+    {
+        error = "argumentos_vacios";
+    }
+    else if(id_estado_usuario != 1 && id_estado_usuario != 2)
+    {
+        error = "id_incorrecto";
+    }
+
+    if(error != 0)
+        mostrar_errores(error);
+                
+    else
+    {
+        var parametros = 
+        {
+            "id_equipo":id_equipo,
+            "id_estado_usuario":id_estado_usuario
+        }
+        $.ajax
+        ({
+            url:"/Investigador/controlador_editar_estado_usuario.php",
+            dataType: "json",
+            data: parametros,
+            type:"POST", //tipo de peticion
+            success:function(response) //se utiliza si el servidor retorna informacion
+            {
+                if(response.result == 'ok')
+                {
+                    window.location.href = "menu_investigador.php";
+                }
+                else
+                {
+                    $("#error").text("Ha habido un problema.");
+                }
+            },
+            error: function (req, status, err){
+                console.log(err);
+                $("#error").text("Ha ocurrido un error.");
+            }
+        })
+    }
+ }
+
 
  function ComprobarRegistro(op, id_equipo=0)
  {
@@ -169,6 +248,7 @@ function ComprobarLogin()
     var tipo_publicacion = $("#id_tipo_publicacion").val();
     var revista = $("#revista").val();
     var autores = $("#autores").val();
+    var web = $("#web").val();
 
     // Se comprueba que se hayan introducido valores.
     if(esta_vacio(titulo) || esta_vacio(año_publicacion) || esta_vacio(tipo_publicacion) || esta_vacio(revista) || esta_vacio(autores))
@@ -195,7 +275,7 @@ function ComprobarLogin()
     else if(!es_int(año_publicacion))
         error = "año_formato";
 
-    else if (tipo_publicacion != "Artículo" && tipo_publicacion != "Letter")
+    else if (tipo_publicacion != "Artículo" && tipo_publicacion != "Letter" && tipo_publicacion != "Patente" && tipo_publicacion != "Congreso")
         error = "tipo_publicacion_formato";
 
     if(error != 0)
@@ -209,6 +289,12 @@ function ComprobarLogin()
         if (tipo_publicacion == "Letter")
             id_tipo_publicacion = 2;
 
+        if (tipo_publicacion == "Patente")
+            id_tipo_publicacion = 3;
+
+        if (tipo_publicacion == "Congreso")
+            id_tipo_publicacion = 4;
+
         var parametros = 
         {
             "id_resultado":id_resultado,
@@ -217,6 +303,7 @@ function ComprobarLogin()
             "id_tipo_publicacion":id_tipo_publicacion,
             "revista": revista,
             "autores": autores,
+            "web": web,
         }
 
         if(op === "nuevo")
@@ -366,11 +453,12 @@ function ComprobarGrupo(op, id_grupo=0)
  {
     var error = 0;
     var titulo_grupo = $("#titulo_grupo").val();
-    var logo_grupo = $("#logo_grupo").val();
+    var logo_grupo = $('#logo_grupo')[0].files;
     var descripcion = $("#descripcion").val();
+    var web = $("#web").val();
 
     // Se comprueba que se hayan introducido valores.
-    if(esta_vacio(titulo_grupo) || esta_vacio(logo_grupo) || esta_vacio(descripcion))
+    if(esta_vacio(titulo_grupo) || esta_vacio(descripcion))
         error = "argumentos_vacios";
 
     else if(!longitud_correcta(descripcion,2000))
@@ -390,44 +478,60 @@ function ComprobarGrupo(op, id_grupo=0)
 
     else
     {
-        var parametros = 
-        {
-            "id_grupo":id_grupo,
-            "titulo_grupo":titulo_grupo,
-            "logo_grupo":logo_grupo,
-            "descripcion":descripcion
-        }
+        var parametros = new FormData();
+        parametros.append("id_grupo",id_grupo);
+        parametros.append("titulo_grupo",titulo_grupo);
+        parametros.append("logo_grupo",logo_grupo[0]);
+        parametros.append("descripcion", descripcion);
+        parametros.append("web", web);
 
         if(op === "nuevo")
-        {
-            $.ajax
-            ({
-                url:"/Investigador/controlador_crear_grupo.php",
-                dataType: "json",
-                data: parametros,
-                type:"POST", //tipo de peticion
-                success:function(response) //se utiliza si el servidor retorna informacion
-                {
-                    if(response.result == 'ok')
-                    {
-                        window.location.href = "menu_investigador.php";
-                    }
-                    else
-                    {
-                        $("#error").text("Ha habido un problema.");
-                    }
-                },
-                error: function (req, status, err){
-                    $("#error").text("Ha ocurrido un error.");
-                }
-            })
+        {   
+            if(logo_grupo.length == 0)
+            {
+                $("#error").text("Debe seleccionar una imagen.");
+            }
+            else
+            {
+                $.ajax
+                ({  
 
-        }else if(op === "actualizar")
+                    url:"/Investigador/controlador_crear_grupo.php",
+                    dataType: "json",
+                    
+                    contentType: false,
+                    processData: false,
+                    data: parametros,
+                    type:"POST", //tipo de peticion
+                    success:function(response) //se utiliza si el servidor retorna informacion
+                    {
+                        if(response.result == 'ok')
+                        {
+                            window.location.href = "menu_investigador.php";
+                        }
+                        else
+                        {
+                            console.log(response)
+                            $("#error").text("Ha habido un problema.");
+                        }
+                    },
+                    error: function (req, status, err){
+                        $("#error").text("Ha ocurrido un error.");
+                        console.log(req);
+                        console.log(status);
+                        console.log(err);
+                    }
+                 })
+             }
+        }
+        else if(op === "actualizar")
         {
             $.ajax
             ({
                 url:"/Investigador/controlador_editar_grupo.php",
                 dataType: "json",
+                contentType: false,
+                processData: false,                
                 data: parametros,
                 type:"POST", //tipo de peticion
                 success:function(response) //se utiliza si el servidor retorna informacion
@@ -438,10 +542,12 @@ function ComprobarGrupo(op, id_grupo=0)
                     }
                     else
                     {
+                        console.log(response)
                         $("#error").text("Ha habido un problema.");
                     }
                 },
                 error: function (req, status, err){
+                    console.log(err);
                     $("#error").text("Ha ocurrido un error.");
                 }
             })
@@ -454,18 +560,55 @@ function ComprobarProyecto(op, id_proyecto=0)
     var error = 0;
     var titulo_pagina = $("#titulo_pagina").val();
     var titulo_proyecto = $("#titulo_proyecto").val();
-    var logo = $("#logo").val();
+    var logo = $('#img-logo')[0].files;
     var expediente = $("#expediente").val();
     var inicio = $("#datepicker").val();
     var cif = $("#cif").val();
     var duracion = $("#duracion").val();
     var resumen = $("#resumen").val();
-    var logo_menu = $("#logo_menu").val();
+    var objetivos = $("#objetivos").val();
+    var descripcion_financiacion = $("#descripcion_financiacion").val();
+    var presupuesto = $("#presupuesto").val();
+    var logo_menu = $('#img-logo-menu')[0].files;
+    var equipo = $('#equipo').val();
+    var resultados =$('#resultados').val();
+    var investigador = $('#investigador').val();
+    var grupos =  $('#grupos').val();
+    array_equipo = [];
+    array_resultado = [];
+    array_investigador = [];
+    array_grupo = [];
 
+    for(var i = 0; i < equipo.length; i++)
+    {
+        array_equipo.push(parseInt( equipo[i].substring(0,1)));
+        console.log(array_equipo);
+    }
+
+    for(var i = 0; i < resultados.length; i++)
+    {
+        array_resultado.push(parseInt( resultados[i].substring(0,1)));
+        console.log(array_resultado);
+    }
+
+    for(var i = 0; i < investigador.length; i++)
+    {
+        array_investigador.push(parseInt( investigador[i].substring(0,1)));
+        console.log(array_investigador);
+    }
+
+    for(var i = 0; i < grupos.length; i++)
+    {
+        array_grupo.push(parseInt( grupos[i].substring(0,1)));
+        console.log(array_grupo);
+    }
 
     // Se comprueba que se hayan introducido valores.
-    if(esta_vacio(titulo_pagina) || esta_vacio(titulo_proyecto) || esta_vacio(logo) || esta_vacio(expediente) || esta_vacio(inicio) || esta_vacio(cif) || esta_vacio(duracion) || esta_vacio(resumen) || esta_vacio(logo_menu))
+    if(esta_vacio(titulo_pagina) || esta_vacio(titulo_proyecto) || esta_vacio(expediente) || esta_vacio(inicio) || esta_vacio(cif) || esta_vacio(duracion) || esta_vacio(resumen))
         error = "argumentos_vacios";
+
+    else if(esta_vacio(array_equipo) || esta_vacio(array_resultado) || esta_vacio(array_investigador) || esta_vacio(array_grupo))
+        error = "select_vacio";
 
     else if(!longitud_correcta(titulo_pagina,300))
         error = "titulo_pag_largo";
@@ -489,8 +632,15 @@ function ComprobarProyecto(op, id_proyecto=0)
 
     else if(!longitud_correcta(resumen,2000))
         error = "resumen_largo";
+    
+    else if(!longitud_correcta(objetivos,5000))
+        error = "objetivos_largo";
 
-    // COMPROBAR SI HAY IMAGEN logo menu
+    else if(!longitud_correcta(descripcion_financiacion,2000))
+        error = "descripcion_financiacion_largo";
+
+    else if(!longitud_correcta(objetivos,5000))
+        error = "objetivos_largo";
 
     else if(!es_cadena(titulo_pagina))
         error = "titulo_pag_formato";
@@ -513,53 +663,88 @@ function ComprobarProyecto(op, id_proyecto=0)
     else if(!es_cadena(resumen))
         error = "resumen_formato";
 
+    else if(!es_cadena(objetivos))
+        error = "objetivos_formato";
+    
+    else if(!es_cadena(descripcion_financiacion))
+        error = "descripcion_financiacion_formato";
+
+    else if(!es_cadena(presupuesto))
+        error = "presupuesto_formato";
+    
     if(error != 0)
         mostrar_errores(error);       
 
     else
     {
-        var parametros = 
-        {
-            "id_proyecto":id_proyecto,
-            "titulo_pagina":titulo_pagina,
-            "titulo_proyecto":titulo_proyecto,
-            "logo":logo,
-            "expediente":expediente,
-            "inicio":inicio,
-            "cif":cif,
-            "duracion":duracion,
-            "resumen":resumen,
-            "logo_menu":logo_menu
-        }
+        var parametros = new FormData();
+        console.log(id_proyecto);
+        parametros.append("id_proyecto",id_proyecto);
+        parametros.append("titulo_pagina",titulo_pagina);
+        parametros.append("titulo_proyecto",titulo_proyecto);
+        parametros.append("logo", logo[0]);
+        parametros.append("expediente",expediente);
+        parametros.append("inicio",inicio);
+        parametros.append("cif",cif);
+        parametros.append("duracion",duracion);
+        parametros.append("resumen",resumen);
+        parametros.append("objetivos", objetivos);
+        parametros.append("descripcion_financiacion",descripcion_financiacion);
+        parametros.append("presupuesto", presupuesto);
+        parametros.append("logo_menu",logo_menu[0]);
+        parametros.append("array_equipo", array_equipo);
+        parametros.append("array_resultado", array_resultado);
+        parametros.append("array_grupo", array_grupo);
+        parametros.append("array_investigador", array_investigador);
+        parametros.append("array_años", array_años);
+        parametros.append("array_presupuestos", array_presupuestos);
+
 
         if(op === "nuevo")
         {
-            $.ajax
-            ({
-                url:"/Investigador/controlador_crear_proyecto.php",
-                dataType: "json",
-                data: parametros,
-                type:"POST", //tipo de peticion
-                success:function(response) //se utiliza si el servidor retorna informacion
-                {
-                    if(response.result == 'ok')
+            if(logo_menu.length == 0 || logo.length == 0)
+            {
+                $("#error").text("Debe seleccionar una imagen.");
+            }
+            else
+            {
+                $.ajax
+                ({
+                    url:"/Investigador/controlador_crear_proyecto.php",
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+
+                    data: parametros,
+                    type:"POST", //tipo de peticion
+                    success:function(response) //se utiliza si el servidor retorna informacion
                     {
-                        window.location.href = "menu_investigador.php";
+                        if(response.result == 'ok')
+                        {
+                            window.location.href = "menu_investigador.php";
+                        }
+                        else
+                        {
+                            console.log(response)
+                            $("#error").text("Ha habido un problema.");
+                        }
+                    },
+                    error: function (req, status, err){
+                        console.log(req);
+                        console.log(status);
+                        console.log(err);
+                        $("#error").text("Ha ocurrido un error del servidor");
                     }
-                    else
-                    {
-                        $("#error").text("Ha habido un problema.");
-                    }
-                },
-                error: function (req, status, err){
-                    $("#error").text("Ha ocurrido un error.");
-                }
-            })
-        }else if(op === "actualizar"){
+                })
+            }
+        }
+        else if(op === "actualizar"){
             $.ajax
             ({
                 url:"/Investigador/controlador_editar_proyecto.php",
-                dataType: "json",
+                dataType: "html",
+                contentType: false,
+                processData: false,
                 data: parametros,
                 type:"POST", //tipo de peticion
                 success:function(response) //se utiliza si el servidor retorna informacion
@@ -570,10 +755,12 @@ function ComprobarProyecto(op, id_proyecto=0)
                     }
                     else
                     {
+                        console.log(response);
                         $("#error").text("Ha habido un problema.");
                     }
                 },
                 error: function (req, status, err){
+                    console.log(err);
                     $("#error").text("Ha ocurrido un error.");
                 }
             })
@@ -648,9 +835,6 @@ function mostrar_errores(error)
 
     else if(error == "descripcion_larga")
         $("#error").text("Cadena descripción demasiado larga.");
-
-    else if(error == "presupuesto_largo")
-        $("#error").text("Cadena presupuesto demasiado larga.");
     
     else if(error == "nombre_formato")
         $("#error").text("Formato nombre incorrecto.");
@@ -700,6 +884,9 @@ function mostrar_errores(error)
     else if(error == "resumen_largo")
         $("#error").text("Cadena resumen demasiado larga.");
 
+    else if(error == "objetivos_largo")
+        $("#error").text("Cadena objetivos demasiado larga.");
+
     else if(error == "revista_larga")
         $("#error").text("Cadena revista demasiado larga.");
     
@@ -741,8 +928,36 @@ function mostrar_errores(error)
     
     else if(error == "resumen_formato")
         $("#error").text("Formato resumen incorrecto.");
+    
+    else if(error == "objetivos_formato")
+        $("#error").text("Formato objetivos incorrecto.");
+
 
     else if(error == "logo_menu_formato")
         $("#error").text("Formato logo menú incorrecto.");
+    
+    else if(error == "select_vacio")
+        $("#error").text("Debes seleccionar algún elemento.");
+
+    
+    else if(error == "descripcion_financiacion_largo")
+        $("#error").text("Cadena descripción financiación demasiado larga.");
+    
+    else if(error == "presupuesto_largo")
+        $("#error").text("Cadena presupuesto demasiado larga.");
+
+    else if(error == "descripcion_financiacion_formato")
+        $("#error").text("Formato descripción incorrecto.");
+
+    else if(error == "presupuesto_formato")
+        $("#error").text("Formato presupuesto incorrecto.");
+
+    else if(error == "id_incorrecto")
+        $("#error").text("Valor de ID incorrecto.");
+
+
+
+        
+
 
 }

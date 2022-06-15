@@ -9,10 +9,10 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
     $base_datos->conectar();
 
     session_start();
-    //Se muestran todas las financiaciones existentes
+    //Se muestran todas las personas existentes
     $sql = "SELECT * FROM equipo";
     $result = $base_datos->consulta($sql);
-    if(!$result)
+    if($result == -1)
     {
         $no_hay_equipo = true;
     }

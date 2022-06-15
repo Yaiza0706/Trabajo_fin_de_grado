@@ -2,6 +2,7 @@
 require_once('../base_datos.php');
 $id_grupo = 0;
 $no_existe = false;
+$imagen_anterior = 0;
 
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET') 
 {
@@ -28,35 +29,59 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
 
     if (isset( $_POST['id_grupo'] ))
     {
-        $grupo = $_POST['id_grupo'];
+        $id_grupo = $_POST['id_grupo'];
     }
 
-    if (isset( $_POST['titulo'] ))
+    if (isset( $_POST['titulo_grupo'] ))
     {
-        $titulo_grupo = $_POST['titulo'];
+        $titulo_grupo = $_POST['titulo_grupo'];
     }
 
-    if (isset( $_POST['logo_grupo'] ))
+    if(isset($_FILES['logo_grupo']['name']))
     {
-        $logo_grupo = $_POST['logo_grupo'];
+        $filename = pathinfo($_FILES['logo_grupo']['name']);
+        $image_path = 'logo_grupo'.'_'.microtime(true).'.'.$filename['extension'];
+        $logo_grupo_ruta = "../imagenes_subidas/".$image_path;
+
+        if(!move_uploaded_file($_FILES['logo_grupo']['tmp_name'],$logo_grupo_ruta))
+        {
+            echo json_encode(['result' => 'error']);
+        }
+    }else
+    {
+        $imagen_anterior = 1;
     }
+
 
     if (isset( $_POST['descripcion'] ))
     {
         $descripcion = $_POST['descripcion'];
     }
-  
+
+    if (isset( $_POST['web'] ))
+    {
+        $web = $_POST['web'];
+    }
     //Se realiza la conexion con la base de datos.
     $base_datos = new bbdd();
     $base_datos->conectar();
 
     //Se actualizan los nuevos valores introducidos
-    $sql = "UPDATE grupos
-    SET logo_grupo = '$logo_grupo', titulo = '$titulo', descripcion = '$descripcion'
-    WHERE id = '$id_grupo'";
+    if (!$imagen_anterior)
+    { 
+        $sql = "UPDATE grupos
+        SET logo_grupo = '$logo_grupo_ruta', titulo = '$titulo_grupo', descripcion = '$descripcion', web = '$web'
+        WHERE id = '$id_grupo'";
+    }
+    else
+    {
+        $sql = "UPDATE grupos
+        SET titulo = '$titulo_grupo', descripcion = '$descripcion'
+        WHERE id = '$id_grupo'";
+    }
     $result = $base_datos->consulta($sql);
 
-    if(!$result)
+    if($result != -1)
     {
         echo json_encode(['result' => 'error']);
     }

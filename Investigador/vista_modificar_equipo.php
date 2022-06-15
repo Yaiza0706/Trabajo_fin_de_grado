@@ -1,6 +1,9 @@
 <?php require_once('controlador_modificar_equipo.php'); ?>
 
 <div class="table-wrapper">
+
+<div> ⠀ </div>
+<div> ⠀ </div>
     <table>
         <thead>
             <tr>

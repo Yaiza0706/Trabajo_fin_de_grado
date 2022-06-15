@@ -18,15 +18,20 @@
         </div>
         <div>
         <?php if ($resultados["id_tipo_publicacion"] == 1) {$id_tipo_publicacion = "Artículo";}
-        else if ($resultados["id_tipo_publicacion"] == 2) {$id_tipo_publicacion = "Letter";} ?>
+        else if ($resultados["id_tipo_publicacion"] == 2) {$id_tipo_publicacion = "Letter";} 
+        else if ($resultados["id_tipo_publicacion"] == 3) {$id_tipo_publicacion = "Patente";}
+        else if ($resultados["id_tipo_publicacion"] == 4) {$id_tipo_publicacion = "Congreso";} ?>
 
-        <label for="id_tipo_publicacion"> Tipo publicación (Artículo / Letter): <input type="text" id="id_tipo_publicacion" placeholder="ID tipo publicación" value="<?= $id_tipo_publicacion ?>">  </label>
+        <label for="id_tipo_publicacion"> Tipo publicación (Artículo / Letter / Patente / Congreso): <input type="text" id="id_tipo_publicacion" placeholder="ID tipo publicación" value="<?= $id_tipo_publicacion ?>">  </label>
         </div>
         <div>
         <label for="revista"> Revista: <input type="text" id="revista" placeholder="Revista" value="<?= $resultados["revista"] ?>"> </label>
         </div>
         <div>
         <label for="autores"> Autores: <input type="text" id="autores" placeholder="Autores" value="<?= $resultados["autores"] ?>">  </label>
+        </div>
+        <div>
+        <label for="web"> Página web: <input type="text" id="web" placeholder="Web" value="<?= $resultados["web"] ?>"> </label>
         </div>
         <div> ⠀ </div>
         <div class = "error">

@@ -97,3 +97,23 @@ function EditarEquipo(id)
         }
     })
 }
+
+function EditarEstadoUsuario(id)
+{
+    let url = "../Investigador/vista_editar_estado_usuario.php?id=" + id;
+    $.ajax
+    ({
+        url:url,
+        dataType: "html",
+        type:"GET", //tipo de peticion
+        success:function(response) //se utiliza si el servidor retorna informacion
+        {
+            window.scrollTo(0,0);
+            $("#ventana_principal").html(response);
+            $(document).attr("title", "Editar Estado Usuario"); 
+        },
+        error: function (req, status, err){
+            $("#error").text("Ha ocurrido un error.");
+        }
+    })
+}

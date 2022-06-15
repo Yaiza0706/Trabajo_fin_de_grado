@@ -11,7 +11,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
     //Se muestran todas las financiaciones existentes
     $sql = "SELECT * FROM financiacion";
     $result = $base_datos->consulta($sql);
-    if(!$result)
+    if($result == -1)
     {
         $no_hay_financiacion = true;
     }

@@ -36,13 +36,11 @@
 									<h2>Menu</h2>
 								</header>
 								<ul>
-									<li><a href="">CREAR WEB</a>
 									<li>
 										<span class="opener">Nuevo</span>
 										<ul>
 											<li><a onclick = "VerProyecto()">Proyecto</a></li>	
 											<li><a onclick = "VerGrupo()">Grupo</a></li>
-											<li><a onclick = "VerFinanciacion()">Financiación</a></li>
 											<li><a onclick = "VerResultado()">Resultado</a></li>
 										</ul>
 									</li>
@@ -51,12 +49,11 @@
 										<ul>
 											<li><a onclick = "ModificarProyecto()">Proyecto</a></li>	
 											<li><a onclick = "ModificarGrupo()">Grupo</a></li>
-											<li><a onclick = "ModificarFinanciacion()">Financiación</a></li>
 											<li><a onclick = "ModificarResultado()">Resultado</a></li>
 										</ul>
 									</li>
-									<li><a onclick="ModificarEquipo()"> Modificar datos personales </a></li>
-									<li><a onclick="AsociarGrupos()"> Asociar grupos</a></li>
+									<li><a onclick="ModificarEquipo()"> Modificar datos personales</a></li>
+									<li><a onclick="ModificarEstadoUsuario()"> Modificar estado usuario</a></li>
 								</ul>
 							</nav>
 					</div>
@@ -81,7 +78,6 @@
 										<ul>
 											<li><a onclick = "VerProyecto()">Proyecto</a></li>	
 											<li><a onclick = "VerGrupo()">Grupo</a></li>
-											<li><a onclick = "VerFinanciacion()">Financiación</a></li>
 											<li><a onclick = "VerResultado()">Resultado</a></li>
 										</ul>
 									</li>
@@ -90,7 +86,6 @@
 										<ul>
 											<li><a onclick = "ModificarProyecto()">Proyecto</a></li>	
 											<li><a onclick = "ModificarGrupo()">Grupo</a></li>
-											<li><a onclick = "ModificarFinanciacion()">Financiación</a></li>
 											<li><a onclick = "ModificarResultado()">Resultado</a></li>
 										</ul>
 									</li>
@@ -118,7 +113,6 @@
 										<ul>
 											<li><a onclick = "VerProyecto()">Proyecto</a></li>	
 											<li><a onclick = "VerGrupo()">Grupo</a></li>
-											<li><a onclick = "VerFinanciacion()">Financiación</a></li>
 											<li><a onclick = "VerResultado()">Resultado</a></li>
 										</ul>
 									</li>
@@ -127,13 +121,11 @@
 										<ul>
 											<li><a onclick = "ModificarProyecto()">Proyecto</a></li>	
 											<li><a onclick = "ModificarGrupo()">Grupo</a></li>
-											<li><a onclick = "ModificarFinanciacion()">Financiación</a></li>
 											<li><a onclick = "ModificarResultado()">Resultado</a></li>
 										</ul>
 									</li>
 									<li><a onclick="ModificarEquipo()"> Modificar datos personales</a></li>
-									<li><a onclick="AsociarGrupos()"> Asociar grupos</a></li>
-								</ul>
+									</ul>
 							</nav>
 					</div>
 				</div>
