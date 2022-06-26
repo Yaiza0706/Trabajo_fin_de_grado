@@ -78,7 +78,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
 
     //Se actualizan los nuevos valores introducidos
     $sql = "UPDATE resultados
-    SET titulo = '$titulo', año_publicacion = '$año_publicacion', id_tipo_publicacion = '$id_tipo_publicacion',revista = '$revista', autores = '$autores', web = '$web', 
+    SET titulo = '$titulo', año_publicacion = '$año_publicacion', id_tipo_publicacion = '$id_tipo_publicacion',revista = '$revista', autores = '$autores', web = '$web' 
     WHERE id = '$id_resultado'";
     $result = $base_datos->consulta($sql);
 

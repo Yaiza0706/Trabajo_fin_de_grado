@@ -5,9 +5,17 @@
 
   <head>
     <script>
+      var array_años = [];
+      var array_presupuestos = [];
+      var result0 = <?php echo json_encode($result0, JSON_HEX_TAG) ?>; 
+      for(var i=0; i<result0.length; i++){
+        array_años.push(result0[i]["año"]);
+        array_presupuestos.push(result0[i]["presupuesto"]);
+       }
       $( function() {
         $( "#datepicker" ).datepicker();
       } );
+
     </script>
   </head>
 
@@ -57,16 +65,26 @@
                       <th> <label for="periodo_año"> Año : <input type="text" name="periodo_año" id = "periodo_año" placeholder="Año"> </label> </th>
                       <th><label for="periodo_presupuesto"> Presupuesto: <input type="text" name="periodo_presupuesto" id = "periodo_presupuesto" placeholder="Presupuesto"> </label> </th>
                       <th> <input type="button" class = "button small" value="Añadir" onclick="anadir_elemento_tabla('tabla')"> </th>
+                      <th> <input type="button" class = "button small" value="Eliminar" onclick="eliminar_elemento_tabla('tabla')"> </th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
+                      if(!is_iterable($result0)){
+                          echo "<tr>";
+                          echo "<td></td>";
+                          echo "<td></td>";
+                          echo "</tr>";                          
+                        
+                      }else{
                         foreach ($result0 as $periodos){
-                            echo "<tr>";
-                            echo "<td>".$periodos["año"]."</td>";
-                            echo "<td>".$periodos["presupuesto"]."</td>";
-                            echo "</tr>";                          
+                          echo "<tr>";
+                          echo "<td>".$periodos["año"]."</td>";
+                          echo "<td>".$periodos["presupuesto"]."</td>";
+                          echo "</tr>";                          
                         }
+                      }
+
                     ?>
                 </tbody>
             </table>
@@ -161,7 +179,7 @@
           <h6> No hay grupos para mostrar. Cree uno primero </h6>
 
           <?php } else { ?>
-                    <select  id="grupos" style="height:100px" multiple name= 'grupos'>
+                    <select id="grupos" style="height:100px" multiple name= 'grupos'>
           <?php
               foreach ($result3 as $grupos)
               {

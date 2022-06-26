@@ -2,6 +2,8 @@
 
 <head>
   <script>
+    var array_años = [];
+    var array_presupuestos = [];
     $( function() {
       $( "#datepicker" ).datepicker();
     } );

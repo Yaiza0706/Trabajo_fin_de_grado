@@ -143,7 +143,7 @@
 		<script src="../VerMenus.js"></script>
 		<script src="../ComprobarDatos.js"></script>
 		<script src="../EditarDatos.js"></script>
-		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+		<script src="../jquery-ui.js"></script>
 
 	</body>
 </html>

@@ -307,12 +307,16 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             copy("../pagina_ejemplo/images/banner.jpg", "../paginas_generadas/$titulo_pagina/images/banner.jpg");
             copy("../pagina_ejemplo/images/logo-uah.png", "../paginas_generadas/$titulo_pagina/images/logo-uah.png");
             copy("../pagina_ejemplo/images/vertical-line.png", "../paginas_generadas/$titulo_pagina/images/vertical-line.png");
-            $ext_menu = pathinfo($logo_menu_ruta, PATHINFO_EXTENSION);
-            copy($logo_menu_ruta, "../paginas_generadas/$titulo_pagina/images/logo-menu.$ext_menu");
-            $ext_proyecto = pathinfo($logo_ruta, PATHINFO_EXTENSION);
-            copy($logo_ruta, "../paginas_generadas/$titulo_pagina/images/logo-proyecto.$ext_proyecto");
-
         }
+        else
+        {
+            unlink("../paginas_generadas/$titulo_pagina/index.html");
+        }
+
+        $ext_menu = pathinfo($logo_menu_ruta, PATHINFO_EXTENSION);
+        copy($logo_menu_ruta, "../paginas_generadas/$titulo_pagina/images/logo-menu.$ext_menu");
+        $ext_proyecto = pathinfo($logo_ruta, PATHINFO_EXTENSION);
+        copy($logo_ruta, "../paginas_generadas/$titulo_pagina/images/logo-proyecto.$ext_proyecto");
 
         $imagenes = "../paginas_generadas/$titulo_pagina/images/";
         $periodo_html = '<thead> <tr> <th>Año</th>';

@@ -400,47 +400,34 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         {
             echo json_encode(['result' => 'error']);
         }
-        $sql = "SELECT * FROM periodos WHERE id_proyecto = " . $id_proyecto;
+
+        $sql = "DELETE FROM periodos WHERE id_proyecto = $id_proyecto";
         $result = $base_datos->consulta($sql);
         if($result == -1)
         {
             $error = true;
         }
-        else
-        {   
-            $array_años = [];
-            $array_presupuestos = [];
-            for($i=0; $i<sizeof($result); $i++)
-            {
-                array_push($array_años, (int)$result[$i]["año"]);
-                array_push($array_presupuestos, $result[$i]["presupuesto"]); 
-            }     
-        }
         
-        if (isset( $_POST['array_años'] ))
+        $array_años = $_POST['array_años'];
+        $array_años = explode(',', $array_años);
+        
+        $array_presupuestos = $_POST['array_presupuestos'];
+        $array_presupuestos = explode(',', $array_presupuestos);
+        
+        for ($i = 0; $i<sizeof($array_años); $i ++) 
         {
-            $array_años_leidos = $_POST['array_años'];
-            $array_años_leidos = explode(',', $array_años_leidos);
-            
-            if (isset( $_POST['array_presupuestos'] ))
+            if (!empty($array_años[$i]) && !empty($array_presupuestos[$i]))
             {
-                $array_presupuestos_leidos = $_POST['array_presupuestos'];
-                $array_presupuestos_leidos = explode(',', $array_presupuestos_leidos);
-            }
-            for ($i = 0; $i<sizeof($array_años_leidos); $i ++) 
-            {
-                //Se añaden los valores que el usuario ha introducido a la base de datos
-                $sql = "INSERT INTO periodos(año, presupuesto,id_proyecto) 
-                VALUES('$array_años_leidos[$i]', '$array_presupuestos_leidos[$i]', '$id_proyecto')";
-                $result = $base_datos->consulta($sql);
-                array_push($array_años, $array_años_leidos[$i]);
-                array_push($array_presupuestos, $array_presupuestos_leidos[$i]);
+            //Se añaden los valores que el usuario ha introducido a la base de datos
+            $sql = "INSERT INTO periodos(año, presupuesto,id_proyecto) 
+            VALUES('$array_años[$i]', '$array_presupuestos[$i]', '$id_proyecto')";
+            $result = $base_datos->consulta($sql);
 
-                if(!$result)
-                {
-                    echo json_encode(['result' => 'error']);
-                }
+            if(!$result)
+            {
+                echo json_encode(['result' => 'error']);
             }
+        }
         }
 
         echo json_encode(['result' => 'ok']);

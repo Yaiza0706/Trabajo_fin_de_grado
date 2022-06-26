@@ -1,5 +1,3 @@
-array_años = [];
-array_presupuestos = [];
 
 function anadir_elemento_tabla(id_tabla, año, presupuesto)
 {
@@ -7,9 +5,9 @@ function anadir_elemento_tabla(id_tabla, año, presupuesto)
     var table = document.getElementById(id_tabla);
     var año = $("#periodo_año").val();
     var presupuesto = $("#periodo_presupuesto").val();
-
     array_años.push(parseInt( año));
     array_presupuestos.push(parseInt(presupuesto));
+    
     // Create an empty <tr> element and add it to the 1st position of the table:
     num_row = table.rows.length;
     var row = table.insertRow(table.rows.length);
@@ -22,6 +20,20 @@ function anadir_elemento_tabla(id_tabla, año, presupuesto)
     var i = 1;
     cell1.innerHTML = '<tbody> <tr><td>' +año+ '</td>' ;
     cell2.innerHTML = '<td>' + presupuesto + '</td> </tr> </tbody>';
+}
+
+function eliminar_elemento_tabla(id_tabla)
+{
+    //1º Cogemos los datos de la tabla
+    var table = document.getElementById(id_tabla);
+    var row_count = table.tBodies[0].rows.length;
+    if(row_count > 0){
+        table.deleteRow(row_count);
+
+        array_años.pop();
+        array_presupuestos.pop();
+    }
+
 }
 
 
@@ -346,6 +358,7 @@ function ComprobarLogin()
                     }
                     else
                     {
+                        console.log(response);
                         $("#error").text("Ha habido un problema.");
                     }
                 },
@@ -742,7 +755,7 @@ function ComprobarProyecto(op, id_proyecto=0)
             $.ajax
             ({
                 url:"/Investigador/controlador_editar_proyecto.php",
-                dataType: "html",
+                dataType: "json",
                 contentType: false,
                 processData: false,
                 data: parametros,
