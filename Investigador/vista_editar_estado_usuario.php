@@ -1,4 +1,9 @@
-<?php require_once('controlador_editar_estado_usuario.php'); ?>
+<?php 
+
+session_start();
+  
+if (isset ($_SESSION['valido'])) { 
+require_once('controlador_editar_estado_usuario.php'); ?>
 
 <?php if ($no_existe): ?>
     <h1>No existe el equipo</h1>
@@ -10,7 +15,7 @@
     <h3> Modifique el estado  del usuario : <?= $equipo["nombre"] ?> <?= $equipo["apellidos"] ?>. </h3>
     <form>
       <div>
-        <label for="nombre"> Estado usuario : <input type="text" name="estado" id="estado_usuario" placeholder="Estado usuario" value="<?= $equipo["id_estado_usuario"] ?>" > </label>
+        <label for="estado"> Estado usuario : <input type="text" name="estado" id="estado_usuario" placeholder="Estado usuario" value="<?= $equipo["id_estado_usuario"] ?>" > </label>
       </div>
       <div> ⠀ </div>
       <div class = "error">
@@ -23,3 +28,7 @@
   </section>
 </section>
 <?php endif ?>
+<?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

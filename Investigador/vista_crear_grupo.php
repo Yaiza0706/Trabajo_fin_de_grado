@@ -1,3 +1,6 @@
+<?php
+session_start();
+if (isset ($_SESSION['valido'])) { ?>
 <section class="main-page">
   <div> ⠀ </div>
   <div> ⠀ </div>
@@ -7,22 +10,17 @@
       <div>
         <label for="titulo_grupo"> Título grupo : <input type="text" name="titulo_grupo" id = "titulo_grupo"placeholder="Título grupo"> </label>
       </div>
-
       <div>
         <label for="logo_grupo"> Logo grupo: </label>
         <input type="file" id="logo_grupo" name="logo_grupo" accept="image/*">
       </div>
         <h7> ⠀ </h7>
-
       <div>
         <label for="descripcion"> Descripción: <input type="text" name="descripcion" id = "descripcion" placeholder="Descripción"> </label>
       </div>
-
       <div>
         <label for="web"> Página web: <input type="text" name="web" id = "web" placeholder="Web"> </label>
       </div>
-
-      
       <div> ⠀ </div>
       <div class = "error">
         <h5 id="error">⠀</h5>
@@ -33,3 +31,8 @@
     </div>
   </section>
 </section>
+
+<?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

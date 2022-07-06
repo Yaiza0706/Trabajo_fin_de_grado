@@ -1,4 +1,9 @@
-<?php require_once('controlador_modificar_estado_usuario.php'); ?>
+<?php 
+session_start();
+
+if (isset ($_SESSION['valido'])) {
+   
+require_once('controlador_modificar_estado_usuario.php'); ?>
 <div> ⠀ </div>
 <div> ⠀ </div>
 
@@ -16,7 +21,6 @@
                 <th>Editar</th>
             </tr>
         </thead>
-        
         <tbody>
             <?php
                 foreach ($result as $equipo){
@@ -32,3 +36,7 @@
     </table>
 </div>
 
+<?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

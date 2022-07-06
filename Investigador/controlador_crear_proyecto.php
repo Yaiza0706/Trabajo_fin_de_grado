@@ -1,17 +1,21 @@
 <?php
+
 require_once('../base_datos.php');
 
 $no_hay_equipo = false;
 $no_hay_resultado = false;
 $no_hay_grupo = false;
+$no_hay_logo_fin = false;
+
+//Se comprueba la petición get
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET') 
 {
     //Se realiza la conexion con la base de datos.
     $base_datos = new bbdd();
     $base_datos->conectar();
 
-    session_start();
-    //Se muestran todas las personas existentes
+    //Se comprueba si están los datos necesarios para mostrar en el select
+
     $sql = "SELECT * FROM equipo";
     $result = $base_datos->consulta($sql);
     if($result == -1)
@@ -32,8 +36,14 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
     {
         $no_hay_grupo = true;
     }
-}
 
+    $sql = "SELECT * FROM logo";
+    $result4 = $base_datos->consulta($sql);
+    if($result4 == -1)
+    {
+        $no_hay_logo_fin = true;
+    }
+}
 
 //Se comprueba peticion post
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') 
@@ -55,7 +65,6 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $image_path = 'logo_proyecto'.'_'.microtime(true).'.'.$filename['extension'];
         $logo_ruta = "../imagenes_subidas/".$image_path;
 
-
         if(!move_uploaded_file($_FILES['logo']['tmp_name'],$logo_ruta))
         {
             echo json_encode(['result' => 'error']);
@@ -73,7 +82,6 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             echo json_encode(['result' => 'error']);
         }
     }
-
 
     if (isset( $_POST['expediente'] ))
     {
@@ -153,16 +161,21 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $array_presupuestos = explode(',', $array_presupuestos);
     }
 
+    if (isset( $_POST['array_logo_fin'] ))
+    {
+        $array_logo_fin = $_POST['array_logo_fin'];
+        $array_logo_fin = explode(',', $array_logo_fin);
+    }
+
     //Se realiza la conexion con la base de datos.
     $base_datos = new bbdd();
     $base_datos->conectar();
 
     //Se añaden los valores que el usuario ha introducido a la base de datos
     $sql = "INSERT INTO proyecto(titulo_proyecto, logo_proyecto, titulo, numero_expediente, fecha_inicio, cif, duracion, resumen, logo_menu) 
-    VALUES('$titulo_proyecto', '$logo_ruta', '$titulo_pagina', '$expediente', '$inicio', '$cif', '$duracion', '$resumen', '$logo_menu_ruta')";
+    VALUES(?,?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $result = $base_datos->consulta($sql);
-
+    $result = $base_datos->consulta_segura($sql,'sssssssss',array($titulo_proyecto, $logo_ruta, $titulo_pagina, $expediente, $inicio, $cif, $duracion, $resumen, $logo_menu_ruta));
     if(!$result)
     {
         echo json_encode(['result' => 'error']);
@@ -173,10 +186,9 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         
         for ($i = 0; $i<sizeof($array_equipo); $i ++) 
         {
-        
-           $sql2 = "INSERT INTO rel_equipo_proyecto(id_proyecto, id_equipo)
-            VALUES('$id_proyecto', '$array_equipo[$i]')";
-            $result2 = $base_datos->consulta($sql2);
+            $sql2 = "INSERT INTO rel_equipo_proyecto(id_proyecto, id_equipo)
+            VALUES(?,?)";
+            $result2 = $base_datos->consulta_segura($sql2,'ii', array($id_proyecto, $array_equipo[$i]));
             if(!$result2)
             {
                 echo json_encode(['result' => 'error']);
@@ -185,10 +197,9 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
         for ($i = 0; $i<sizeof($array_resultado); $i ++) 
         {
-        
-           $sql2 = "INSERT INTO rel_resultados_proyecto(id_proyecto, id_resultado)
-            VALUES('$id_proyecto', '$array_resultado[$i]')";
-            $result3 = $base_datos->consulta($sql2);
+            $sql2 = "INSERT INTO rel_resultados_proyecto(id_proyecto, id_resultado)
+            VALUES(?,?)";
+            $result3 = $base_datos->consulta_segura($sql2,'ii', array($id_proyecto, $array_resultado[$i]));
             if(!$result3)
             {
                 echo json_encode(['result' => 'error']);
@@ -197,10 +208,9 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
         for ($i = 0; $i<sizeof($array_investigador); $i ++) 
         {
-        
-           $sql2 = "INSERT INTO rel_ip_proyecto(id_proyecto, id_ip)
-            VALUES('$id_proyecto', '$array_investigador[$i]')";
-            $result4 = $base_datos->consulta($sql2);
+            $sql2 = "INSERT INTO rel_ip_proyecto(id_proyecto, id_ip)
+            VALUES(?, ?)";
+            $result4 = $base_datos->consulta_segura($sql2,'ii', array($id_proyecto, $array_investigador[$i]));
             if(!$result4)
             {
                 echo json_encode(['result' => 'error']);
@@ -209,33 +219,41 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
         for ($i = 0; $i<sizeof($array_grupo); $i ++) 
         {
-        
-           $sql2 = "INSERT INTO rel_grupos_proyecto(id_proyecto, id_grupo)
-            VALUES('$id_proyecto', '$array_grupo[$i]')";
-            $result5 = $base_datos->consulta($sql2);
+            $sql2 = "INSERT INTO rel_grupos_proyecto(id_proyecto, id_grupo)
+            VALUES(?,?)";
+            $result5 = $base_datos->consulta_segura($sql2,'ii', array($id_proyecto, $array_grupo[$i]));
             if(!$result5)
             {
                 echo json_encode(['result' => 'error']);
             }
         }
 
+        for ($i = 0; $i<sizeof($array_logo_fin); $i ++) 
+        {
+            $sql2 = "INSERT INTO rel_logo_proyecto(id_proyecto, id_logo)
+            VALUES(?,?)";
+            $result6 = $base_datos->consulta_segura($sql2,'ii', array($id_proyecto, $array_logo_fin[$i]));
+            if(!$result6)
+            {
+                echo json_encode(['result' => 'error']);
+            }
+        }
 
-        //Se añaden los valores que el usuario ha introducido a la base de datos
+        //Se añaden los objetivos que el usuario ha introducido a la base de datos
         $sql = "INSERT INTO objetivos(descripcion, id_proyecto) 
-        VALUES('$objetivos', '$id_proyecto')";
+        VALUES(?, ?)";
 
-        $result = $base_datos->consulta($sql);
-
+        $result = $base_datos->consulta_segura($sql,'si', array($objetivos, $id_proyecto));
         if(!$result)
         {
             echo json_encode(['result' => 'error']);
         }
 
-        //Se añaden los valores que el usuario ha introducido a la base de datos
+        //Se añade la financiación que el usuario ha introducido a la base de datos
         $sql = "INSERT INTO financiacion(descripcion, presupuesto_total,id_proyecto) 
-        VALUES('$descripcion_financiacion', '$presupuesto', '$id_proyecto')";
-        $result = $base_datos->consulta($sql);
-        
+        VALUES(?, ?, ?)";
+
+        $result = $base_datos->consulta_segura($sql,'ssi', array($descripcion_financiacion,$presupuesto ,$id_proyecto));
         if(!$result)
         {
             echo json_encode(['result' => 'error']);
@@ -243,28 +261,30 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
         for ($i = 0; $i<sizeof($array_años); $i ++) 
         {
-            //Se añaden los valores que el usuario ha introducido a la base de datos
+            //Se añaden los años y presupuestos que el usuario ha introducido a la base de datos
             $sql = "INSERT INTO periodos(año, presupuesto,id_proyecto) 
-            VALUES('$array_años[$i]', '$array_presupuestos[$i]', '$id_proyecto')";
-            $result = $base_datos->consulta($sql);
-            
+            VALUES(?,?, ?)";
+
+            $result = $base_datos->consulta_segura($sql,'iii', array($array_años[$i], $array_presupuestos[$i], $id_proyecto));
             if(!$result)
             {
                 echo json_encode(['result' => 'error']);
             }
         }
-    
+
+        //Si no ha habido ningún error, se envía ok
         echo json_encode(['result' => 'ok']);
 
+        //Se genera la página web
         $path = "../paginas_generadas/$titulo_pagina";
         if (!file_exists($path)) 
         {
             mkdir($path, 0777, true);
-            copy("../pagina_ejemplo/LICENSE.txt", "../paginas_generadas/$titulo_pagina/LICENSE.txt");
-            copy("../pagina_ejemplo/README.txt", "../paginas_generadas/$titulo_pagina/README.txt");
+            copy("../pagina_ejemplo/LICENSE.txt", "$path/LICENSE.txt");
+            copy("../pagina_ejemplo/README.txt", "$path/README.txt");
             mkdir("$path/assets", 0777, true);
             mkdir("$path/assets/css", 0777, true);          
-            copy("../pagina_ejemplo/assets/css/main.css", "../paginas_generadas/$titulo_pagina/assets/css/main.css");
+            copy("../pagina_ejemplo/assets/css/main.css", "$path/assets/css/main.css");
             copy("../pagina_ejemplo/assets/css/fontawesome-all.min.css", "../paginas_generadas/$titulo_pagina/assets/css/fontawesome-all.min.css");
 
             mkdir("$path/assets/js", 0777, true); 
@@ -346,8 +366,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $equipo_html = '';
         for ($i = 0; $i<sizeof($array_equipo); $i ++) 
         {
-            $sql = "SELECT * FROM equipo WHERE id = $array_equipo[$i]";
-            $resultado = $base_datos->consulta($sql);  
+            $sql = "SELECT * FROM equipo WHERE id = ?";
+            $resultado = $base_datos->consulta_segura($sql,'i',array($array_equipo[$i]));  
             foreach($resultado as $equipo)
             {
                 $numero = $i+1;
@@ -363,8 +383,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $ip = '';
         for ($i = 0; $i<sizeof($array_investigador); $i ++) 
         {
-            $sql = "SELECT * FROM equipo WHERE id = $array_investigador[$i]";
-            $resultado = $base_datos->consulta($sql);  
+            $sql = "SELECT * FROM equipo WHERE id = ?";
+            $resultado = $base_datos->consulta_segura($sql,'i', array($array_investigador[$i]));  
             foreach($resultado as $equipo)
             {
                 $numero = $i+1;
@@ -381,8 +401,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
         for ($i = 0; $i<sizeof($array_resultado); $i ++) 
         {
-            $sql = "SELECT * FROM resultados WHERE id = $array_resultado[$i]";
-            $result = $base_datos->consulta($sql);  
+            $sql = "SELECT * FROM resultados WHERE id = ?";
+            $result = $base_datos->consulta_segura($sql,'i', array($array_resultado[$i]));  
             foreach($result as $resultado)
             {
                 $numero = $i+1;
@@ -414,8 +434,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $grupo_html = '';
         for ($i = 0; $i<sizeof($array_grupo); $i ++) 
         {
-            $sql = "SELECT * FROM grupos WHERE id = $array_grupo[$i]";
-            $resultado = $base_datos->consulta($sql);  
+            $sql = "SELECT * FROM grupos WHERE id = ?";
+            $resultado = $base_datos->consulta_segura($sql,'i',array($array_grupo[$i]));  
             foreach($resultado as $grupo)
             {
                 
@@ -427,6 +447,28 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
                 $grupo_html = $grupo_html . "<p>". $grupo['descripcion']."</p> </div>";
             } 
         }
+
+        $logos_financiacion = "<div class='box alt'> <div class='row gtr-50 gtr-uniform'>";
+        for ($i = 0; $i<sizeof($array_logo_fin); $i ++) 
+        {
+            $sql = "SELECT * FROM logo WHERE id = ?";
+            $resultado = $base_datos->consulta_segura($sql, 'i', array($array_logo_fin[$i]));  
+            foreach($resultado as $logo)
+            {
+                $ext_logo = pathinfo($logo['imagen'], PATHINFO_EXTENSION);
+                $id_logo = $logo['id'];
+                copy($logo['imagen'], "../paginas_generadas/$titulo_pagina/images/logo-financiacion$id_logo.$ext_logo");
+                if($i == 1)
+                {
+                    $logos_financiacion = $logos_financiacion . "<div class='col-6'><span class='image fit'> <img style='margin-top: 21%;' src='images/logo-financiacion$id_logo.$ext_logo' alt=''/></span></div>";
+                }
+                else
+                {
+                    $logos_financiacion = $logos_financiacion . "<div class='col-6'><span class='image fit'> <img src='images/logo-financiacion$id_logo.$ext_logo' alt=''/></span></div>";
+                }
+            } 
+        }
+        $logos_financiacion = $logos_financiacion . "</div></div>";
 
         $fichero_index = fopen("../paginas_generadas/$titulo_pagina/index.html", "a");
         fwrite($fichero_index, "
@@ -621,12 +663,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
                         <div class='container'>
                             <h3>Financiación</h3>
                             <p> $descripcion_financiacion</p>
-                            <div class='box alt'>
-                                <div class='row gtr-50 gtr-uniform'>
-                                    <div class='col-6'><span class='image fit'><img src='images/Logotipo_comunidad_de_madrid.png' alt='' /></span></div>
-                                    <div class='col-6'><span class='image fit'><img style='margin-top: 21%;' src='images/Comunidad_europea-fondo_europeo.png' alt='' /></span></div>
-                                </div>
-                            </div>
+                            $logos_financiacion
+
                             <h4> Financiación otorgada</h4>
                             <table class='table table-jah table-financiacion'>
                                 $periodo_html                       
@@ -665,6 +703,4 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             fclose($fichero_index);
         } 
     }
-
-    ?>
-
+ ?> 

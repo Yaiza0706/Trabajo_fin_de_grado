@@ -1,12 +1,13 @@
-<?php require_once('controlador_modificar_grupo.php'); ?>
+<?php session_start();
+
+if (isset ($_SESSION['valido'])) { 
+    require_once('controlador_modificar_grupo.php');  ?>
 
 <?php if($no_hay_grupos) { ?>
     <div> ⠀ </div>
     <div> ⠀ </div>
     <h3> No hay grupos para mostrar. </h3>
-
 <?php } else { ?>
-
     <div> ⠀ </div>
     <div> ⠀ </div>
 <div class="table-wrapper">
@@ -18,7 +19,6 @@
                 <th>Editar</th>
             </tr>
         </thead>
-        
         <tbody>
             <?php
                 foreach ($result as $grupos){
@@ -33,3 +33,7 @@
     </table>
 </div>
 <?php } ?>
+<?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

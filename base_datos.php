@@ -1,5 +1,4 @@
 <?php
-
 //Se definen los parámetros para realizar la conexión con la base de datos.
 define ('USER', 'root');
 define ('PASSWORD', 'TFG1234');
@@ -20,6 +19,30 @@ class bbdd
 		    echo("ERROR: No se puede conectar al servidor: " . $this->conexion->connect_error);
 		}
 	}
+
+	public function consulta_segura($sql,$types = null,$params = null) {
+		$resultado = $this->conexion->prepare($sql);
+		$resultado->bind_param($types, ...$params);
+
+		$resultado->execute() or trigger_error($resultado->error, E_USER_ERROR);
+		$exe = $resultado->get_result() ;
+		if($exe == NULL)
+		{
+			return -1;
+		}
+		
+		else if ($exe->num_rows>0) 
+		{
+			$row_data = $exe->fetch_all(MYSQLI_ASSOC);
+			return $row_data;
+		}
+		 else 
+		 {	
+			return -1;
+		}
+	}
+		
+
 
 	public function consulta($consultar, $parametros = array())
 	{
@@ -55,14 +78,7 @@ class bbdd
 		$resultado->bind_param("s", $usuario);
 		$resultado->execute();
 		$res = $resultado->fetch();
-		if ($res)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return $res;
 	}
 	public function ultimo_id()
 	{

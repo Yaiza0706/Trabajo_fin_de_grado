@@ -1,4 +1,6 @@
-<?php require_once('controlador_editar_resultado.php'); ?>
+<?php session_start();
+if (isset ($_SESSION['valido'])) { 
+require_once('controlador_editar_resultado.php'); ?>
 
 <?php if ($no_existe): ?>
     <h1>No existe el resultado</h1>
@@ -44,3 +46,7 @@
   </section>
 </section>
 <?php endif ?>
+<?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

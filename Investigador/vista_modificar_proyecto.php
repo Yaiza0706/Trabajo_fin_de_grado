@@ -1,4 +1,6 @@
-<?php require_once('controlador_modificar_proyecto.php'); ?>
+<?php session_start();
+if (isset ($_SESSION['valido'])) { 
+require_once('controlador_modificar_proyecto.php'); ?>
 
 
 <?php if($no_hay_proyectos) { ?>
@@ -7,8 +9,6 @@
     <h3> No hay proyectos para mostrar. </h3>
 
 <?php } else { ?>
-
-
     <div> ⠀ </div>
     <div> ⠀ </div>
 
@@ -35,5 +35,8 @@
         </tbody>
     </table>
 </div>
-
 <?php }?>
+<?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

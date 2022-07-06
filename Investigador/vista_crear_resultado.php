@@ -1,3 +1,5 @@
+<?php session_start();
+if (isset ($_SESSION['valido'])) { ?>
 <section class="main-page">
   <div> ⠀ </div>
   <div> ⠀ </div>
@@ -32,3 +34,7 @@
         </div>
   </section>
 </section>
+<?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

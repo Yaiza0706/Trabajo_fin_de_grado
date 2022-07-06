@@ -1,4 +1,5 @@
 <?php
+
 require_once('../base_datos.php');
 
 $no_hay_resultados = false;
@@ -16,5 +17,4 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
         $no_hay_resultados = true;
     }
 }
-
-?>
+?> 

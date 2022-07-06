@@ -13,34 +13,42 @@
   <body>
     <section class="main-page">
       <section id="login-container">
-          <h1> Bienvenido </h1>
-          <h4>Introduce el correo electrónico y la contraseña para la conexión.</h4>
-          <form> <!-- action="controlador_login.php" method="post" -->
-            <div>
-              <label for="email"> Correo electrónico : </label> 
-            </div>
-            <div>
-              <input type="text" name="email" id="email" placeholder="Correo electrónico">
-            </div>
 
-            <div>
-              <label for="contraseña"> Contraseña : </label> 
-            </div>
-            <div>
-              <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
-            </div>
-            <div class = "error">
-              <h5 id= "error">⠀</h5>
-            </div>
-          </form>
+        <h4>Introduzca el correo electrónico y la contraseña para la conexión.</h4>
+        <form>
           <div>
-              <button class="button-login" name="login" onclick="ComprobarLogin()">Iniciar sesión</button>
-            </div>
-            <div>
-                <a href="../Registro/vista_registro.php">Crear nuevo usuario</a>
-            </div>
+            <label for="email"> Correo electrónico : </label> 
+          </div>
+          <div>
+            <input type="text" name="email" id="email" placeholder="Correo electrónico">
+          </div>
+          <div>
+            <label for="contraseña"> Contraseña : </label> 
+          </div>
+          <div>
+            <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
+          </div>
+          <label for="image-captcha">Introduzca el texto que aparece en la imagen. </label>
+          <br>
+          <br>
+          <div id= "image-captcha">
+          <?php require_once('captcha.php'); ?>
+          <img src='images/reload.svg ' onclick = "refreshcaptcha()"> </img>
+          </div>
+          <div>
+            <input type="text" name="captcha" id="captcha" pattern="[A-Z]{6}" placeholder="Valores del captcha" >
+          </div>
+          </form>
+        <div class = "error">
+            <h5 id= "error">⠀</h5>
+          </div>
+        <div>
+            <button class="button-login" name="login" onclick="ComprobarLogin()">Iniciar sesión</button>
+        </div>
+        <div>
+          <a href="../Registro/vista_registro.php">Crear nuevo usuario</a>
+        </div>
       </section>
     </section>
   </body>
 </html>
-

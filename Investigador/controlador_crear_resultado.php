@@ -1,4 +1,5 @@
 <?php
+
 require_once('../base_datos.php');
 
 //Se comprueba peticion post
@@ -53,9 +54,9 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
     //Se añaden los valores que el usuario ha introducido a la base de datos
     $sql = "INSERT INTO resultados(titulo, año_publicacion, id_tipo_publicacion, revista, autores, web) 
-    VALUES('$titulo', '$año_publicacion', '$id_tipo_publicacion', '$revista' , '$autores' , '$web')";
+    VALUES(?, ?, ?, ? , ?, ?)";
 
-    $result = $base_datos->consulta($sql);
+    $result = $base_datos->consulta_segura($sql,'siisss',array($titulo, $año_publicacion, $id_tipo_publicacion, $revista , $autores , $web));
     if(!$result)
     {
         echo json_encode(['result' => 'error']);
@@ -65,7 +66,4 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         echo json_encode(['result' => 'ok']);
     }
 }
-
-?>
-
-
+ ?> 

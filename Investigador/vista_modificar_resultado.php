@@ -1,4 +1,6 @@
-<?php require_once('controlador_modificar_resultado.php'); ?>
+<?php session_start();
+if (isset ($_SESSION['valido'])) { 
+    require_once('controlador_modificar_resultado.php'); ?>
 
 <?php if($no_hay_resultados) { ?>
     <div> ⠀ </div>
@@ -18,7 +20,6 @@
                 <th>Editar</th>
             </tr>
         </thead>
-        
         <tbody>
             <?php
                 foreach ($result as $resultados){
@@ -34,3 +35,7 @@
 </div>
 
 <?php }?>
+<?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

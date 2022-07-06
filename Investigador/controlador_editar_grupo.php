@@ -1,4 +1,5 @@
 <?php
+
 require_once('../base_datos.php');
 $id_grupo = 0;
 $no_existe = false;
@@ -6,23 +7,24 @@ $imagen_anterior = 0;
 
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET') 
 {
-    //Se obtiene el valor del id del grupo que se va a editar
-    $id_grupo = $_GET["id"];
-    
-    //Se realiza la conexion con la base de datos.
-    $base_datos = new bbdd();
-    $base_datos->conectar();
-
-    //Se leen todos los datos del grupo con el id recibido
-    $sql = "SELECT * FROM grupos WHERE id = " . $id_grupo;
-    $result = $base_datos->consulta($sql);
-    if($result == -1)
+    if(isset($_GET["id"]))
     {
-        $no_existe = true;
-    }else{
-        $grupos = $result[0];
-    }
+        //Se obtiene el valor del id del grupo que se va a editar
+        $id_grupo = $_GET["id"];
+        //Se realiza la conexion con la base de datos.
+        $base_datos = new bbdd();
+        $base_datos->conectar();
 
+        //Se leen todos los datos del grupo con el id recibido
+        $sql = "SELECT * FROM grupos WHERE id = " . $id_grupo;
+        $result = $base_datos->consulta($sql);
+        if($result == -1)
+        {
+            $no_existe = true;
+        }else{
+            $grupos = $result[0];
+        }
+    }
 }else if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') 
 {
     //Se guardan los datos introducidos en variables locales
@@ -70,16 +72,18 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
     if (!$imagen_anterior)
     { 
         $sql = "UPDATE grupos
-        SET logo_grupo = '$logo_grupo_ruta', titulo = '$titulo_grupo', descripcion = '$descripcion', web = '$web'
-        WHERE id = '$id_grupo'";
+        SET logo_grupo = ?, titulo = ?, descripcion = ?, web = ?
+        WHERE id = ?";
+        $result = $base_datos->consulta($sql,'ssssi',array($logo_grupo_ruta,$titulo_grupo,$descripcion,$web,$id_grupo));
     }
     else
     {
         $sql = "UPDATE grupos
-        SET titulo = '$titulo_grupo', descripcion = '$descripcion'
-        WHERE id = '$id_grupo'";
+        SET titulo = ?, descripcion = ?, web = ?
+        WHERE id = ?";
+        $result = $base_datos->consulta_segura($sql,'sssi',array($titulo_grupo,$descripcion,$web,$id_grupo));
     }
-    $result = $base_datos->consulta($sql);
+    
 
     if($result != -1)
     {
@@ -90,7 +94,4 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
         echo json_encode(['result' => 'ok']);
     } 
 }
-
-?>
-
 

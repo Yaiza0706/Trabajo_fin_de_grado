@@ -1,47 +1,67 @@
 
 function anadir_elemento_tabla(id_tabla, año, presupuesto)
 {
-    //1º Cogemos los datos de la tabla
+    //Se cogen los datos de la tabla
     var table = document.getElementById(id_tabla);
     var año = $("#periodo_año").val();
     var presupuesto = $("#periodo_presupuesto").val();
-    array_años.push(parseInt( año));
-    array_presupuestos.push(parseInt(presupuesto));
-    
-    // Create an empty <tr> element and add it to the 1st position of the table:
-    num_row = table.rows.length;
-    var row = table.insertRow(table.rows.length);
+    if(año != "" && presupuesto != "")
+    {
+        //Se meten en un array
+        array_años.push(parseInt( año));
+        array_presupuestos.push(parseInt(presupuesto));
+        
+        num_row = table.rows.length;
+        var row = table.insertRow(table.rows.length);
 
-    // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-
-    // Add some text to the new cells:;
-    var i = 1;
-    cell1.innerHTML = '<tbody> <tr><td>' +año+ '</td>' ;
-    cell2.innerHTML = '<td>' + presupuesto + '</td> </tr> </tbody>';
+        // Se añaden las nuevas celdas
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = '<tbody> <tr><td>' +año+ '</td>' ;
+        cell2.innerHTML = '<td>' + presupuesto + '</td> </tr> </tbody>';
+    }
 }
 
 function eliminar_elemento_tabla(id_tabla)
 {
-    //1º Cogemos los datos de la tabla
+    //Se coge el id de la tabla
     var table = document.getElementById(id_tabla);
     var row_count = table.tBodies[0].rows.length;
-    if(row_count > 0){
+    if(row_count > 0)
+    {
+        //Se pueden eliminar todas las filas menos la primera
         table.deleteRow(row_count);
-
         array_años.pop();
         array_presupuestos.pop();
     }
-
 }
 
+//Función para mostrar otra imagen de captcha diferente
+function refreshcaptcha()
+{
+    document.getElementById('image-captcha').innerHTML = "";
+    let url = "../captcha.php";
+    $.ajax
+    ({
+        url:url,
+        dataType: "html",
+        type:"GET", //tipo de peticion
+        success:function(response) //se utiliza si el servidor retorna informacion
+        {
+            document.getElementById('image-captcha').innerHTML = response + "<img src='images/reload.svg ' onclick = 'refreshcaptcha()'> </img>";
+        },
+        error: function (req, status, err){
+            $("#error").text("Ha ocurrido un error.");
+        }
+    })
+}
 
 function ComprobarLogin() 
 {
     var error = 0;
     var email = $("#email").val();
     var contraseña = $("#contraseña").val();
+    var captcha = $("#captcha").val();
 
     // Se comprueba que se hayan introducido valores.
     if(esta_vacio(email))
@@ -49,10 +69,16 @@ function ComprobarLogin()
 
     else if(esta_vacio(contraseña))
         error = "contraseña_vacia";
+    
+    else if(esta_vacio(captcha))
+        error = "argumentos_vacios"
 
     //Se comprueba que el email sea un email
     else if(!es_Email(email))
         error = "email_no_valido";
+
+    else if (!es_cadena(contraseña))
+        error = "contraseña_formato";
 
     if(error != 0)
         mostrar_errores(error);        
@@ -61,7 +87,8 @@ function ComprobarLogin()
         var parametros = 
         {
             "email":email,
-            "contraseña":contraseña
+            "contraseña":contraseña,
+            "captcha":captcha
         }
         $.ajax
         ({
@@ -75,19 +102,34 @@ function ComprobarLogin()
                 {
                     window.location.href = "/Investigador/menu_investigador.php";
                 }
+                else if (response.result == 'no_verificado')
+                {
+                    $("#error").text("El usuario o la contraseña no son correctos");
+                }
+                else if(response.result == 'no_activo')
+                {
+                    $("#error").text("El usuario está inactivo. Pida al administrador que lo active");
+                }
+                else if (response.result == 'no_captcha')
+                {
+                    $("#error").text("Valores introducidos del captcha incorrectos.");
+                }
                 else
                 {
                     console.log(response);
-                    $("#error").text("El usuario o la contraseña no son correctos");
+                    $("#error").text("Ha habido un problema");
                 }
             },
-            error: function (req, status, err){
+            error: function (req, status, err)
+            {
+                console.log(err);
                 $("#error").text("Ha ocurrido un error.");
             }
         })
     }
  }
 
+ 
  function ComprobarEstadoUsuario(id_equipo=0)
  {
     var error = 0;
@@ -127,6 +169,7 @@ function ComprobarLogin()
                 }
                 else
                 {
+                    console.log(response);
                     $("#error").text("Ha habido un problema.");
                 }
             },
@@ -150,7 +193,7 @@ function ComprobarLogin()
     var contraseña = $("#contraseña").val();
 
     // Se comprueba que se hayan introducido valores.
-    if(esta_vacio(nombre) || esta_vacio(apellido) || esta_vacio(titulacion) || esta_vacio(web) || esta_vacio(email))
+    if(esta_vacio(nombre) || esta_vacio(apellido) || esta_vacio(titulacion) || esta_vacio(web) || esta_vacio(email) || esta_vacio(contraseña))
         error = "argumentos_vacios";
             
     //Se comprueba que el email sea un email
@@ -183,6 +226,12 @@ function ComprobarLogin()
 
     else if(!es_cadena(web))
         error = "web_formato";
+    
+    else if(!es_cadena(contraseña))
+        error = "contraseña_formato";
+    
+    else if(!contraseña_segura(contraseña))
+        error = "contraseña_insegura";
 
     if(error != 0)
         mostrar_errores(error);       
@@ -217,8 +266,14 @@ function ComprobarLogin()
                     {
                         $("#error").text("Ya existe un usuario con ese email.");
                     }
+                    else
+                    {
+                        console.log(response);
+                        $("#error").text("Ha habido un problema.");
+                    }
                 },
                 error: function (req, status, err){
+                    console.log(err);
                     $("#error").text("Ha ocurrido un error.");
                 }
             })
@@ -239,10 +294,12 @@ function ComprobarLogin()
                     }
                     else
                     {
+                        console.log(response);
                         $("#error").text("Ha habido un problema.");
                     }
                 },
                 error: function (req, status, err){
+                    console.log(err);
                     $("#error").text("Ha ocurrido un error.");
                 }
             })
@@ -263,7 +320,7 @@ function ComprobarLogin()
     var web = $("#web").val();
 
     // Se comprueba que se hayan introducido valores.
-    if(esta_vacio(titulo) || esta_vacio(año_publicacion) || esta_vacio(tipo_publicacion) || esta_vacio(revista) || esta_vacio(autores))
+    if(esta_vacio(titulo) || esta_vacio(año_publicacion) || esta_vacio(tipo_publicacion) || esta_vacio(revista) || esta_vacio(autores) || esta_vacio(web))
         error = "argumentos_vacios";
 
     else if(!longitud_correcta(autores,2000))
@@ -286,6 +343,12 @@ function ComprobarLogin()
 
     else if(!es_int(año_publicacion))
         error = "año_formato";
+
+    else if(!longitud_correcta(web, 100))
+        error = "web_larga";
+
+    else if(!es_cadena(web))
+        error = "web_formato";
 
     else if (tipo_publicacion != "Artículo" && tipo_publicacion != "Letter" && tipo_publicacion != "Patente" && tipo_publicacion != "Congreso")
         error = "tipo_publicacion_formato";
@@ -370,70 +433,68 @@ function ComprobarLogin()
     }
  }
 
- function ComprobarFinanciacion(op, id_financiacion=0)
+ function ComprobarLogo(op, id_logo=0)
  {
     var error = 0;
-    var descripcion = $("#descripcion").val();
-    var presupuesto_total = $("#presupuesto_total").val();
-    var id_proyecto = $("#id_proyecto").val();
+    var titulo = $("#titulo").val();
+    var logo_financiacion = $('#img-logo')[0].files;
 
     // Se comprueba que se hayan introducido valores.
-    if(esta_vacio(descripcion) || esta_vacio(presupuesto_total) || esta_vacio(id_proyecto))
+    if(esta_vacio(titulo) )
         error = "argumentos_vacios";
 
-    else if(!longitud_correcta(descripcion,2000))
-        error = "descripcion_larga";
+    else if(!longitud_correcta(titulo,100))
+        error = "titulo_largo";
 
-    else if(!longitud_correcta(presupuesto_total,50))
-        error = "presupuesto_largo";
-
-    else if(!es_cadena(descripcion))
-        error = "descripcion_formato";
-
-    else if(!es_cadena(presupuesto_total))
-        error = "presupuesto_formato";
-
-    else if(!es_int(id_proyecto))
-        error = "id_formato"
+    else if(!es_cadena(titulo))
+        error = "titulo_formato";
 
     if(error != 0)
         mostrar_errores(error);       
 
     else
     {
-        var parametros = 
-        {
-            "id_financiacion":id_financiacion,
-            "descripcion":descripcion,
-            "presupuesto_total":presupuesto_total,
-            "id_proyecto":id_proyecto
+        var parametros = new FormData();
+        parametros.append("id_logo",id_logo);
+        parametros.append("titulo",titulo);
+        parametros.append("logo_financiacion",logo_financiacion[0]);
+        if(op === "nuevo")
+        {  
+            if(logo_financiacion.length == 0)
+            {
+                $("#error").text("Debe seleccionar una imagen.");
+            }
+            else
+            {         
+            $.ajax
+                ({  
+                    url:"/Investigador/controlador_crear_logo.php",
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    data: parametros,
+                    type:"POST", //tipo de peticion
+                    success:function(response) //se utiliza si el servidor retorna informacion
+                    {
+                        if(response.result == 'ok')
+                        {
+                            window.location.href = "menu_investigador.php";
+                        }
+                        else
+                        {
+                            console.log(response)
+                            $("#error").text("Ha habido un problema.");
+                        }
+                    },
+                    error: function (req, status, err){
+                        $("#error").text("Ha ocurrido un error.");
+                        console.log(err);
+                    }
+                 })   
+                }
         }
 
-        if(op === "nuevo")
-        {
-            $.ajax
-            ({
-                url:"/Investigador/controlador_crear_financiacion.php",
-                dataType: "json",
-                data: parametros,
-                type:"POST", //tipo de peticion
-                success:function(response) //se utiliza si el servidor retorna informacion
-                {
-                    if(response.result == 'ok')
-                    {
-                        window.location.href = "menu_investigador.php";
-                    }
-                    else
-                    {
-                        $("#error").text("Ha habido un problema.");
-                    }
-                },
-                error: function (req, status, err){
-                    $("#error").text("Ha ocurrido un error.");
-                }
-            })
-
-        }else if(op === "actualizar")
+        else if(op === "actualizar")
         {
             $.ajax
             ({
@@ -471,7 +532,7 @@ function ComprobarGrupo(op, id_grupo=0)
     var web = $("#web").val();
 
     // Se comprueba que se hayan introducido valores.
-    if(esta_vacio(titulo_grupo) || esta_vacio(descripcion))
+    if(esta_vacio(titulo_grupo) || esta_vacio(descripcion) || esta_vacio(web))
         error = "argumentos_vacios";
 
     else if(!longitud_correcta(descripcion,2000))
@@ -481,10 +542,16 @@ function ComprobarGrupo(op, id_grupo=0)
         error = "titulo_largo";
 
     else if(!es_cadena(titulo_grupo))
-        error = "descripcion_formato";
+        error = "titulo_formato";
 
     else if(!es_cadena(descripcion))
-        error = "presupuesto_formato";
+        error = "descripcion_formato";
+
+    else if(!longitud_correcta(web, 100))
+        error = "web_larga";
+
+    else if(!es_cadena(web))
+        error = "web_formato";
 
     if(error != 0)
         mostrar_errores(error);       
@@ -530,8 +597,6 @@ function ComprobarGrupo(op, id_grupo=0)
                     },
                     error: function (req, status, err){
                         $("#error").text("Ha ocurrido un error.");
-                        console.log(req);
-                        console.log(status);
                         console.log(err);
                     }
                  })
@@ -587,40 +652,44 @@ function ComprobarProyecto(op, id_proyecto=0)
     var resultados =$('#resultados').val();
     var investigador = $('#investigador').val();
     var grupos =  $('#grupos').val();
+    var logo_fin = $('#logo_financiacion').val();
     array_equipo = [];
     array_resultado = [];
     array_investigador = [];
     array_grupo = [];
+    array_logo_fin = [];
 
     for(var i = 0; i < equipo.length; i++)
     {
         array_equipo.push(parseInt( equipo[i].substring(0,1)));
-        console.log(array_equipo);
     }
 
     for(var i = 0; i < resultados.length; i++)
     {
         array_resultado.push(parseInt( resultados[i].substring(0,1)));
-        console.log(array_resultado);
     }
 
     for(var i = 0; i < investigador.length; i++)
     {
         array_investigador.push(parseInt( investigador[i].substring(0,1)));
-        console.log(array_investigador);
     }
 
     for(var i = 0; i < grupos.length; i++)
     {
         array_grupo.push(parseInt( grupos[i].substring(0,1)));
-        console.log(array_grupo);
+    }
+
+    for(var i = 0; i < logo_fin.length; i++)
+    {
+        array_logo_fin.push(parseInt( logo_fin[i].substring(0,1)));
     }
 
     // Se comprueba que se hayan introducido valores.
-    if(esta_vacio(titulo_pagina) || esta_vacio(titulo_proyecto) || esta_vacio(expediente) || esta_vacio(inicio) || esta_vacio(cif) || esta_vacio(duracion) || esta_vacio(resumen))
+    if(esta_vacio(titulo_pagina) || esta_vacio(titulo_proyecto) || esta_vacio(expediente) || esta_vacio(inicio) || esta_vacio(cif) ||
+    esta_vacio(duracion) || esta_vacio(resumen) || esta_vacio(objetivos) || esta_vacio(descripcion_financiacion) || esta_vacio(presupuesto))
         error = "argumentos_vacios";
 
-    else if(esta_vacio(array_equipo) || esta_vacio(array_resultado) || esta_vacio(array_investigador) || esta_vacio(array_grupo))
+    else if(esta_vacio(array_equipo) || esta_vacio(array_resultado) || esta_vacio(array_investigador) || esta_vacio(array_grupo) || esta_vacio(array_logo_fin))
         error = "select_vacio";
 
     else if(!longitud_correcta(titulo_pagina,300))
@@ -628,8 +697,6 @@ function ComprobarProyecto(op, id_proyecto=0)
 
     else if(!longitud_correcta(titulo_proyecto,100))
         error = "titulo_proy_largo";
-
-    // COMPROBAR SI HAY IMAGEN logo
 
     else if(!longitud_correcta(expediente,50))
         error = "expediente_largo";
@@ -652,8 +719,8 @@ function ComprobarProyecto(op, id_proyecto=0)
     else if(!longitud_correcta(descripcion_financiacion,2000))
         error = "descripcion_financiacion_largo";
 
-    else if(!longitud_correcta(objetivos,5000))
-        error = "objetivos_largo";
+    else if(!longitud_correcta(presupuesto,50))
+        error = "presupuesto_largo";
 
     else if(!es_cadena(titulo_pagina))
         error = "titulo_pag_formato";
@@ -691,7 +758,6 @@ function ComprobarProyecto(op, id_proyecto=0)
     else
     {
         var parametros = new FormData();
-        console.log(id_proyecto);
         parametros.append("id_proyecto",id_proyecto);
         parametros.append("titulo_pagina",titulo_pagina);
         parametros.append("titulo_proyecto",titulo_proyecto);
@@ -711,6 +777,7 @@ function ComprobarProyecto(op, id_proyecto=0)
         parametros.append("array_investigador", array_investigador);
         parametros.append("array_años", array_años);
         parametros.append("array_presupuestos", array_presupuestos);
+        parametros.append("array_logo_fin", array_logo_fin);
 
 
         if(op === "nuevo")
@@ -718,6 +785,10 @@ function ComprobarProyecto(op, id_proyecto=0)
             if(logo_menu.length == 0 || logo.length == 0)
             {
                 $("#error").text("Debe seleccionar una imagen.");
+            }
+            else if(esta_vacio(array_años) || esta_vacio(array_presupuestos))
+            {
+                error = "no_año_presupuesto";
             }
             else
             {
@@ -743,8 +814,6 @@ function ComprobarProyecto(op, id_proyecto=0)
                         }
                     },
                     error: function (req, status, err){
-                        console.log(req);
-                        console.log(status);
                         console.log(err);
                         $("#error").text("Ha ocurrido un error del servidor");
                     }
@@ -813,6 +882,40 @@ function es_int(parametro)
     return(!isNaN(parametro))
 }
 
+function contraseña_segura(parametro)
+{
+    if (parametro.length >= 8)
+    {
+        var letras_min="abcdefghyjklmnñopqrstuvwxyz";
+        var letras_may="ABCDEFGHYJKLMNÑOPQRSTUVWXYZ";
+        var numeros = "123456789";
+        var tiene_min = false;
+        var tiene_may = false;
+        var tiene_num = false;
+        for(i=0; i<parametro.length; i++)
+        {
+            if (letras_min.indexOf(parametro.charAt(i),0)!=-1)
+            {
+                tiene_min = true;;
+            }
+            if (letras_may.indexOf(parametro.charAt(i),0)!=-1)
+            {
+                tiene_may = true;
+            }
+            if (numeros.indexOf(parametro.charAt(i),0)!=-1)
+            {
+                tiene_num = true;
+            }
+        }
+
+        return (tiene_min && tiene_may && tiene_num);
+    }
+    else
+    {
+        return false;
+    }
+}
+
 //Función que imprime los errores por pantalla
 function mostrar_errores(error)
 {
@@ -825,6 +928,9 @@ function mostrar_errores(error)
     else if(error == "contraseña_vacia")
         $("#error").text("El campo contraseña no puede estar vacío");
 
+    else if(error == "contraseña_formato")
+    $("#error").text("Formato contraseña incorrecto");
+    
     else if(error == "argumentos_vacios")
         $("#error").text("Por favor, rellene todos los argumentos.");
         
@@ -866,9 +972,6 @@ function mostrar_errores(error)
 
     else if(error == "descripcion_formato")
         $("#error").text("Formato descripción incorrecto.");
-
-    else if(error == "presupuesto_formato")
-        $("#error").text("Formato presupuesto incorrecto.");
 
     else if(error == "id_formato")
         $("#error").text("Formato ID incorrecto.");
@@ -950,8 +1053,7 @@ function mostrar_errores(error)
         $("#error").text("Formato logo menú incorrecto.");
     
     else if(error == "select_vacio")
-        $("#error").text("Debes seleccionar algún elemento.");
-
+        $("#error").text("Debe seleccionar algún elemento.");
     
     else if(error == "descripcion_financiacion_largo")
         $("#error").text("Cadena descripción financiación demasiado larga.");
@@ -966,11 +1068,12 @@ function mostrar_errores(error)
         $("#error").text("Formato presupuesto incorrecto.");
 
     else if(error == "id_incorrecto")
-        $("#error").text("Valor de ID incorrecto.");
+        $("#error").text("Valor de ID incorrecto."); 
 
-
-
-        
-
+    else if(error == "no_año_presupuesto")
+        $("#error").text("Debe introducir un valor para año y presupuesto");    
+    
+    else if(error == "contraseña_insegura")
+        $("#error").text("Debe introducir una contraseña segura(mínimo 8 caracteres que contenga letra mayúscula, letra minúscula y número."); 
 
 }

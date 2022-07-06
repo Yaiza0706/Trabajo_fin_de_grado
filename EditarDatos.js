@@ -58,26 +58,6 @@ function EditarGrupo(id)
     })
 }
 
-function EditarFinanciacion(id)
-{
-    let url = "../Investigador/vista_editar_financiacion.php?id=" + id;
-    $.ajax
-    ({
-        url:url,
-        dataType: "html",
-        type:"GET", //tipo de peticion
-        success:function(response) //se utiliza si el servidor retorna informacion
-        {
-            window.scrollTo(0,0);
-            $("#ventana_principal").html(response);
-            $(document).attr("title", "Editar Financiacion"); 
-        },
-        error: function (req, status, err){
-            $("#error").text("Ha ocurrido un error.");
-        }
-    })
-}
-
 function EditarEquipo(id)
 {
     let url = "../Investigador/vista_editar_equipo.php?id=" + id;
@@ -106,6 +86,7 @@ function EditarEstadoUsuario(id)
         url:url,
         dataType: "html",
         type:"GET", //tipo de peticion
+        contentType: "text/plain",
         success:function(response) //se utiliza si el servidor retorna informacion
         {
             window.scrollTo(0,0);

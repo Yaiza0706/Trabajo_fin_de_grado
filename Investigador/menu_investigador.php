@@ -15,7 +15,7 @@
 			<!-- Main -->
 				<div id="main">
 					<div class="inner">
-					<?php if ($_SESSION['valido']) { ?>
+					<?php if (isset ($_SESSION['valido'])) { ?>
 					<section class="main-page">
 						<!-- Header -->
 						<header id="header">
@@ -42,6 +42,8 @@
 											<li><a onclick = "VerProyecto()">Proyecto</a></li>	
 											<li><a onclick = "VerGrupo()">Grupo</a></li>
 											<li><a onclick = "VerResultado()">Resultado</a></li>
+											<li><a onclick = "VerLogo()">Logo financiación</a></li>
+
 										</ul>
 									</li>
 									<li>
@@ -79,6 +81,7 @@
 											<li><a onclick = "VerProyecto()">Proyecto</a></li>	
 											<li><a onclick = "VerGrupo()">Grupo</a></li>
 											<li><a onclick = "VerResultado()">Resultado</a></li>
+											<li><a onclick = "VerLogo()">Logo financiación</a></li>
 										</ul>
 									</li>
 									<li>
@@ -112,7 +115,6 @@
 										<span class="opener">Nuevo</span>
 										<ul>
 											<li><a onclick = "VerProyecto()">Proyecto</a></li>	
-											<li><a onclick = "VerGrupo()">Grupo</a></li>
 											<li><a onclick = "VerResultado()">Resultado</a></li>
 										</ul>
 									</li>
@@ -120,7 +122,6 @@
 										<span class="opener">Modificar</span>
 										<ul>
 											<li><a onclick = "ModificarProyecto()">Proyecto</a></li>	
-											<li><a onclick = "ModificarGrupo()">Grupo</a></li>
 											<li><a onclick = "ModificarResultado()">Resultado</a></li>
 										</ul>
 									</li>
@@ -132,7 +133,11 @@
 				<?php }?> 
 
 		</div>
-		<?php }?> 
+		<?php } else{?> 
+			<header id="header">
+				<h2>Debe iniciar sesión antes de entrar.</h2>
+			</header>
+			<?php } ?> 
 
 	<!-- Scripts -->
 		<script src="../assets/js/jquery.min.js"></script>

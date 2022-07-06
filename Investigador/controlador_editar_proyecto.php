@@ -1,4 +1,5 @@
 <?php
+
 require_once('../base_datos.php');
 $id_proyecto = 0;
 $no_existe = false;
@@ -10,140 +11,163 @@ $no_financiacion = false;
 $no_hay_equipo = false;
 $no_hay_resultado = false;
 $no_hay_grupo = false;
+$no_hay_logo_fin = false;
 
 
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET') 
 {
-    //Se obtiene el valor del id del proyecto que se va a editar
-    $id_proyecto = $_GET["id"];
-    
-    //Se realiza la conexion con la base de datos.
-    $base_datos = new bbdd();
-    $base_datos->conectar();
-
-    //Se leen todos los datos del proyecto con el id recibido
-    $sql = "SELECT * FROM proyecto WHERE id = " . $id_proyecto;
-    $result = $base_datos->consulta($sql);
-    if($result == -1)
+    if(isset($_GET["id"]))
     {
-        $no_existe = true;
-    }
-    else
-    {
-        $proyecto = $result[0];
-    }
-
-    //Se leen todos los objetivos con el id del proyecto 
-    $sql = "SELECT * FROM objetivos WHERE id_proyecto = " . $id_proyecto;
-    $result = $base_datos->consulta($sql);
-    if($result == -1)
-    {
-        $no_objetivos  = true;
-    }
-    else
-    {
-        $objetivos = $result[0];
-    }
-
-    //Se lee la financiacion con el id del proyecto 
-    $sql = "SELECT * FROM financiacion WHERE id_proyecto = " . $id_proyecto;
-    $result = $base_datos->consulta($sql);
-    if($result == -1)
-    {
-        $no_financiacion  = true;
-    }
-    else
-    {
-        $financiacion = $result[0];
-    }
-
-    //Se leen los periodos de la financiacion con el id del proyecto 
-    $sql = "SELECT * FROM periodos WHERE id_proyecto = " . $id_proyecto;
-    $result0 = $base_datos->consulta($sql);
-    if($result0 == -1)
-    {
-        $no_periodo  = true;
-    }      
-
-    //Se muestran todas las personas existentes
-    $sql = "SELECT * FROM equipo";
-    $result1 = $base_datos->consulta($sql);
-    if($result1 == -1)
-    {
-        $no_hay_equipo = true;
-    }
-
-    $sql = "SELECT * FROM resultados";
-    $result2 = $base_datos->consulta($sql);
-    if($result2 == -1)
-    {
-        $no_hay_resultado = true;
-    }
-
-    $sql = "SELECT * FROM grupos";
-    $result3 = $base_datos->consulta($sql);
-    if($result3 == -1)
-    {
-        $no_hay_grupo = true;
-    }
-
-    $sql = "SELECT id_resultado FROM rel_resultados_proyecto WHERE id_proyecto = " . $id_proyecto;
-    $result = $base_datos->consulta($sql);
-    if($result == -1)
-    {
-        $error = true;
-    }
-    else
-    {   
-        $array_resultado = [];
-        for($i=0; $i<sizeof($result); $i++)
-            array_push($array_resultado, (int)$result[$i]["id_resultado"]);
-    }
-
-    $sql = "SELECT id_grupo FROM rel_grupos_proyecto WHERE id_proyecto = " . $id_proyecto;
-    $result = $base_datos->consulta($sql);
-    if($result == -1)
-    {
-        $error = true;
-    }
-    else
-    {   
-        $array_grupo = [];
-        for($i=0; $i<sizeof($result); $i++)
-            array_push($array_grupo, (int)$result[$i]["id_grupo"]);
-    }
-
-    $sql = "SELECT id_equipo FROM rel_equipo_proyecto WHERE id_proyecto = " . $id_proyecto;
-    $result = $base_datos->consulta($sql);
-    if($result == -1)
-    {
-        $error = true;
-    }
-    else
-    {   
-        $array_equipo = [];
-        for($i=0; $i<sizeof($result); $i++)
-            array_push($array_equipo, (int)$result[$i]["id_equipo"]);
+        //Se obtiene el valor del id del proyecto que se va a editar
+        $id_proyecto = $_GET["id"];
         
-    }
+        //Se realiza la conexion con la base de datos.
+        $base_datos = new bbdd();
+        $base_datos->conectar();
 
-    $sql = "SELECT id_ip FROM rel_ip_proyecto WHERE id_proyecto = " . $id_proyecto;
-    $result = $base_datos->consulta($sql);
-    if($result == -1)
-    {
-        $error = true;
-    }
-    else
-    {   
-        $array_investigador = [];
-        for($i=0; $i<sizeof($result); $i++)
-            array_push($array_investigador, (int)$result[$i]["id_ip"]);
+        //Se leen todos los datos del proyecto con el id recibido
+        $sql = "SELECT * FROM proyecto WHERE id = " . $id_proyecto;
+        $result = $base_datos->consulta($sql);
+        if($result == -1)
+        {
+            $no_existe = true;
+        }
+        else
+        {
+            $proyecto = $result[0];
+        }
+
+        //Se leen todos los objetivos con el id del proyecto 
+        $sql = "SELECT * FROM objetivos WHERE id_proyecto = " . $id_proyecto;
+        $result = $base_datos->consulta($sql);
+        if($result == -1)
+        {
+            $no_objetivos  = true;
+        }
+        else
+        {
+            $objetivos = $result[0];
+        }
+
+        //Se lee la financiacion con el id del proyecto 
+        $sql = "SELECT * FROM financiacion WHERE id_proyecto = " . $id_proyecto;
+        $result = $base_datos->consulta($sql);
+        if($result == -1)
+        {
+            $no_financiacion  = true;
+        }
+        else
+        {
+            $financiacion = $result[0];
+        }
+
+        //Se leen los periodos de la financiacion con el id del proyecto 
+        $sql = "SELECT * FROM periodos WHERE id_proyecto = " . $id_proyecto;
+        $result0 = $base_datos->consulta($sql);
+        if($result0 == -1)
+        {
+            $no_periodo  = true;
+        }      
+
+        $sql = "SELECT * FROM equipo";
+        $result1 = $base_datos->consulta($sql);
+        if($result1 == -1)
+        {
+            $no_hay_equipo = true;
+        }
+
+        $sql = "SELECT * FROM resultados";
+        $result2 = $base_datos->consulta($sql);
+        if($result2 == -1)
+        {
+            $no_hay_resultado = true;
+        }
+
+        $sql = "SELECT * FROM grupos";
+        $result3 = $base_datos->consulta($sql);
+        if($result3 == -1)
+        {
+            $no_hay_grupo = true;
+        }
+
+        $sql = "SELECT * FROM logo";
+        $result4 = $base_datos->consulta($sql);
+        if($result4 == -1)
+        {
+            $no_hay_logo_fin = true;
+        }
+
+        $sql = "SELECT id_resultado FROM rel_resultados_proyecto WHERE id_proyecto = " . $id_proyecto;
+        $result = $base_datos->consulta($sql);
+        if($result == -1)
+        {
+            $error = true;
+        }
+        else
+        {   
+            $array_resultado = [];
+            for($i=0; $i<sizeof($result); $i++)
+                array_push($array_resultado, (int)$result[$i]["id_resultado"]);
+        }
+
+        $sql = "SELECT id_grupo FROM rel_grupos_proyecto WHERE id_proyecto = " . $id_proyecto;
+        $result = $base_datos->consulta($sql);
+        if($result == -1)
+        {
+            $error = true;
+        }
+        else
+        {   
+            $array_grupo = [];
+            for($i=0; $i<sizeof($result); $i++)
+                array_push($array_grupo, (int)$result[$i]["id_grupo"]);
+        }
+
+        $sql = "SELECT id_equipo FROM rel_equipo_proyecto WHERE id_proyecto = " . $id_proyecto;
+        $result = $base_datos->consulta($sql);
+        if($result == -1)
+        {
+            $error = true;
+        }
+        else
+        {   
+            $array_equipo = [];
+            for($i=0; $i<sizeof($result); $i++)
+                array_push($array_equipo, (int)$result[$i]["id_equipo"]);
+            
+        }
+
+        $sql = "SELECT id_ip FROM rel_ip_proyecto WHERE id_proyecto = " . $id_proyecto;
+        $result = $base_datos->consulta($sql);
+        if($result == -1)
+        {
+            $error = true;
+        }
+        else
+        {   
+            $array_investigador = [];
+            for($i=0; $i<sizeof($result); $i++)
+                array_push($array_investigador, (int)$result[$i]["id_ip"]);
+        }
+
+        $sql = "SELECT id_logo FROM rel_logo_proyecto WHERE id_proyecto = " . $id_proyecto;
+        $result = $base_datos->consulta($sql);
+        if($result == -1)
+        {
+            $error = true;
+        }
+        else
+        {   
+            $array_logo_fin = [];
+            for($i=0; $i<sizeof($result); $i++)
+                array_push($array_logo_fin, (int)$result[$i]["id_logo"]);
+        }
     }
 }
+
 else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 {
     //Se guardan los datos introducidos en variables locales
-
     if (isset( $_POST['id_proyecto'] ))
     {
         $id_proyecto = $_POST['id_proyecto'];
@@ -159,19 +183,18 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $titulo_proyecto = $_POST['titulo_proyecto'];
     }
 
-        //Se realiza la conexion con la base de datos.
+    //Se realiza la conexion con la base de datos.
     $base_datos = new bbdd();
     $base_datos->conectar();
 
-    $sql = "SELECT * FROM proyecto WHERE id = $id_proyecto";
-    $resultado = $base_datos->consulta($sql);  
+    $sql = "SELECT * FROM proyecto WHERE id = ?";
+    $resultado = $base_datos->consulta_segura($sql, 'i', array($id_proyecto));  
 
     if(isset($_FILES['logo']['name']))
     {
         $filename = pathinfo($_FILES['logo']['name']);
         $image_path = 'logo_proyecto'.'_'.microtime(true).'.'.$filename['extension'];
         $logo_ruta = "../imagenes_subidas/".$image_path;
-
 
         if(!move_uploaded_file($_FILES['logo']['tmp_name'],$logo_ruta))
         {
@@ -186,6 +209,7 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             $logo_ruta = $proyecto['logo_proyecto'];
         }
     }
+    
     if(isset($_FILES['logo_menu']['name']))
     {
         $filename2 = pathinfo($_FILES['logo_menu']['name']);
@@ -273,45 +297,55 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $array_grupo = explode(',', $array_grupo);
     }
 
+    if (isset( $_POST['array_logo_fin'] ))
+    {
+        $array_logo_fin = $_POST['array_logo_fin'];
+        $array_logo_fin = explode(',', $array_logo_fin);
+    }
+
     if (!$logo_anterior && !$logo_menu_anterior)
     { 
         //Se actualizan los nuevos valores introducidos
         $sql = "UPDATE proyecto
-        SET titulo_proyecto = '$titulo_proyecto', logo_proyecto = '$logo', titulo = '$titulo_pagina', numero_expediente = '$expediente', fecha_inicio = '$inicio',
-        cif = '$cif', duracion = '$duracion', resumen = '$resumen', logo_menu = '$logo_menu'
-        WHERE id = '$id_proyecto'";
+        SET titulo_proyecto = ?, logo_proyecto = ?, titulo = ?, numero_expediente = ?, fecha_inicio = ?,
+        cif = ?, duracion = ?, resumen = ', logo_menu = ?
+        WHERE id = ?";
+        $result = $base_datos->consulta_segura($sql,'sssssssssi',array($titulo_proyecto, $logo_ruta, $titulo_pagina, $expediente, $inicio, $cif, $duracion, $resumen, $logo_menu_ruta, $id_proyecto));;
     }
     else if ($logo_anterior && $logo_menu_anterior)
     {
         $sql = "UPDATE proyecto
-        SET titulo_proyecto = '$titulo_proyecto', titulo = '$titulo_pagina', numero_expediente = '$expediente', fecha_inicio = '$inicio',
-        cif = '$cif', duracion = '$duracion', resumen = '$resumen'
-        WHERE id = '$id_proyecto'";
+        SET titulo_proyecto = ?, titulo =?, numero_expediente = ?, fecha_inicio = ?,
+        cif = ?, duracion = ?, resumen = ?
+        WHERE id = ?";
+        $result = $base_datos->consulta_segura($sql,'sssssssi',array($titulo_proyecto, $titulo_pagina, $expediente, $inicio, $cif, $duracion, $resumen, $id_proyecto));;
     }
     else if((!$logo_anterior && $logo_menu_anterior))
     {
         $sql = "UPDATE proyecto
-        SET titulo_proyecto = '$titulo_proyecto', logo_proyecto = '$logo', titulo = '$titulo_pagina', numero_expediente = '$expediente', fecha_inicio = '$inicio',
-        cif = '$cif', duracion = '$duracion', resumen = '$resumen'
-        WHERE id = '$id_proyecto'";
+        SET titulo_proyecto = ?, logo_proyecto = ?, titulo = ?, numero_expediente = ?, fecha_inicio = ?,
+        cif = ?, duracion = ?, resumen = ?
+        WHERE id = ?";
+        $result = $base_datos->consulta_segura($sql,'ssssssssi',array($titulo_proyecto, $logo_ruta, $titulo_pagina, $expediente, $inicio, $cif, $duracion, $resumen, $id_proyecto));;
     }
     else
     {
         $sql = "UPDATE proyecto
-        SET titulo_proyecto = '$titulo_proyecto', titulo = '$titulo_pagina', numero_expediente = '$expediente', fecha_inicio = '$inicio',
-        cif = '$cif', duracion = '$duracion', resumen = '$resumen', logo_menu = '$logo_menu'
-        WHERE id = '$id_proyecto'";
+        SET titulo_proyecto = ?, titulo = ?, numero_expediente = ?, fecha_inicio = ?,
+        cif = ?, duracion = ?, resumen = ?, logo_menu = ?
+        WHERE id = ?";
+        $result = $base_datos->consulta_segura($sql,'ssssssssi',array($titulo_proyecto, $titulo_pagina, $expediente, $inicio, $cif, $duracion, $resumen, $logo_menu_ruta, $id_proyecto));;
     }
     
-    $result = $base_datos->consulta($sql);
+    
     if(!$result)
     {
         echo json_encode(['result' => 'error']);
     }
     else
     {
-        $sql2 = "DELETE FROM rel_equipo_proyecto WHERE id_proyecto = $id_proyecto";
-        $result2 = $base_datos->consulta($sql2);
+        $sql2 = "DELETE FROM rel_equipo_proyecto WHERE id_proyecto = ?";
+        $result2 = $base_datos->consulta_segura($sql2,'i',array($id_proyecto));
         if(!$result2)
         {
             echo json_encode(['result' => 'error']);
@@ -319,16 +353,16 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         for ($i = 0; $i<sizeof($array_equipo); $i ++) 
         {        
            $sql2 = "INSERT INTO rel_equipo_proyecto(id_proyecto, id_equipo)
-            VALUES('$id_proyecto', '$array_equipo[$i]')";
-            $result2 = $base_datos->consulta($sql2);
+            VALUES(?,?)";
+            $result2 = $base_datos->consulta_segura($sql2, 'ii', array($id_proyecto, $array_equipo[$i]));
             if(!$result2)
             {
                 echo json_encode(['result' => 'error']);
             }
         }
 
-        $sql2 = "DELETE FROM rel_resultados_proyecto WHERE id_proyecto = $id_proyecto";
-        $result2 = $base_datos->consulta($sql2);
+        $sql2 = "DELETE FROM rel_resultados_proyecto WHERE id_proyecto = ?";
+        $result2 = $base_datos->consulta_segura($sql2, 'i', array($id_proyecto));
         if(!$result2)
         {
             echo json_encode(['result' => 'error']);
@@ -337,15 +371,15 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         for ($i = 0; $i<sizeof($array_resultado); $i ++) 
         {
            $sql2 = "INSERT INTO rel_resultados_proyecto(id_proyecto, id_resultado)
-            VALUES('$id_proyecto', '$array_resultado[$i]')";
-            $result3 = $base_datos->consulta($sql2);
+            VALUES(?, ?)";
+            $result3 = $base_datos->consulta_segura($sql2, 'ii', array($id_proyecto, $array_resultado[$i]));
             if(!$result3)
             {
                 echo json_encode(['result' => 'error']);
             }
         }
-        $sql2 = "DELETE FROM rel_ip_proyecto WHERE id_proyecto = $id_proyecto";
-        $result2 = $base_datos->consulta($sql2);
+        $sql2 = "DELETE FROM rel_ip_proyecto WHERE id_proyecto = ?";
+        $result2 = $base_datos->consulta_segura($sql2,  'i', array($id_proyecto));
         if(!$result2)
         {
             echo json_encode(['result' => 'error']);
@@ -354,16 +388,16 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         for ($i = 0; $i<sizeof($array_investigador); $i ++) 
         {        
            $sql2 = "INSERT INTO rel_ip_proyecto(id_proyecto, id_ip)
-            VALUES('$id_proyecto', '$array_investigador[$i]')";
-            $result4 = $base_datos->consulta($sql2);
+            VALUES(?, ?)";
+            $result4 = $base_datos->consulta_segura($sql2, 'ii', array($id_proyecto, $array_investigador[$i]));
             if(!$result4)
             {
                 echo json_encode(['result' => 'error']);
             }
         }
 
-        $sql2 = "DELETE FROM rel_grupos_proyecto WHERE id_proyecto = $id_proyecto";
-        $result2 = $base_datos->consulta($sql2);
+        $sql2 = "DELETE FROM rel_grupos_proyecto WHERE id_proyecto = ?";
+        $result2 = $base_datos->consulta_segura($sql2,  'i', array($id_proyecto));
         if(!$result2)
         {
             echo json_encode(['result' => 'error']);
@@ -373,9 +407,27 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         for ($i = 0; $i<sizeof($array_grupo); $i ++) 
         {
            $sql2 = "INSERT INTO rel_grupos_proyecto(id_proyecto, id_grupo)
-            VALUES('$id_proyecto', '$array_grupo[$i]')";
-            $result5 = $base_datos->consulta($sql2);
+            VALUES(?, ?)";
+            $result5 = $base_datos->consulta_segura($sql2, 'ii', array($id_proyecto, $array_grupo[$i]));
             if(!$result5)
+            {
+                echo json_encode(['result' => 'error']);
+            }
+        }
+
+        $sql2 = "DELETE FROM rel_logo_proyecto WHERE id_proyecto = ?";
+        $result2 = $base_datos->consulta_segura($sql2,  'i', array($id_proyecto));
+        if(!$result2)
+        {
+            echo json_encode(['result' => 'error']);
+        }
+        
+        for ($i = 0; $i<sizeof($array_logo_fin); $i ++) 
+        {
+           $sql2 = "INSERT INTO rel_logo_proyecto(id_proyecto, id_logo)
+            VALUES(?, ?)";
+            $result6 = $base_datos->consulta_segura($sql2,  'ii', array($id_proyecto, $array_logo_fin[$i]));
+            if(!$result6)
             {
                 echo json_encode(['result' => 'error']);
             }
@@ -383,8 +435,8 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
         //Se añaden los valores que el usuario ha introducido a la base de datos
         "UPDATE objetivos
-        SET descripcion = '$objetivos', id_proyecto = '$id_proyecto";
-        $result = $base_datos->consulta($sql);
+        SET descripcion = ?, id_proyecto = ?";
+        $result = $base_datos->consulta_segura($sql,  'si', array($objetivos, $id_proyecto));
 
         if(!$result)
         {
@@ -393,16 +445,16 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
         //Se añaden los valores que el usuario ha introducido a la base de datos
         "UPDATE financiacion
-        SET descripcion = '$descripcion_financiacion', presupuesto_total = '$presupuesto', id_proyecto = '$id_proyecto'" ;
+        SET descripcion = ?, presupuesto_total = ?, id_proyecto = ?" ;
 
-        $result = $base_datos->consulta($sql);
+        $result = $base_datos->consulta_segura($sql,  'ssi', array($descripcion_financiacion, $presupuesto, $id_proyecto));
         if(!$result)
         {
             echo json_encode(['result' => 'error']);
         }
 
-        $sql = "DELETE FROM periodos WHERE id_proyecto = $id_proyecto";
-        $result = $base_datos->consulta($sql);
+        $sql = "DELETE FROM periodos WHERE id_proyecto = ?";
+        $result = $base_datos->consulta_segura($sql,  'i', array($id_proyecto));
         if($result == -1)
         {
             $error = true;
@@ -420,8 +472,8 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             {
             //Se añaden los valores que el usuario ha introducido a la base de datos
             $sql = "INSERT INTO periodos(año, presupuesto,id_proyecto) 
-            VALUES('$array_años[$i]', '$array_presupuestos[$i]', '$id_proyecto')";
-            $result = $base_datos->consulta($sql);
+            VALUES(?, ?, ?)";
+            $result = $base_datos->consulta_segura($sql,'iii',array($array_años[$i], $array_presupuestos[$i], $id_proyecto));
 
             if(!$result)
             {
@@ -432,69 +484,76 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
         echo json_encode(['result' => 'ok']);
 
+
+        //Se genera la página web
+
         $path = "../paginas_generadas/$titulo_pagina";
         if (!file_exists($path)) 
         {
             mkdir($path, 0777, true);
-            copy("../pagina_ejemplo/LICENSE.txt", "../paginas_generadas/$titulo_pagina/LICENSE.txt");
-            copy("../pagina_ejemplo/README.txt", "../paginas_generadas/$titulo_pagina/README.txt");
+            copy("../pagina_ejemplo/LICENSE.txt", "$path/LICENSE.txt");
+            copy("../pagina_ejemplo/README.txt", "$path/README.txt");
             mkdir("$path/assets", 0777, true);
             mkdir("$path/assets/css", 0777, true);          
-            copy("../pagina_ejemplo/assets/css/main.css", "../paginas_generadas/$titulo_pagina/assets/css/main.css");
-            copy("../pagina_ejemplo/assets/css/fontawesome-all.min.css", "../paginas_generadas/$titulo_pagina/assets/css/fontawesome-all.min.css");
+            copy("../pagina_ejemplo/assets/css/main.css", "$path/assets/css/main.css");
+            copy("../pagina_ejemplo/assets/css/fontawesome-all.min.css", "$path/assets/css/fontawesome-all.min.css");
 
             mkdir("$path/assets/js", 0777, true); 
-            copy("../pagina_ejemplo/assets/js/breakpoints.min.js", "../paginas_generadas/$titulo_pagina/assets/js/breakpoints.min.js");
-            copy("../pagina_ejemplo/assets/js/browser.min.js", "../paginas_generadas/$titulo_pagina/assets/js/browser.min.js");
-            copy("../pagina_ejemplo/assets/js/jquery.min.js", "../paginas_generadas/$titulo_pagina/assets/js/jquery.min.js");
-            copy("../pagina_ejemplo/assets/js/jquery.scrollex.min.js", "../paginas_generadas/$titulo_pagina/assets/js/jquery.scrollex.min.js");
-            copy("../pagina_ejemplo/assets/js/jquery.scrolly.min.js", "../paginas_generadas/$titulo_pagina/assets/js/jquery.scrolly.min.js");
-            copy("../pagina_ejemplo/assets/js/main.js", "../paginas_generadas/$titulo_pagina/assets/js/main.js");
-            copy("../pagina_ejemplo/assets/js/util.js", "../paginas_generadas/$titulo_pagina/assets/js/util.js");
+            copy("../pagina_ejemplo/assets/js/breakpoints.min.js", "$path/assets/js/breakpoints.min.js");
+            copy("../pagina_ejemplo/assets/js/browser.min.js", "$path/assets/js/browser.min.js");
+            copy("../pagina_ejemplo/assets/js/jquery.min.js", "$path/assets/js/jquery.min.js");
+            copy("../pagina_ejemplo/assets/js/jquery.scrollex.min.js", "$path/assets/js/jquery.scrollex.min.js");
+            copy("../pagina_ejemplo/assets/js/jquery.scrolly.min.js", "$path/assets/js/jquery.scrolly.min.js");
+            copy("../pagina_ejemplo/assets/js/main.js", "$path/assets/js/main.js");
+            copy("../pagina_ejemplo/assets/js/util.js", "$path/assets/js/util.js");
 
             mkdir("$path/assets/sass", 0777, true); 
-            copy("../pagina_ejemplo/assets/sass/main.scss", "../paginas_generadas/$titulo_pagina/assets/sass/main.scss");
+            copy("../pagina_ejemplo/assets/sass/main.scss", "$path/assets/sass/main.scss");
             mkdir("$path/assets/sass/libs", 0777, true); 
-            copy("../pagina_ejemplo/assets/sass/libs/_breakpoints.scss", "../paginas_generadas/$titulo_pagina/assets/sass/libs/_breakpoints.scss");
-            copy("../pagina_ejemplo/assets/sass/libs/_functions.scss", "../paginas_generadas/$titulo_pagina/assets/sass/libs/_functions.scss");
-            copy("../pagina_ejemplo/assets/sass/libs/_html-grid.scss", "../paginas_generadas/$titulo_pagina/assets/sass/libs/_html-grid.scss");
-            copy("../pagina_ejemplo/assets/sass/libs/_mixins.scss", "../paginas_generadas/$titulo_pagina/assets/sass/libs/_mixins.scss");
-            copy("../pagina_ejemplo/assets/sass/libs/_vars.scss", "../paginas_generadas/$titulo_pagina/assets/sass/libs/_vars.scss");
-            copy("../pagina_ejemplo/assets/sass/libs/_vendor.scss", "../paginas_generadas/$titulo_pagina/assets/sass/libs/_vendor.scss");
+            copy("../pagina_ejemplo/assets/sass/libs/_breakpoints.scss", "$path/assets/sass/libs/_breakpoints.scss");
+            copy("../pagina_ejemplo/assets/sass/libs/_functions.scss", "$path/assets/sass/libs/_functions.scss");
+            copy("../pagina_ejemplo/assets/sass/libs/_html-grid.scss", "$path/assets/sass/libs/_html-grid.scss");
+            copy("../pagina_ejemplo/assets/sass/libs/_mixins.scss", "$path/assets/sass/libs/_mixins.scss");
+            copy("../pagina_ejemplo/assets/sass/libs/_vars.scss", "$path/assets/sass/libs/_vars.scss");
+            copy("../pagina_ejemplo/assets/sass/libs/_vendor.scss", "$path/assets/sass/libs/_vendor.scss");
 
             mkdir("$path/assets/webfonts", 0777, true); 
-            copy("../pagina_ejemplo/assets/webfonts/fa-brands-400.eot", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-brands-400.eot");
-            copy("../pagina_ejemplo/assets/webfonts/fa-brands-400.svg", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-brands-400.svg");
-            copy("../pagina_ejemplo/assets/webfonts/fa-brands-400.ttf", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-brands-400.ttf");
-            copy("../pagina_ejemplo/assets/webfonts/fa-brands-400.woff", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-brands-400.woff");
-            copy("../pagina_ejemplo/assets/webfonts/fa-brands-400.woff2", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-brands-400.woff2");
-            copy("../pagina_ejemplo/assets/webfonts/fa-regular-400.eot", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-regular-400.eot");
-            copy("../pagina_ejemplo/assets/webfonts/fa-regular-400.svg", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-regular-400.svg");
-            copy("../pagina_ejemplo/assets/webfonts/fa-regular-400.ttf", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-regular-400.ttf");
-            copy("../pagina_ejemplo/assets/webfonts/fa-regular-400.woff", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-regular-400.woff");
-            copy("../pagina_ejemplo/assets/webfonts/fa-regular-400.woff2", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-regular-400.woff2");
-            copy("../pagina_ejemplo/assets/webfonts/fa-solid-900.eot", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-solid-900.eot");
-            copy("../pagina_ejemplo/assets/webfonts/fa-solid-900.svg", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-solid-900.svg");
-            copy("../pagina_ejemplo/assets/webfonts/fa-solid-900.ttf", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-solid-900.ttf");
-            copy("../pagina_ejemplo/assets/webfonts/fa-solid-900.woff", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-solid-900.woff");
-            copy("../pagina_ejemplo/assets/webfonts/fa-solid-900.woff2", "../paginas_generadas/$titulo_pagina/assets/webfonts/fa-solid-900.woff2");
+            copy("../pagina_ejemplo/assets/webfonts/fa-brands-400.eot", "$path/assets/webfonts/fa-brands-400.eot");
+            copy("../pagina_ejemplo/assets/webfonts/fa-brands-400.svg", "$path/assets/webfonts/fa-brands-400.svg");
+            copy("../pagina_ejemplo/assets/webfonts/fa-brands-400.ttf", "$path/assets/webfonts/fa-brands-400.ttf");
+            copy("../pagina_ejemplo/assets/webfonts/fa-brands-400.woff", "$path/assets/webfonts/fa-brands-400.woff");
+            copy("../pagina_ejemplo/assets/webfonts/fa-brands-400.woff2", "$path/assets/webfonts/fa-brands-400.woff2");
+            copy("../pagina_ejemplo/assets/webfonts/fa-regular-400.eot", "$path/assets/webfonts/fa-regular-400.eot");
+            copy("../pagina_ejemplo/assets/webfonts/fa-regular-400.svg", "$path/assets/webfonts/fa-regular-400.svg");
+            copy("../pagina_ejemplo/assets/webfonts/fa-regular-400.ttf", "$path/assets/webfonts/fa-regular-400.ttf");
+            copy("../pagina_ejemplo/assets/webfonts/fa-regular-400.woff", "$path/assets/webfonts/fa-regular-400.woff");
+            copy("../pagina_ejemplo/assets/webfonts/fa-regular-400.woff2", "$path/assets/webfonts/fa-regular-400.woff2");
+            copy("../pagina_ejemplo/assets/webfonts/fa-solid-900.eot", "$path/assets/webfonts/fa-solid-900.eot");
+            copy("../pagina_ejemplo/assets/webfonts/fa-solid-900.svg", "$path/assets/webfonts/fa-solid-900.svg");
+            copy("../pagina_ejemplo/assets/webfonts/fa-solid-900.ttf", "$path/assets/webfonts/fa-solid-900.ttf");
+            copy("../pagina_ejemplo/assets/webfonts/fa-solid-900.woff", "$path/assets/webfonts/fa-solid-900.woff");
+            copy("../pagina_ejemplo/assets/webfonts/fa-solid-900.woff2", "$path/assets/webfonts/fa-solid-900.woff2");
             
             mkdir("$path/images", 0777, true);
-            copy("../pagina_ejemplo/images/banner.jpg", "../paginas_generadas/$titulo_pagina/images/banner.jpg");
-            copy("../pagina_ejemplo/images/logo-uah.png", "../paginas_generadas/$titulo_pagina/images/logo-uah.png");
-            copy("../pagina_ejemplo/images/vertical-line.png", "../paginas_generadas/$titulo_pagina/images/vertical-line.png");
+            copy("../pagina_ejemplo/images/banner.jpg", "$path/images/banner.jpg");
+            copy("../pagina_ejemplo/images/logo-uah.png", "$path/images/logo-uah.png");
+            copy("../pagina_ejemplo/images/vertical-line.png", "$path/images/vertical-line.png");
         }
         else
         {
-            unlink("../paginas_generadas/$titulo_pagina/index.html");
+            //Se borra el fichero index.html
+            unlink("$path/index.html");
         }
 
+        //Se guardan las imágenes subidas en la carpeta de la página
         $ext_menu = pathinfo($logo_menu_ruta, PATHINFO_EXTENSION);
-        copy($logo_menu_ruta, "../paginas_generadas/$titulo_pagina/images/logo-menu.$ext_menu");
+        copy($logo_menu_ruta, "$path/images/logo-menu.$ext_menu");
         $ext_proyecto = pathinfo($logo_ruta, PATHINFO_EXTENSION);
-        copy($logo_ruta, "../paginas_generadas/$titulo_pagina/images/logo-proyecto.$ext_proyecto");
+        copy($logo_ruta, "$path/images/logo-proyecto.$ext_proyecto");
 
-        $imagenes = "../paginas_generadas/$titulo_pagina/images/";
+        $imagenes = "$path/images/";
+
+        //Se añaden los periodos
         $periodo_html = '<thead> <tr> <th>Año</th>';
         for ($i = 0; $i<sizeof($array_años); $i ++) 
         {
@@ -507,7 +566,7 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         }
         $periodo_html = $periodo_html.'</tr> </tbody>';
 
-
+        //Se añaden las tablas de equipo e investigador principal
         $cabecera_equipo ="
         <thead>
             <tr>
@@ -522,8 +581,8 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $equipo_html = '';
         for ($i = 0; $i<sizeof($array_equipo); $i ++) 
         {
-            $sql = "SELECT * FROM equipo WHERE id = $array_equipo[$i]";
-            $resultado = $base_datos->consulta($sql);  
+            $sql = "SELECT * FROM equipo WHERE id = ?";
+            $resultado = $base_datos->consulta_segura($sql,'i',array($array_equipo[$i]));  
             foreach($resultado as $equipo)
             {
                 $numero = $i+1;
@@ -539,8 +598,8 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $ip = '';
         for ($i = 0; $i<sizeof($array_investigador); $i ++) 
         {
-            $sql = "SELECT * FROM equipo WHERE id = $array_investigador[$i]";
-            $resultado = $base_datos->consulta($sql);  
+            $sql = "SELECT * FROM equipo WHERE id = ?";
+            $resultado = $base_datos->consulta_segura($sql,'i',array($array_investigador[$i]));  
             foreach($resultado as $equipo)
             {
                 $numero = $i+1;
@@ -553,12 +612,13 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             } 
         }
 
+        //Se añade la tabla de resultados
         $resultado_html = '';
 
         for ($i = 0; $i<sizeof($array_resultado); $i ++) 
         {
-            $sql = "SELECT * FROM resultados WHERE id = $array_resultado[$i]";
-            $result = $base_datos->consulta($sql);  
+            $sql = "SELECT * FROM resultados WHERE id = ?";
+            $result = $base_datos->consulta_segura($sql,'i',array($array_resultado[$i]));  
             foreach($result as $resultado)
             {
                 $numero = $i+1;
@@ -587,16 +647,17 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             } 
         }
 
+        //Se añaden los grupos
         $grupo_html = '';
         for ($i = 0; $i<sizeof($array_grupo); $i ++) 
         {
-            $sql = "SELECT * FROM grupos WHERE id = $array_grupo[$i]";
-            $resultado = $base_datos->consulta($sql);  
+            $sql = "SELECT * FROM grupos WHERE id = ?";
+            $resultado = $base_datos->consulta_segura($sql,'i',array($array_grupo[$i]));  
             foreach($resultado as $grupo)
             {
                 
                 $ext_grupo = pathinfo($grupo['logo_grupo'], PATHINFO_EXTENSION);
-                copy($grupo['logo_grupo'], "../paginas_generadas/$titulo_pagina/images/logo-grupo.$ext_grupo");
+                copy($grupo['logo_grupo'], "$path/images/logo-grupo.$ext_grupo");
                 $grupo_html = $grupo_html . "<a href='". $grupo['web']."'class='image'><img src='images/logo-grupo.$ext_grupo'alt='' /></a>";
                 $grupo_html = $grupo_html . "<div class='inner'>";
                 $grupo_html = $grupo_html . "<h4>". $grupo['titulo']. '</h4>';
@@ -604,7 +665,27 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             } 
         }
 
-        $fichero_index = fopen("../paginas_generadas/$titulo_pagina/index.html", "a");
+        //Se guardan los logos en la carpeta
+        $logos_financiacion = '';
+        for ($i = 0; $i<sizeof($array_logo_fin); $i ++) 
+        {
+            $logos_financiacion = $logos_financiacion . "<div class='box alt'> <div class='row gtr-50 gtr-uniform'>";
+            $sql = "SELECT * FROM logo WHERE id = ?";
+            $resultado = $base_datos->consulta_segura($sql,'i',array($array_logo_fin[$i]));  
+            foreach($resultado as $logo)
+            {
+                $ext_logo = pathinfo($logo['imagen'], PATHINFO_EXTENSION);
+                $id_logo = $logo['id'];
+                copy($logo['imagen'], "$path/images/logo-financiacion$id_logo.$ext_logo");
+                $logos_financiacion = $logos_financiacion . "<div class='col-6'><span class='image fit'><img src='images/logo-financiacion$id_logo.$ext_logo' alt='' /></span></div>";
+            } 
+            $logos_financiacion = $logos_financiacion . "</div></div>";
+        }
+
+        //Se crea el fichero index.html
+        $fichero_index = fopen("$path/index.html", "a");
+
+        //Se concatena toda la información
         fwrite($fichero_index, "
         <!DOCTYPE HTML>
         <!--
@@ -797,12 +878,7 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
                         <div class='container'>
                             <h3>Financiación</h3>
                             <p> $descripcion_financiacion</p>
-                            <div class='box alt'>
-                                <div class='row gtr-50 gtr-uniform'>
-                                    <div class='col-6'><span class='image fit'><img src='images/Logotipo_comunidad_de_madrid.png' alt='' /></span></div>
-                                    <div class='col-6'><span class='image fit'><img style='margin-top: 21%;' src='images/Comunidad_europea-fondo_europeo.png' alt='' /></span></div>
-                                </div>
-                            </div>
+                            $logos_financiacion
                             <h4> Financiación otorgada</h4>
                             <table class='table table-jah table-financiacion'>
                                 $periodo_html                       
@@ -838,11 +914,10 @@ else if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
                 <script src='assets/js/main.js'></script>
                 </body></html> ");
 
+            //Se cierra el fichero
             fclose($fichero_index);
             
     }
 }
-
-?>
-
+ ?> 
 

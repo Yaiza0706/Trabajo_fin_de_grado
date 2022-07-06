@@ -10,7 +10,6 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $titulo_grupo = $_POST['titulo_grupo'];
     }
 
-
     if(isset($_FILES['logo_grupo']['name']))
     {
         $filename = pathinfo($_FILES['logo_grupo']['name']);
@@ -22,7 +21,6 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             echo json_encode(['result' => 'error']);
         }
     }
-
 
     if (isset( $_POST['descripcion'] ))
     {
@@ -40,10 +38,9 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
      //Se añaden los valores que el usuario ha introducido a la base de datos
     $sql = "INSERT INTO grupos(logo_grupo, titulo, descripcion, web) 
-    VALUES('$logo_grupo_ruta', '$titulo_grupo', '$descripcion' , '$web')";
+    VALUES(?, ?, ? , ?)";
 
-    $result = $base_datos->consulta($sql);
-
+    $result = $base_datos->consulta_segura($sql,'ssss', array($logo_grupo_ruta, $titulo_grupo, $descripcion , $web));
     if(!$result)
     {
         echo json_encode(['result' => 'error']);
@@ -53,7 +50,4 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         echo json_encode(['result' => 'ok']);
     } 
 }
-
-?>
-
-
+?> 

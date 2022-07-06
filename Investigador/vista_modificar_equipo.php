@@ -1,4 +1,6 @@
-<?php require_once('controlador_modificar_equipo.php'); ?>
+<?php session_start();
+if (isset ($_SESSION['valido'])) { 
+require_once('controlador_modificar_equipo.php'); ?>
 
 <div class="table-wrapper">
 
@@ -24,3 +26,7 @@
         </tbody>
     </table>
 </div>
+<?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

@@ -1,4 +1,7 @@
-<?php require_once('controlador_editar_grupo.php'); ?>
+<?php
+ session_start();
+if (isset ($_SESSION['valido'])) { 
+ require_once('controlador_editar_grupo.php'); ?>
 
 <?php if ($no_existe): ?>
     <h1>No existe el grupo</h1>
@@ -41,5 +44,8 @@
     </div>
   </section>
 </section>
-
 <?php endif ?>
+<?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

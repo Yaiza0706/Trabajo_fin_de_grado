@@ -33,6 +33,23 @@ function VerGrupo()
         }
     })
 }
+function VerLogo()
+{
+    $.ajax
+    ({
+        url:"../Investigador/vista_crear_logo.php",
+        dataType: "html",
+        type:"GET", //tipo de peticion
+        success:function(response) //se utiliza si el servidor retorna informacion
+        {
+            $("#ventana_principal").html(response);
+            $(document).attr("title", "Crear logo"); 
+        },
+        error: function (req, status, err){
+            $("#error").text("Ha ocurrido un error.");
+        }
+    })
+}
 
 function VerFinanciacion()
 {
@@ -98,7 +115,7 @@ function ModificarGrupo()
         success:function(response) //se utiliza si el servidor retorna informacion
         {
             $("#ventana_principal").html(response);
-            $(document).attr("title", "Modificar GRupo"); 
+            $(document).attr("title", "Modificar Grupo"); 
         },
         error: function (req, status, err){
             $("#error").text("Ha ocurrido un error.");

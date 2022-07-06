@@ -1,4 +1,6 @@
-<?php require_once('controlador_editar_proyecto.php'); ?>
+<?php session_start();
+if (isset ($_SESSION['valido'])) { 
+   require_once('controlador_editar_proyecto.php'); ?>
 <?php if ($no_existe): ?>
     <h1>No existe el grupo</h1>
 <?php else: ?>
@@ -8,10 +10,12 @@
       var array_años = [];
       var array_presupuestos = [];
       var result0 = <?php echo json_encode($result0, JSON_HEX_TAG) ?>; 
-      for(var i=0; i<result0.length; i++){
+      for(var i=0; i<result0.length; i++)
+      {
         array_años.push(result0[i]["año"]);
         array_presupuestos.push(result0[i]["presupuesto"]);
-       }
+      }
+      
       $( function() {
         $( "#datepicker" ).datepicker();
       } );
@@ -93,6 +97,25 @@
           <div>
             <label for="presupuesto"> Presupuesto total: <input type="text" name="presupuesto" id = "presupuesto" placeholder="Presupuesto" value="<?= $financiacion["presupuesto_total"] ?>"> </label>
           </div>
+
+          <div>
+        <label for="logo_financiacion"> Selecciona los logos de las financiaciones asociados a este proyecto: </label>
+        <?php if($no_hay_logo_fin) { ?>
+        <h6> No hay logos para mostrar.Cree uno primero </h6>
+
+        <?php } else { ?>
+        <select id="logo_financiacion" style="height:100px" multiple name= 'logo_financiacion'>
+        <?php
+            foreach ($result4 as $logo_financiacion)
+            {
+              if(in_array($logo_financiacion['id'], $array_logo_fin))
+                echo "<option id=". 'logo_financiacion'. $logo_financiacion['id']." selected>" .$logo_financiacion['id'].'. '.$logo_financiacion['nombre']. "</option>";
+              else
+                echo "<option id=". 'logo_financiacion'. $logo_financiacion['id']." >" .$logo_financiacion['id'].'. '.$logo_financiacion['nombre']. "</option>";
+            } 
+          }
+        ?>
+      </select>
 
         <div>
           <label for="logo"> Logo: </label>
@@ -204,3 +227,7 @@
   </section>
   <?php endif ?>
 
+  <?php } else{
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+    } ?> 

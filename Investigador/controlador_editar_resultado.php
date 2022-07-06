@@ -1,27 +1,30 @@
 <?php
+
 require_once('../base_datos.php');
 $id_resultado = 0;
 $no_existe = false;
 
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET') 
 {
-    //Se obtiene el valor del id del resultado que se va a editar
-    $id_resultado = $_GET["id"];
-    
-    //Se realiza la conexion con la base de datos.
-    $base_datos = new bbdd();
-    $base_datos->conectar();
-
-    //Se leen todos los datos del resultado con el id recibido
-    $sql = "SELECT * FROM resultados WHERE id = " . $id_resultado;
-    $result = $base_datos->consulta($sql);
-    if($result == -1)
+    if(isset($_GET["id"]))
     {
-        $no_existe = true;
-    }else{
-        $resultados = $result[0];
-    }
+        //Se obtiene el valor del id del resultado que se va a editar
+        $id_resultado = $_GET["id"];
+        
+        //Se realiza la conexion con la base de datos.
+        $base_datos = new bbdd();
+        $base_datos->conectar();
 
+        //Se leen todos los datos del resultado con el id recibido
+        $sql = "SELECT * FROM resultados WHERE id = " . $id_resultado;
+        $result = $base_datos->consulta($sql);
+        if($result == -1)
+        {
+            $no_existe = true;
+        }else{
+            $resultados = $result[0];
+        }
+    }
 }else if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') 
 {
     //Se guardan los datos introducidos en variables locales
@@ -60,6 +63,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
     {
         $web = $_POST['web'];
     }
+
     //Se realiza la conexion con la base de datos.
     $base_datos = new bbdd();
     $base_datos->conectar();
@@ -78,9 +82,9 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
 
     //Se actualizan los nuevos valores introducidos
     $sql = "UPDATE resultados
-    SET titulo = '$titulo', año_publicacion = '$año_publicacion', id_tipo_publicacion = '$id_tipo_publicacion',revista = '$revista', autores = '$autores', web = '$web' 
-    WHERE id = '$id_resultado'";
-    $result = $base_datos->consulta($sql);
+    SET titulo = ?, año_publicacion = ?, id_tipo_publicacion = ?,revista = ?, autores = ?, web = ? 
+    WHERE id = ?";
+    $result = $base_datos->consulta_segura($sql,'siisssi',array($titulo, $año_publicacion, $id_tipo_publicacion, $revista, $autores, $web,$id_resultado));
 
     if(!$result)
     {
@@ -91,7 +95,4 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
         echo json_encode(['result' => 'ok']);
     } 
 }
-
-?>
-
-
+ ?> 
