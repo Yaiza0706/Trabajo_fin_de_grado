@@ -547,7 +547,7 @@ function ComprobarGrupo(op, id_grupo=0)
     else if(!es_cadena(descripcion))
         error = "descripcion_formato";
 
-    else if(!longitud_correcta(web, 100))
+    else if(!longitud_correcta(web, 200))
         error = "web_larga";
 
     else if(!es_cadena(web))

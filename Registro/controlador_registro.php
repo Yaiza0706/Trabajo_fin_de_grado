@@ -6,8 +6,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 {
     //Se guardan los datos introducidos en variables locales
 
-    $tipo_usuario = 1;     //Se añadirán a todos los nuevos usuarios como investigadores.
-    $estado_usuario = 2;   //Se añadirán a todos los nuevos usuarios como no activos.
+    $tipo_usuario = 3;     //Se añadirán a todos los nuevos usuarios como investigadores.
+    $estado_usuario = 1;   //Se añadirán a todos los nuevos usuarios como no activos.
     $intentos = 0;
 
     if (isset( $_POST['nombre'] ))

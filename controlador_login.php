@@ -60,17 +60,24 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
             }
             else
             {
-                //Si se cumplen los requisitos se accede a los menus.
-                $nombre = $fila[0]['nombre'];
-                $id_tipo_usuario = $fila[0]['id_tipo_usuario'];
-                $apellidos =  $fila[0]['apellidos'];
-                $id = $fila[0]['id'];
-                $_SESSION['nombre'] = $nombre;
-                $_SESSION['id_tipo_usuario'] = $id_tipo_usuario;
-                $_SESSION['apellidos'] = $apellidos;
-                $_SESSION['id'] = $id;
-                $_SESSION['valido'] = true;
-                echo json_encode(['result' => 'ok']);
+                if($id_estado_usuario == 1)
+                {
+                    echo json_encode(['result' => 'no_activo']);
+                }
+                else
+                {
+                    //Si se cumplen los requisitos se accede a los menus.
+                    $nombre = $fila[0]['nombre'];
+                    $id_tipo_usuario = $fila[0]['id_tipo_usuario'];
+                    $apellidos =  $fila[0]['apellidos'];
+                    $id = $fila[0]['id'];
+                    $_SESSION['nombre'] = $nombre;
+                    $_SESSION['id_tipo_usuario'] = $id_tipo_usuario;
+                    $_SESSION['apellidos'] = $apellidos;
+                    $_SESSION['id'] = $id;
+                    $_SESSION['valido'] = true;
+                    echo json_encode(['result' => 'ok']);
+                }
             }
         }
     }
