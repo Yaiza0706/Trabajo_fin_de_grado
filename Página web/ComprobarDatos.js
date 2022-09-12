@@ -888,10 +888,12 @@ function contraseña_segura(parametro)
     {
         var letras_min="abcdefghyjklmnñopqrstuvwxyz";
         var letras_may="ABCDEFGHYJKLMNÑOPQRSTUVWXYZ";
+        var caracteres = "!#$%&'()*+,-./:;<=>?@[\]^_{|}~";
         var numeros = "123456789";
         var tiene_min = false;
         var tiene_may = false;
         var tiene_num = false;
+        var tiene_car = false;
         for(i=0; i<parametro.length; i++)
         {
             if (letras_min.indexOf(parametro.charAt(i),0)!=-1)
@@ -906,9 +908,13 @@ function contraseña_segura(parametro)
             {
                 tiene_num = true;
             }
+            if (caracteres.indexOf(parametro.charAt(i),0)!=-1)
+            {
+                tiene_car = true;
+            }
         }
 
-        return (tiene_min && tiene_may && tiene_num);
+        return (tiene_min && tiene_may && tiene_num && tiene_car);
     }
     else
     {

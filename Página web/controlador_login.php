@@ -76,6 +76,10 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
                     $_SESSION['apellidos'] = $apellidos;
                     $_SESSION['id'] = $id;
                     $_SESSION['valido'] = true;
+                    $intentos = 0;
+                    $sql = "UPDATE equipo
+                    SET intentos = ?   WHERE mail = ?";
+                    $result = $base_datos->consulta_segura($sql,'is',array($intentos,$usuario));
                     echo json_encode(['result' => 'ok']);
                 }
             }
