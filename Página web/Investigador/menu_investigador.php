@@ -74,7 +74,6 @@
 									<h2>Menu</h2>
 								</header>
 								<ul>
-									<li><a href="">CREAR WEB</a>
 									<li>
 										<span class="opener">Nuevo</span>
 										<ul>
@@ -110,12 +109,12 @@
 									<h2>Menu</h2>
 								</header>
 								<ul>
-									<li><a href="">CREAR WEB</a>
 									<li>
 										<span class="opener">Nuevo</span>
 										<ul>
 											<li><a onclick = "VerProyecto()">Proyecto</a></li>	
 											<li><a onclick = "VerResultado()">Resultado</a></li>
+											<li><a onclick = "VerLogo()">Logo financiación</a></li>
 										</ul>
 									</li>
 									<li>
