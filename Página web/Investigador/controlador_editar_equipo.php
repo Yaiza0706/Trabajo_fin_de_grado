@@ -55,10 +55,10 @@ else if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $email = $_POST['email'];
     }
 
-    if (isset( $_POST['contraseña'] ))
+    if (isset( $_POST['contra'] ))
     {
-        $contraseña = $_POST['contraseña'];
-        $contraseña_hash = password_hash($contraseña, PASSWORD_DEFAULT);
+        $contra = $_POST['contra'];
+        $contra_hash = password_hash($contra, PASSWORD_DEFAULT);
     }
 
     $base_datos = new bbdd();
@@ -66,10 +66,10 @@ else if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
         //Se actualizan los nuevos valores introducidos
         $sql = "UPDATE equipo
-        SET nombre = ?, apellidos = ?, titulacion = ?, web = ?, mail = ?, contraseña = ?
+        SET nombre = ?, apellidos = ?, titulacion = ?, web = ?, mail = ?, contra = ?
         WHERE id = ?";
 
-        $test = $base_datos->consulta_segura($sql, 'ssssssi', array($nombre,$apellido,$titulacion,$web,$email,$contraseña, $id_equipo));
+        $test = $base_datos->consulta_segura($sql, 'ssssssi', array($nombre,$apellido,$titulacion,$web,$email,$contra, $id_equipo));
         if(!$test)
         {   
             echo json_encode(['result' => 'error']);       

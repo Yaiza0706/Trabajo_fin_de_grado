@@ -35,10 +35,10 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $email = $_POST['email'];
     }
 
-    if (isset( $_POST['contraseña'] ))
+    if (isset( $_POST['contra'] ))
     {
-        $contraseña = $_POST['contraseña'];
-        $contraseña_hash = password_hash($contraseña, PASSWORD_DEFAULT);
+        $contra = $_POST['contra'];
+        $contra_hash = password_hash($contra, PASSWORD_DEFAULT);
     }
 
     $base_datos = new bbdd();
@@ -49,10 +49,10 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
     if(!$result)
     {
-        $sql = "INSERT INTO equipo(nombre, apellidos, titulacion, web, id_tipo_usuario, mail, contraseña, id_estado_usuario, intentos) 
+        $sql = "INSERT INTO equipo(nombre, apellidos, titulacion, web, id_tipo_usuario, mail, contra, id_estado_usuario, intentos) 
         VALUES(?, ?, ?, ?, ?, ?, ?, ?,?)";
     
-        $test = $base_datos->consulta_segura($sql,'ssssissii', array($nombre, $apellido, $titulacion, $web, $tipo_usuario, $email, $contraseña_hash, $estado_usuario, $intentos));
+        $test = $base_datos->consulta_segura($sql,'ssssissii', array($nombre, $apellido, $titulacion, $web, $tipo_usuario, $email, $contra_hash, $estado_usuario, $intentos));
         if(!$test)
         {   
             echo json_encode(['result' => 'error']);       

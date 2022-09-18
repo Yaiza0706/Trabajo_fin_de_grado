@@ -60,15 +60,15 @@ function ComprobarLogin()
 {
     var error = 0;
     var email = $("#email").val();
-    var contraseña = $("#contraseña").val();
+    var contra = $("#contra").val();
     var captcha = $("#captcha").val();
 
     // Se comprueba que se hayan introducido valores.
     if(esta_vacio(email))
         error = "email_vacio";
 
-    else if(esta_vacio(contraseña))
-        error = "contraseña_vacia";
+    else if(esta_vacio(contra))
+        error = "contra_vacia";
     
     else if(esta_vacio(captcha))
         error = "argumentos_vacios"
@@ -77,8 +77,8 @@ function ComprobarLogin()
     else if(!es_Email(email))
         error = "email_no_valido";
 
-    else if (!es_cadena(contraseña))
-        error = "contraseña_formato";
+    else if (!es_cadena(contra))
+        error = "contra_formato";
 
     if(error != 0)
         mostrar_errores(error);        
@@ -87,7 +87,7 @@ function ComprobarLogin()
         var parametros = 
         {
             "email":email,
-            "contraseña":contraseña,
+            "contra":contra,
             "captcha":captcha
         }
         $.ajax
@@ -190,10 +190,10 @@ function ComprobarLogin()
     var titulacion = $("#titulacion").val();
     var web = $("#web").val();
     var email = $("#email").val();
-    var contraseña = $("#contraseña").val();
+    var contra = $("#contra").val();
 
     // Se comprueba que se hayan introducido valores.
-    if(esta_vacio(nombre) || esta_vacio(apellido) || esta_vacio(titulacion) || esta_vacio(web) || esta_vacio(email) || esta_vacio(contraseña))
+    if(esta_vacio(nombre) || esta_vacio(apellido) || esta_vacio(titulacion) || esta_vacio(web) || esta_vacio(email) || esta_vacio(contra))
         error = "argumentos_vacios";
             
     //Se comprueba que el email sea un email
@@ -227,11 +227,11 @@ function ComprobarLogin()
     else if(!es_cadena(web))
         error = "web_formato";
     
-    else if(!es_cadena(contraseña))
-        error = "contraseña_formato";
+    else if(!es_cadena(contra))
+        error = "contra_formato";
     
-    else if(!contraseña_segura(contraseña))
-        error = "contraseña_insegura";
+    else if(!contra_segura(contra))
+        error = "contra_insegura";
 
     if(error != 0)
         mostrar_errores(error);       
@@ -246,7 +246,7 @@ function ComprobarLogin()
             "titulacion":titulacion,
             "web":web,
             "email":email,
-            "contraseña":contraseña
+            "contra":contra
         }
         if(op === "nuevo")
         {
@@ -882,7 +882,7 @@ function es_int(parametro)
     return(!isNaN(parametro))
 }
 
-function contraseña_segura(parametro)
+function contra_segura(parametro)
 {
     if (parametro.length >= 8)
     {
@@ -931,10 +931,10 @@ function mostrar_errores(error)
     else if(error == "email_no_valido")
         $("#error").text("El email no es válido");
 
-    else if(error == "contraseña_vacia")
+    else if(error == "contra_vacia")
         $("#error").text("El campo contraseña no puede estar vacío");
 
-    else if(error == "contraseña_formato")
+    else if(error == "contra_formato")
     $("#error").text("Formato contraseña incorrecto");
     
     else if(error == "argumentos_vacios")
@@ -1079,7 +1079,7 @@ function mostrar_errores(error)
     else if(error == "no_año_presupuesto")
         $("#error").text("Debe introducir un valor para año y presupuesto");    
     
-    else if(error == "contraseña_insegura")
+    else if(error == "contra_insegura")
         $("#error").text("Debe introducir una contraseña segura(mínimo 8 caracteres que contenga letra mayúscula, letra minúscula y número."); 
 
 }

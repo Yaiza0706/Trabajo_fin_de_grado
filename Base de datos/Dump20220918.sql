@@ -4,7 +4,7 @@ USE `pagina_web`;
 --
 -- Host: localhost    Database: pagina_web
 -- ------------------------------------------------------
--- Server version	8.0.29-0ubuntu0.20.04.3
+-- Server version	8.0.30-0ubuntu0.20.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,7 +32,7 @@ CREATE TABLE `equipo` (
   `web` varchar(100) NOT NULL,
   `id_tipo_usuario` int NOT NULL,
   `mail` varchar(50) NOT NULL,
-  `contraseña` varchar(2000) NOT NULL,
+  `contra` varchar(2000) NOT NULL,
   `id_estado_usuario` int NOT NULL,
   `intentos` int DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -40,7 +40,7 @@ CREATE TABLE `equipo` (
   KEY `id_estado_usuario` (`id_estado_usuario`),
   CONSTRAINT `equipo_ibfk_1` FOREIGN KEY (`id_tipo_usuario`) REFERENCES `tipo_usuario` (`id`),
   CONSTRAINT `equipo_ibfk_2` FOREIGN KEY (`id_estado_usuario`) REFERENCES `estado_usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `equipo` (
 
 LOCK TABLES `equipo` WRITE;
 /*!40000 ALTER TABLE `equipo` DISABLE KEYS */;
-INSERT INTO `equipo` VALUES (1,'Yaiza','Rubio Chavida','Ingeniería telemática','No',1,'y.rubio@edu.uah.es','$2y$10$z6RXgZ.SFb2iVzVHE4vOGONDrTWKRxKxBuMgtzI68bgiwRpnsPhsW',2,1),(2,'Joaquín','Alvárez Horcajo','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Joaquin-Alvarez-Horcajo/',1,'j.alvarez@uah.es','$2y$10$R6JDkpvF4qJcHlqNYDo7renWEqYVxHUmt820MG347tgCx2wEUVUVG',2,0),(3,'Isaías','Martínez Yelmo','Doctor en Ingeniería Telemática','https://www.uah.es/es/estudios/profesor/Isaias-Martinez-Yelmo/',3,'isaias.martinezy@uah.es','$2y$10$YZKZV8d0yOOLkt5hzRU9O.0.RKuFqzsDPfw5cR4QzYTnjvk5AJpk2',1,0),(4,'José Manuel','Arco Rodríguez','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Jose-Manuel-Arco-Rodriguez/',3,'josem.arco@uah.es','$2y$10$.EDPgLudQYwjLEnHQlfyluUIZUND43mBXvc8NktCmSWn65kvJKZr2',1,0),(5,'Juan Antonio','Carral Pelayo','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Juan-Antonio-Carral-Pelayo/',3,'juanantonio.carral@uah.es','$2y$10$f8pnQp.J..IcU4hl8dAhLOomCAGkxTIxmUwaPcIWvJU1QYq.UqBL2',1,0),(6,'Guillermo Agustín','Ibáñez Fernández','Doctor en Ingeniería de Telecomunicación','https://scholar.google.es/citations?user=-9EfrcoAAAAJ&hl=es',3,'guillermo.ibanez@uah.es','$2y$10$JQfUziHQhvgAOkL60mDA1u/Px3ccw8t.y6XYeq6A6FSa.XYa1Tvry',1,0),(7,'Elisa','Rojas Sánchez','Doctora en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Elisa-Rojas-Sanchez/',3,'elisa.rojas@uah.es','$2y$10$WR/DSmdBnoK.UaABctEbO.J8Bc5IXXL5dYell0UiP5GCmMx6PnAFW',1,0),(8,'Diego','López Pajares','Máster en Ingeniería de Telecomunicación','http://www.upm.es/observatorio/vi/index.jsp?pageac=investigador.jsp&idInvestigador=34604',3,'diego.lopezp@upm.es','$2y$10$wcEKwel2yHGQyOsxMLtW3uHernw6yJUwoLw8Uw/2KgoRg.w1KidNS',1,0),(9,'Boby Nicusor','Constantin','Grado en Ingeniería Telemática','No',3,'bobby.nicursor@uah.es','$2y$10$r6RHj6yufhhtf8SzarxhxOeHmcpH6zHIMuM/reH6yaSwbmW97krm.',1,0);
+INSERT INTO `equipo` VALUES (1,'Yaiza','Rubio Chavida','Ingeniería telemática','No',1,'y.rubio@edu.uah.es','$2y$10$z6RXgZ.SFb2iVzVHE4vOGONDrTWKRxKxBuMgtzI68bgiwRpnsPhsW',2,0),(2,'Joaquín','Alvárez Horcajo','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Joaquin-Alvarez-Horcajo/',1,'j.alvarez@uah.es','$2y$10$R6JDkpvF4qJcHlqNYDo7renWEqYVxHUmt820MG347tgCx2wEUVUVG',2,0),(3,'Isaías','Martínez Yelmo','Doctor en Ingeniería Telemática','https://www.uah.es/es/estudios/profesor/Isaias-Martinez-Yelmo/',3,'isaias.martinezy@uah.es','$2y$10$YZKZV8d0yOOLkt5hzRU9O.0.RKuFqzsDPfw5cR4QzYTnjvk5AJpk2',2,0),(4,'José Manuel','Arco Rodríguez','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Jose-Manuel-Arco-Rodriguez/',3,'josem.arco@uah.es','$2y$10$.EDPgLudQYwjLEnHQlfyluUIZUND43mBXvc8NktCmSWn65kvJKZr2',2,0),(5,'Juan Antonio','Carral Pelayo','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Juan-Antonio-Carral-Pelayo/',3,'juanantonio.carral@uah.es','$2y$10$f8pnQp.J..IcU4hl8dAhLOomCAGkxTIxmUwaPcIWvJU1QYq.UqBL2',1,0),(6,'Guillermo Agustín','Ibáñez Fernández','Doctor en Ingeniería de Telecomunicación','https://scholar.google.es/citations?user=-9EfrcoAAAAJ&hl=es',3,'guillermo.ibanez@uah.es','$2y$10$JQfUziHQhvgAOkL60mDA1u/Px3ccw8t.y6XYeq6A6FSa.XYa1Tvry',1,0),(7,'Elisa','Rojas Sánchez','Doctora en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Elisa-Rojas-Sanchez/',3,'elisa.rojas@uah.es','$2y$10$WR/DSmdBnoK.UaABctEbO.J8Bc5IXXL5dYell0UiP5GCmMx6PnAFW',1,0),(8,'Diego','López Pajares','Máster en Ingeniería de Telecomunicación','http://www.upm.es/observatorio/vi/index.jsp?pageac=investigador.jsp&idInvestigador=34604',3,'diego.lopezp@upm.es','$2y$10$wcEKwel2yHGQyOsxMLtW3uHernw6yJUwoLw8Uw/2KgoRg.w1KidNS',1,0),(9,'Boby Nicusor','Constantin','Grado en Ingeniería Telemática','No',3,'bobby.nicursor@uah.es','$2y$10$r6RHj6yufhhtf8SzarxhxOeHmcpH6zHIMuM/reH6yaSwbmW97krm.',1,0),(10,'prueba','defensa','Ingeniería telemática','yaiza.com',3,'yaizarubioch@gmail.com','$2y$10$vF05orZFLJ.tOcJMAyiIcuDFPiRsR8v4mGAAauFAu9Q2BLzToa3IS',2,0),(11,'Prueba','final','No','No',3,'prueba@gmail.com','$2y$10$6qEsRnNAARCTyL0cb1iq.uS3ApBH7KpVm2jtgA3wdu/Dm4yjTW1lK',1,0);
 /*!40000 ALTER TABLE `equipo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -470,6 +470,14 @@ LOCK TABLES `tipo_usuario` WRITE;
 INSERT INTO `tipo_usuario` VALUES (1,'Admin',NULL),(2,'Investigador principal',NULL),(3,'Investigador',NULL);
 /*!40000 ALTER TABLE `tipo_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'pagina_web'
+--
+
+--
+-- Dumping routines for database 'pagina_web'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -480,4 +488,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-06 17:54:40
+-- Dump completed on 2022-09-18 22:08:50

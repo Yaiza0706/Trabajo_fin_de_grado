@@ -7,7 +7,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
     session_start();
     //Se guardan los datos introducidos en variables locales.
     $usuario = $_POST['email'];
-    $contraseña = $_POST['contraseña'];
+    $contra = $_POST['contra'];
     $captcha = $_POST['captcha'];
     if($captcha != $_SESSION['captcha_text'])
     {
@@ -28,10 +28,10 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         }
         else
         {
-            $hash = $fila[0]['contraseña'];
+            $hash = $fila[0]['contra'];
             $intentos = $fila[0]['intentos'];
             $id_estado_usuario =  $fila[0]['id_estado_usuario'];
-            $result = password_verify($contraseña, $hash);
+            $result = password_verify($contra, $hash);
 
             //Se comprueba si los datos leídos son correctos.
             if(!$result)

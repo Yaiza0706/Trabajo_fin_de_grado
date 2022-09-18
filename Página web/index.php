@@ -23,10 +23,10 @@
             <input type="text" name="email" id="email" placeholder="Correo electrónico">
           </div>
           <div>
-            <label for="contraseña"> Contraseña : </label> 
+            <label for="contra"> Contraseña : </label> 
           </div>
           <div>
-            <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
+            <input type="password" name="contra" id="contra" placeholder="Contraseña">
           </div>
           <label for="image-captcha">Introduzca el texto que aparece en la imagen. </label>
           <br>

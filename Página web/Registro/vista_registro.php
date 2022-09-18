@@ -37,7 +37,7 @@
         <label for="nombre"> Email : <input type="text" name="email" id ="email" placeholder="Correo electrónico"> </label>
       </div>
       <div>
-        <label for="nombre"> Contraseña : <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña"> </label>
+        <label for="nombre"> Contraseña : <input type="password" name="contra" id="contra" placeholder="Contraseña"> </label>
       </div>
       <div> ⠀ </div>
       <div class = "error">
