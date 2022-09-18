@@ -36,7 +36,7 @@ require_once('controlador_editar_equipo.php'); ?>
       </div>
     </form>
     <div>
-      <button class="button-form" onclick='ComprobarRegistro("actualizar", <?= $_SESSION["id"] ?>)'> Actualizar usuario</button>
+      <button class="button-form" onclick='ComprobarRegistro("actualizar", <?= $id_equipo?>)'> Actualizar usuario</button>
     </div>
   </section>
 </section>

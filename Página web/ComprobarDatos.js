@@ -1,14 +1,14 @@
 
-function anadir_elemento_tabla(id_tabla, año, presupuesto)
+function anadir_elemento_tabla(id_tabla, anyo, presupuesto)
 {
     //Se cogen los datos de la tabla
     var table = document.getElementById(id_tabla);
-    var año = $("#periodo_año").val();
+    var anyo = $("#periodo_anyo").val();
     var presupuesto = $("#periodo_presupuesto").val();
-    if(año != "" && presupuesto != "")
+    if(anyo != "" && presupuesto != "")
     {
         //Se meten en un array
-        array_años.push(parseInt( año));
+        array_anyos.push(parseInt( anyo));
         array_presupuestos.push(parseInt(presupuesto));
         
         num_row = table.rows.length;
@@ -17,7 +17,7 @@ function anadir_elemento_tabla(id_tabla, año, presupuesto)
         // Se añaden las nuevas celdas
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
-        cell1.innerHTML = '<tbody> <tr><td>' +año+ '</td>' ;
+        cell1.innerHTML = '<tbody> <tr><td>' +anyo+ '</td>' ;
         cell2.innerHTML = '<td>' + presupuesto + '</td> </tr> </tbody>';
     }
 }
@@ -31,7 +31,7 @@ function eliminar_elemento_tabla(id_tabla)
     {
         //Se pueden eliminar todas las filas menos la primera
         table.deleteRow(row_count);
-        array_años.pop();
+        array_anyos.pop();
         array_presupuestos.pop();
     }
 }
@@ -313,14 +313,14 @@ function ComprobarLogin()
     var error = 0;
     var id_tipo_publicacion;
     var titulo = $("#titulo").val();
-    var año_publicacion = $("#año_publicacion").val();
+    var anyo_publicacion = $("#anyo_publicacion").val();
     var tipo_publicacion = $("#id_tipo_publicacion").val();
     var revista = $("#revista").val();
     var autores = $("#autores").val();
     var web = $("#web").val();
 
     // Se comprueba que se hayan introducido valores.
-    if(esta_vacio(titulo) || esta_vacio(año_publicacion) || esta_vacio(tipo_publicacion) || esta_vacio(revista) || esta_vacio(autores) || esta_vacio(web))
+    if(esta_vacio(titulo) || esta_vacio(anyo_publicacion) || esta_vacio(tipo_publicacion) || esta_vacio(revista) || esta_vacio(autores) || esta_vacio(web))
         error = "argumentos_vacios";
 
     else if(!longitud_correcta(autores,2000))
@@ -341,8 +341,8 @@ function ComprobarLogin()
     else if(!es_cadena(autores))
         error = "autores_formato";
 
-    else if(!es_int(año_publicacion))
-        error = "año_formato";
+    else if(!es_int(anyo_publicacion))
+        error = "anyo_formato";
 
     else if(!longitud_correcta(web, 100))
         error = "web_larga";
@@ -374,7 +374,7 @@ function ComprobarLogin()
         {
             "id_resultado":id_resultado,
             "titulo":titulo,
-            "año_publicacion":año_publicacion,
+            "anyo_publicacion":anyo_publicacion,
             "id_tipo_publicacion":id_tipo_publicacion,
             "revista": revista,
             "autores": autores,
@@ -775,7 +775,7 @@ function ComprobarProyecto(op, id_proyecto=0)
         parametros.append("array_resultado", array_resultado);
         parametros.append("array_grupo", array_grupo);
         parametros.append("array_investigador", array_investigador);
-        parametros.append("array_años", array_años);
+        parametros.append("array_anyos", array_anyos);
         parametros.append("array_presupuestos", array_presupuestos);
         parametros.append("array_logo_fin", array_logo_fin);
 
@@ -786,9 +786,9 @@ function ComprobarProyecto(op, id_proyecto=0)
             {
                 $("#error").text("Debe seleccionar una imagen.");
             }
-            else if(esta_vacio(array_años) || esta_vacio(array_presupuestos))
+            else if(esta_vacio(array_anyos) || esta_vacio(array_presupuestos))
             {
-                error = "no_año_presupuesto";
+                error = "no_anyo_presupuesto";
             }
             else
             {
@@ -1021,8 +1021,8 @@ function mostrar_errores(error)
     else if(error == "autores_formato")
         $("#error").text("Formato autores incorrecto.");
 
-    else if(error == "año_formato")
-        $("#error").text("Formato año incorrecto.");
+    else if(error == "anyo_formato")
+        $("#error").text("Formato anyo incorrecto.");
     
     else if(error == "tipo_publicacion_formato")
         $("#error").text("Formato tipo publicación incorrecto.");
@@ -1076,7 +1076,7 @@ function mostrar_errores(error)
     else if(error == "id_incorrecto")
         $("#error").text("Valor de ID incorrecto."); 
 
-    else if(error == "no_año_presupuesto")
+    else if(error == "no_anyo_presupuesto")
         $("#error").text("Debe introducir un valor para año y presupuesto");    
     
     else if(error == "contra_insegura")

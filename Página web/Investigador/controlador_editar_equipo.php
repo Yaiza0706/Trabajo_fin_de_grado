@@ -29,6 +29,12 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
 else if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') 
 {
     
+
+    if (isset( $_POST['id_equipo'] ))
+    {
+        $id_equipo = $_POST['id_equipo'];
+    }
+
     //Se guardan los datos introducidos en variables locales
     if (isset( $_POST['nombre'] ))
     {
@@ -69,7 +75,7 @@ else if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         SET nombre = ?, apellidos = ?, titulacion = ?, web = ?, mail = ?, contra = ?
         WHERE id = ?";
 
-        $test = $base_datos->consulta_segura($sql, 'ssssssi', array($nombre,$apellido,$titulacion,$web,$email,$contra, $id_equipo));
+        $test = $base_datos->consulta_segura($sql, 'ssssssi', array($nombre,$apellido,$titulacion,$web,$email,$contra_hash, $id_equipo));
         if(!$test)
         {   
             echo json_encode(['result' => 'error']);       

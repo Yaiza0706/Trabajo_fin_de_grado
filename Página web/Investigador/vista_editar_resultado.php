@@ -16,7 +16,7 @@ require_once('controlador_editar_resultado.php'); ?>
          <label for="titulo"> Título resultado: <input type="text" id="titulo" placeholder="Título resultado" value="<?= $resultados["titulo"] ?>"> </label>
         </div>
           <div>
-          <label for="año_publicacion"> Año publicacion: <input type="text" id="año_publicacion" placeholder="Año publicación" value="<?= $resultados["año_publicacion"] ?>"> </label>
+          <label for="anyo_publicacion"> Año publicacion: <input type="text" id="anyo_publicacion" placeholder="Año publicación" value="<?= $resultados["anyo_publicacion"] ?>"> </label>
         </div>
         <div>
         <?php if ($resultados["id_tipo_publicacion"] == 1) {$id_tipo_publicacion = "Artículo";}

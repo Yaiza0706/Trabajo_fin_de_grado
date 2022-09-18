@@ -17,11 +17,15 @@ require_once('controlador_modificar_equipo.php'); ?>
         
         <tbody>
             <?php
-                echo "<tr>";
-                echo "<td>".$_SESSION["nombre"]."</td>";
-                echo "<td>".$_SESSION["apellidos"]."</td>";
-                echo '<td><button class="button small" onclick = "EditarEquipo('.$_SESSION["id"].')"> Editar </button></td>';
-                echo "</tr>";
+                 foreach ($result as $equipo){
+                    if ($equipo["id"] == $_SESSION["id"])
+                    {
+                        echo "<tr>";
+                        echo "<td>".$equipo["nombre"]."</td>";
+                        echo "<td>".$equipo["apellidos"]."</td>";
+                        echo '<td><button class="button small" onclick = "EditarEquipo('.$equipo["id"].')"> Editar </button></td>';
+                        echo "</tr>";
+                    }}
             ?>
         </tbody>
     </table>

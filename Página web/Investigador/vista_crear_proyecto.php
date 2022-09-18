@@ -5,7 +5,7 @@ require_once('controlador_crear_proyecto.php'); ?>
 
 <head>
   <script>
-    var array_años = [];
+    var array_anyos = [];
     var array_presupuestos = [];
     $( function() {
       $( "#datepicker" ).datepicker();
@@ -55,7 +55,7 @@ require_once('controlador_crear_proyecto.php'); ?>
           <table id = "tabla">
             <thead>
               <tr>
-                  <th> <label for="periodo_año"> Año : <input type="text" name="periodo_año" id = "periodo_año" placeholder="Año"> </label> </th>
+                  <th> <label for="periodo_anyo"> Año : <input type="text" name="periodo_anyo" id = "periodo_anyo" placeholder="Año"> </label> </th>
                   <th><label for="periodo_presupuesto"> Presupuesto: <input type="text" name="periodo_presupuesto" id = "periodo_presupuesto" placeholder="Presupuesto"> </label> </th>
                   <th> <input type="button" class = "button small" value="Añadir" onclick="anadir_elemento_tabla('tabla')"> </th>
                   <th> <input type="button" class = "button small" value="Eliminar" onclick="eliminar_elemento_tabla('tabla')"> </th>
@@ -116,7 +116,7 @@ require_once('controlador_crear_proyecto.php'); ?>
             <?php
                 foreach ($result2 as $resultados)
                 {
-                    echo "<option id=". 'resultados'. $resultados['id'].">" .$resultados['id'].'. '.$resultados['titulo'].'. Año: '.$resultados['año_publicacion']. "</option>";
+                    echo "<option id=". 'resultados'. $resultados['id'].">" .$resultados['id'].'. '.$resultados['titulo'].'. Año: '.$resultados['anyo_publicacion']. "</option>";
                 } 
               }
             ?>

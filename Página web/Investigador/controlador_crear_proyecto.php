@@ -150,10 +150,10 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $array_grupo = explode(',', $array_grupo);
     }
 
-    if (isset( $_POST['array_años'] ))
+    if (isset( $_POST['array_anyos'] ))
     {
-        $array_años = $_POST['array_años'];
-        $array_años = explode(',', $array_años);
+        $array_anyos = $_POST['array_anyos'];
+        $array_anyos = explode(',', $array_anyos);
     }
     if (isset( $_POST['array_presupuestos'] ))
     {
@@ -262,10 +262,10 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         for ($i = 0; $i<sizeof($array_años); $i ++) 
         {
             //Se añaden los años y presupuestos que el usuario ha introducido a la base de datos
-            $sql = "INSERT INTO periodos(año, presupuesto,id_proyecto) 
+            $sql = "INSERT INTO periodos(anyo, presupuesto,id_proyecto) 
             VALUES(?,?, ?)";
 
-            $result = $base_datos->consulta_segura($sql,'iii', array($array_años[$i], $array_presupuestos[$i], $id_proyecto));
+            $result = $base_datos->consulta_segura($sql,'iii', array($array_anyos[$i], $array_presupuestos[$i], $id_proyecto));
             if(!$result)
             {
                 echo json_encode(['result' => 'error']);
@@ -340,12 +340,12 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
 
         $imagenes = "../paginas_generadas/$titulo_pagina/images/";
         $periodo_html = '<thead> <tr> <th>Año</th>';
-        for ($i = 0; $i<sizeof($array_años); $i ++) 
+        for ($i = 0; $i<sizeof($array_anyos); $i ++) 
         {
-            $periodo_html = $periodo_html .'<th>' .$array_años[$i].'</th>';
+            $periodo_html = $periodo_html .'<th>' .$array_anyos[$i].'</th>';
         }
         $periodo_html = $periodo_html. '</tr> </thead> <tbody> <tr> <td>Presupuesto Anual</td>';
-        for ($i = 0; $i<sizeof($array_años); $i ++) 
+        for ($i = 0; $i<sizeof($array_anyos); $i ++) 
         {
             $periodo_html = $periodo_html . '<td>'.$array_presupuestos[$i].'</td>' ;
         }
@@ -409,7 +409,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
                 $resultado_html = $resultado_html . "<tr> <td>". $numero .'</td>';
                 $resultado_html = $resultado_html . "<td>". $resultado['autores']. '</td>';
                 $resultado_html = $resultado_html . "<td> <a href='" . $resultado['web']."'>". $resultado['titulo'] ."</a></td>";
-                $resultado_html = $resultado_html . "<td>". $resultado['año_publicacion']. '</td>';
+                $resultado_html = $resultado_html . "<td>". $resultado['anyo_publicacion']. '</td>';
                 if($resultado['id_tipo_publicacion'] == 1)
                 {
                     $tipo = 'Artículo';

@@ -39,9 +39,9 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
         $titulo = $_POST['titulo'];
     }
 
-    if (isset( $_POST['año_publicacion'] ))
+    if (isset( $_POST['anyo_publicacion'] ))
     {
-        $año_publicacion = $_POST['año_publicacion'];
+        $anyo_publicacion = $_POST['anyo_publicacion'];
     }
 
     if (isset( $_POST['id_tipo_publicacion'] ))
@@ -82,9 +82,9 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'GET')
 
     //Se actualizan los nuevos valores introducidos
     $sql = "UPDATE resultados
-    SET titulo = ?, año_publicacion = ?, id_tipo_publicacion = ?,revista = ?, autores = ?, web = ? 
+    SET titulo = ?, anyo_publicacion = ?, id_tipo_publicacion = ?,revista = ?, autores = ?, web = ? 
     WHERE id = ?";
-    $result = $base_datos->consulta_segura($sql,'siisssi',array($titulo, $año_publicacion, $id_tipo_publicacion, $revista, $autores, $web,$id_resultado));
+    $result = $base_datos->consulta_segura($sql,'siisssi',array($titulo, $anyo_publicacion, $id_tipo_publicacion, $revista, $autores, $web,$id_resultado));
 
     if(!$result)
     {

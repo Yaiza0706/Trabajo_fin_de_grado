@@ -10,7 +10,7 @@ if (isset ($_SESSION['valido'])) { ?>
          <label for="titulo"> Título resultado: <input type="text" id="titulo" placeholder="Título resultado"> </label>
         </div>
           <div>
-          <label for="año_publicacion"> Año publicacion: <input type="text" id="año_publicacion" placeholder="Año publicación"> </label>
+          <label for="anyo_publicacion"> Año publicacion: <input type="text" id="anyo_publicacion" placeholder="Año publicación"> </label>
         </div>
         <div>
         <label for="id_tipo_publicacion"> Tipo publicación (Artículo / Letter / Patente / Congreso): <input type="text" id="id_tipo_publicacion" placeholder="ID tipo publicación">  </label>

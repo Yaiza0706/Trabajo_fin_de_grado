@@ -7,12 +7,12 @@ if (isset ($_SESSION['valido'])) {
 
   <head>
     <script>
-      var array_años = [];
+      var array_anyos = [];
       var array_presupuestos = [];
       var result0 = <?php echo json_encode($result0, JSON_HEX_TAG) ?>; 
       for(var i=0; i<result0.length; i++)
       {
-        array_años.push(result0[i]["año"]);
+        array_anyos.push(result0[i]["anyo"]);
         array_presupuestos.push(result0[i]["presupuesto"]);
       }
       
@@ -66,7 +66,7 @@ if (isset ($_SESSION['valido'])) {
             <table id = "tabla">
                 <thead>
                     <tr>
-                      <th> <label for="periodo_año"> Año : <input type="text" name="periodo_año" id = "periodo_año" placeholder="Año"> </label> </th>
+                      <th> <label for="periodo_anyo"> Año : <input type="text" name="periodo_anyo" id = "periodo_anyo" placeholder="Año"> </label> </th>
                       <th><label for="periodo_presupuesto"> Presupuesto: <input type="text" name="periodo_presupuesto" id = "periodo_presupuesto" placeholder="Presupuesto"> </label> </th>
                       <th> <input type="button" class = "button small" value="Añadir" onclick="anadir_elemento_tabla('tabla')"> </th>
                       <th> <input type="button" class = "button small" value="Eliminar" onclick="eliminar_elemento_tabla('tabla')"> </th>
@@ -83,7 +83,7 @@ if (isset ($_SESSION['valido'])) {
                       }else{
                         foreach ($result0 as $periodos){
                           echo "<tr>";
-                          echo "<td>".$periodos["año"]."</td>";
+                          echo "<td>".$periodos["anyo"]."</td>";
                           echo "<td>".$periodos["presupuesto"]."</td>";
                           echo "</tr>";                          
                         }
@@ -164,9 +164,9 @@ if (isset ($_SESSION['valido'])) {
               foreach ($result2 as $resultados)
               {
                 if(in_array($resultados['id'], $array_resultado))
-                  echo "<option id=". 'resultados'. $resultados['id']." selected>" .$resultados['id'].'. '.$resultados['titulo'].'. Año: '.$resultados['año_publicacion']. "</option>";
+                  echo "<option id=". 'resultados'. $resultados['id']." selected>" .$resultados['id'].'. '.$resultados['titulo'].'. Año: '.$resultados['anyo_publicacion']. "</option>";
                 else
-                  echo "<option id=". 'resultados'. $resultados['id'].">" .$resultados['id'].'. '.$resultados['titulo'].'. Año: '.$resultados['año_publicacion']. "</option>";
+                  echo "<option id=". 'resultados'. $resultados['id'].">" .$resultados['id'].'. '.$resultados['titulo'].'. Año: '.$resultados['anyo_publicacion']. "</option>";
                 } 
             }
           ?>

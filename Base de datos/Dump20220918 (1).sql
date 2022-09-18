@@ -49,7 +49,7 @@ CREATE TABLE `equipo` (
 
 LOCK TABLES `equipo` WRITE;
 /*!40000 ALTER TABLE `equipo` DISABLE KEYS */;
-INSERT INTO `equipo` VALUES (1,'Yaiza','Rubio Chavida','Ingeniería telemática','No',1,'y.rubio@edu.uah.es','$2y$10$z6RXgZ.SFb2iVzVHE4vOGONDrTWKRxKxBuMgtzI68bgiwRpnsPhsW',2,0),(2,'Joaquín','Alvárez Horcajo','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Joaquin-Alvarez-Horcajo/',1,'j.alvarez@uah.es','$2y$10$R6JDkpvF4qJcHlqNYDo7renWEqYVxHUmt820MG347tgCx2wEUVUVG',2,0),(3,'Isaías','Martínez Yelmo','Doctor en Ingeniería Telemática','https://www.uah.es/es/estudios/profesor/Isaias-Martinez-Yelmo/',3,'isaias.martinezy@uah.es','$2y$10$YZKZV8d0yOOLkt5hzRU9O.0.RKuFqzsDPfw5cR4QzYTnjvk5AJpk2',2,0),(4,'José Manuel','Arco Rodríguez','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Jose-Manuel-Arco-Rodriguez/',3,'josem.arco@uah.es','$2y$10$.EDPgLudQYwjLEnHQlfyluUIZUND43mBXvc8NktCmSWn65kvJKZr2',2,0),(5,'Juan Antonio','Carral Pelayo','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Juan-Antonio-Carral-Pelayo/',3,'juanantonio.carral@uah.es','$2y$10$f8pnQp.J..IcU4hl8dAhLOomCAGkxTIxmUwaPcIWvJU1QYq.UqBL2',1,0),(6,'Guillermo Agustín','Ibáñez Fernández','Doctor en Ingeniería de Telecomunicación','https://scholar.google.es/citations?user=-9EfrcoAAAAJ&hl=es',3,'guillermo.ibanez@uah.es','$2y$10$JQfUziHQhvgAOkL60mDA1u/Px3ccw8t.y6XYeq6A6FSa.XYa1Tvry',1,0),(7,'Elisa','Rojas Sánchez','Doctora en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Elisa-Rojas-Sanchez/',3,'elisa.rojas@uah.es','$2y$10$WR/DSmdBnoK.UaABctEbO.J8Bc5IXXL5dYell0UiP5GCmMx6PnAFW',1,0),(8,'Diego','López Pajares','Máster en Ingeniería de Telecomunicación','http://www.upm.es/observatorio/vi/index.jsp?pageac=investigador.jsp&idInvestigador=34604',3,'diego.lopezp@upm.es','$2y$10$wcEKwel2yHGQyOsxMLtW3uHernw6yJUwoLw8Uw/2KgoRg.w1KidNS',1,0),(9,'Boby Nicusor','Constantin','Grado en Ingeniería Telemática','No',3,'bobby.nicursor@uah.es','$2y$10$r6RHj6yufhhtf8SzarxhxOeHmcpH6zHIMuM/reH6yaSwbmW97krm.',1,0),(10,'prueba','defensa','Ingeniería telemática','yaiza.com',3,'yaizarubioch@gmail.com','$2y$10$vF05orZFLJ.tOcJMAyiIcuDFPiRsR8v4mGAAauFAu9Q2BLzToa3IS',2,0),(11,'Prueba','final','No','No',3,'prueba@gmail.com','$2y$10$6qEsRnNAARCTyL0cb1iq.uS3ApBH7KpVm2jtgA3wdu/Dm4yjTW1lK',1,0);
+INSERT INTO `equipo` VALUES (1,'Yaiza','Rubio Chavida','Ingeniería telemática','No',1,'y.rubio@edu.uah.es','$2y$10$mSwJLLc7oVEbeizOyXdKA.oWk09fZc1KyDYnxbIZrwl33vFleJROW',2,0),(2,'Joaquín','Alvárez Horcajo','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Joaquin-Alvarez-Horcajo/',1,'j.alvarez@uah.es','$2y$10$R6JDkpvF4qJcHlqNYDo7renWEqYVxHUmt820MG347tgCx2wEUVUVG',2,0),(3,'Isaías','Martínez Yelmo','Doctor en Ingeniería Telemática','https://www.uah.es/es/estudios/profesor/Isaias-Martinez-Yelmo/',3,'isaias.martinezy@uah.es','$2y$10$YZKZV8d0yOOLkt5hzRU9O.0.RKuFqzsDPfw5cR4QzYTnjvk5AJpk2',2,0),(4,'José Manuel','Arco Rodríguez','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Jose-Manuel-Arco-Rodriguez/',3,'josem.arco@uah.es','$2y$10$.EDPgLudQYwjLEnHQlfyluUIZUND43mBXvc8NktCmSWn65kvJKZr2',2,0),(5,'Juan Antonio','Carral Pelayo','Doctor en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Juan-Antonio-Carral-Pelayo/',3,'juanantonio.carral@uah.es','$2y$10$f8pnQp.J..IcU4hl8dAhLOomCAGkxTIxmUwaPcIWvJU1QYq.UqBL2',1,0),(6,'Guillermo Agustín','Ibáñez Fernández','Doctor en Ingeniería de Telecomunicación','https://scholar.google.es/citations?user=-9EfrcoAAAAJ&hl=es',3,'guillermo.ibanez@uah.es','$2y$10$JQfUziHQhvgAOkL60mDA1u/Px3ccw8t.y6XYeq6A6FSa.XYa1Tvry',1,0),(7,'Elisa','Rojas Sánchez','Doctora en Ingeniería de Telecomunicación','https://www.uah.es/es/estudios/profesor/Elisa-Rojas-Sanchez/',3,'elisa.rojas@uah.es','$2y$10$WR/DSmdBnoK.UaABctEbO.J8Bc5IXXL5dYell0UiP5GCmMx6PnAFW',1,0),(8,'Diego','López Pajares','Máster en Ingeniería de Telecomunicación','http://www.upm.es/observatorio/vi/index.jsp?pageac=investigador.jsp&idInvestigador=34604',3,'diego.lopezp@upm.es','$2y$10$wcEKwel2yHGQyOsxMLtW3uHernw6yJUwoLw8Uw/2KgoRg.w1KidNS',1,0),(9,'Boby Nicusor','Constantin','Grado en Ingeniería Telemática','No',3,'bobby.nicursor@uah.es','$2y$10$r6RHj6yufhhtf8SzarxhxOeHmcpH6zHIMuM/reH6yaSwbmW97krm.',1,0),(10,'prueba','defensa','Ingeniería telemática','yaiza.com',3,'yaizarubioch@gmail.com','$2y$10$vF05orZFLJ.tOcJMAyiIcuDFPiRsR8v4mGAAauFAu9Q2BLzToa3IS',1,4),(11,'Prueba','final','No','No',3,'prueba@gmail.com','$2y$10$6qEsRnNAARCTyL0cb1iq.uS3ApBH7KpVm2jtgA3wdu/Dm4yjTW1lK',1,0);
 /*!40000 ALTER TABLE `equipo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,7 +194,7 @@ DROP TABLE IF EXISTS `periodos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `periodos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `año` int unsigned NOT NULL,
+  `anyo` int unsigned NOT NULL,
   `presupuesto` varchar(50) NOT NULL,
   `id_proyecto` int DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -241,7 +241,7 @@ CREATE TABLE `proyecto` (
 
 LOCK TABLES `proyecto` WRITE;
 /*!40000 ALTER TABLE `proyecto` DISABLE KEYS */;
-INSERT INTO `proyecto` VALUES (1,'Integración de Redes IoT en entornos inteligentes basados en SDN/NFV y redes 5G','../imagenes_subidas/logo_proyecto_1657109137.2304.jpg','IRIS-CM','CM/JIN/2019-039','01/01/2020','Q2818018J','24 meses',' Actualmente, las redes de comunicaciones son cruciales para interconectar un mundo digitalizado formado por un gran número de dispositivos heterogéneos al cual se le conoce como Internet de las Cosas (IoT-Internet of Things). Por este motivo, la quinta generación de red móvil (5G) prevé la integración de estos dispositivos IoT en redes inteligentes apoyadas en las tecnologías de las redes definidas por software (SDN - Software-Defined Networking) y la virtualización de funciones de red (NFV-Network Function Virtualization). Sin embargo, esta la integración de IoT y SDN/NFV no es todavía posible debido a las limitaciones de energía, capacidad o del firmware/software de los dispositivos IoT. Por todo ello, el proyecto IRIS tiene como objetivo facilitar la integración de estas tecnologías mediante el estudio de protocolos y servicios inteligentes que permitan faciliten la configuración de red, el descubrimiento de recursos y servicios para hacer un uso adecuado y eficiente de ellos. Además, se estudiarán mecanismos de encaminamiento eficiente en entornos IoT de forma integrada con redes inteligentes basadas en SDN/NFVV, (como son las redes 5G). De esta manera, se pretende impulsar la integración del IoT con el núcleo de las redes de comunicaciones para ofrecer soluciones y servicios más avanzados que permitan continuar con la modernización de la sociedad.','../imagenes_subidas/logo_menu_1657109137.237.png');
+INSERT INTO `proyecto` VALUES (1,'Integración de Redes IoT en entornos inteligentes basados en SDN/NFV y redes 5G','../imagenes_subidas/logo_proyecto_1657109137.2304.jpg','IRIS-CM','CM/JIN/2019-039','01/01/2020','Q2818018J','24 meses','  Actualmente, las redes de comunicaciones son cruciales para interconectar un mundo digitalizado formado por un gran número de dispositivos heterogéneos al cual se le conoce como Internet de las Cosas (IoT-Internet of Things). Por este motivo, la quinta generación de red móvil (5G) prevé la integración de estos dispositivos IoT en redes inteligentes apoyadas en las tecnologías de las redes definidas por software (SDN - Software-Defined Networking) y la virtualización de funciones de red (NFV-Network Function Virtualization). Sin embargo, esta la integración de IoT y SDN/NFV no es todavía posible debido a las limitaciones de energía, capacidad o del firmware/software de los dispositivos IoT. Por todo ello, el proyecto IRIS tiene como objetivo facilitar la integración de estas tecnologías mediante el estudio de protocolos y servicios inteligentes que permitan faciliten la configuración de red, el descubrimiento de recursos y servicios para hacer un uso adecuado y eficiente de ellos. Además, se estudiarán mecanismos de encaminamiento eficiente en entornos IoT de forma integrada con redes inteligentes basadas en SDN/NFVV, (como son las redes 5G). De esta manera, se pretende impulsar la integración del IoT con el núcleo de las redes de comunicaciones para ofrecer soluciones y servicios más avanzados que permitan continuar con la modernización de la sociedad. ','../imagenes_subidas/logo_menu_1657109137.237.png');
 /*!40000 ALTER TABLE `proyecto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,7 +261,7 @@ CREATE TABLE `rel_equipo_proyecto` (
   KEY `id_proyecto` (`id_proyecto`),
   CONSTRAINT `rel_equipo_proyecto_ibfk_1` FOREIGN KEY (`id_equipo`) REFERENCES `equipo` (`id`),
   CONSTRAINT `rel_equipo_proyecto_ibfk_2` FOREIGN KEY (`id_proyecto`) REFERENCES `proyecto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +270,7 @@ CREATE TABLE `rel_equipo_proyecto` (
 
 LOCK TABLES `rel_equipo_proyecto` WRITE;
 /*!40000 ALTER TABLE `rel_equipo_proyecto` DISABLE KEYS */;
-INSERT INTO `rel_equipo_proyecto` VALUES (1,2,1),(2,3,1),(3,4,1),(4,5,1),(5,6,1),(6,7,1),(7,8,1),(8,9,1);
+INSERT INTO `rel_equipo_proyecto` VALUES (9,2,1),(10,3,1),(11,4,1),(12,5,1),(13,6,1),(14,7,1),(15,8,1),(16,9,1);
 /*!40000 ALTER TABLE `rel_equipo_proyecto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,7 +290,7 @@ CREATE TABLE `rel_grupos_proyecto` (
   KEY `id_proyecto` (`id_proyecto`),
   CONSTRAINT `rel_grupos_proyecto_ibfk_1` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id`),
   CONSTRAINT `rel_grupos_proyecto_ibfk_2` FOREIGN KEY (`id_proyecto`) REFERENCES `proyecto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,7 +299,7 @@ CREATE TABLE `rel_grupos_proyecto` (
 
 LOCK TABLES `rel_grupos_proyecto` WRITE;
 /*!40000 ALTER TABLE `rel_grupos_proyecto` DISABLE KEYS */;
-INSERT INTO `rel_grupos_proyecto` VALUES (1,1,1);
+INSERT INTO `rel_grupos_proyecto` VALUES (2,1,1);
 /*!40000 ALTER TABLE `rel_grupos_proyecto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +319,7 @@ CREATE TABLE `rel_ip_proyecto` (
   KEY `id_proyecto` (`id_proyecto`),
   CONSTRAINT `rel_ip_proyecto_ibfk_1` FOREIGN KEY (`id_ip`) REFERENCES `equipo` (`id`),
   CONSTRAINT `rel_ip_proyecto_ibfk_2` FOREIGN KEY (`id_proyecto`) REFERENCES `proyecto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -328,7 +328,7 @@ CREATE TABLE `rel_ip_proyecto` (
 
 LOCK TABLES `rel_ip_proyecto` WRITE;
 /*!40000 ALTER TABLE `rel_ip_proyecto` DISABLE KEYS */;
-INSERT INTO `rel_ip_proyecto` VALUES (1,3,1);
+INSERT INTO `rel_ip_proyecto` VALUES (2,3,1);
 /*!40000 ALTER TABLE `rel_ip_proyecto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +348,7 @@ CREATE TABLE `rel_logo_proyecto` (
   KEY `id_logo` (`id_logo`),
   CONSTRAINT `rel_logo_proyecto_ibfk_1` FOREIGN KEY (`id_proyecto`) REFERENCES `proyecto` (`id`),
   CONSTRAINT `rel_logo_proyecto_ibfk_2` FOREIGN KEY (`id_logo`) REFERENCES `logo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -357,7 +357,7 @@ CREATE TABLE `rel_logo_proyecto` (
 
 LOCK TABLES `rel_logo_proyecto` WRITE;
 /*!40000 ALTER TABLE `rel_logo_proyecto` DISABLE KEYS */;
-INSERT INTO `rel_logo_proyecto` VALUES (1,1,1),(2,1,2);
+INSERT INTO `rel_logo_proyecto` VALUES (3,1,1),(4,1,2);
 /*!40000 ALTER TABLE `rel_logo_proyecto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,7 +377,7 @@ CREATE TABLE `rel_resultados_proyecto` (
   KEY `id_proyecto` (`id_proyecto`),
   CONSTRAINT `rel_resultados_proyecto_ibfk_1` FOREIGN KEY (`id_resultado`) REFERENCES `resultados` (`id`),
   CONSTRAINT `rel_resultados_proyecto_ibfk_2` FOREIGN KEY (`id_proyecto`) REFERENCES `proyecto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -386,7 +386,7 @@ CREATE TABLE `rel_resultados_proyecto` (
 
 LOCK TABLES `rel_resultados_proyecto` WRITE;
 /*!40000 ALTER TABLE `rel_resultados_proyecto` DISABLE KEYS */;
-INSERT INTO `rel_resultados_proyecto` VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,5,1),(6,6,1),(7,7,1),(8,8,1),(9,9,1);
+INSERT INTO `rel_resultados_proyecto` VALUES (10,1,1),(11,2,1),(12,3,1),(13,4,1),(14,5,1),(15,6,1),(16,7,1),(17,8,1),(18,9,1);
 /*!40000 ALTER TABLE `rel_resultados_proyecto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -400,7 +400,7 @@ DROP TABLE IF EXISTS `resultados`;
 CREATE TABLE `resultados` (
   `id` int NOT NULL AUTO_INCREMENT,
   `titulo` varchar(200) NOT NULL,
-  `año_publicacion` int unsigned NOT NULL,
+  `anyo_publicacion` int unsigned NOT NULL,
   `id_tipo_publicacion` int DEFAULT NULL,
   `revista` varchar(200) NOT NULL,
   `autores` varchar(2000) NOT NULL,
@@ -474,10 +474,6 @@ UNLOCK TABLES;
 --
 -- Dumping events for database 'pagina_web'
 --
-
---
--- Dumping routines for database 'pagina_web'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -488,4 +484,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-18 22:08:50
+-- Dump completed on 2022-09-18 23:11:39

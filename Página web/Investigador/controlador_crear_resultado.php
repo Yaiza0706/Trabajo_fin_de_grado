@@ -11,9 +11,9 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $titulo = $_POST['titulo'];
     }
 
-    if (isset( $_POST['año_publicacion'] ))
+    if (isset( $_POST['anyo_publicacion'] ))
     {
-        $año_publicacion = $_POST['año_publicacion'];
+        $anyo_publicacion = $_POST['anyo_publicacion'];
     }
 
     if (isset( $_POST['id_tipo_publicacion'] ))
@@ -53,10 +53,10 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')
         $id_tipo_publicacion = 4;
 
     //Se añaden los valores que el usuario ha introducido a la base de datos
-    $sql = "INSERT INTO resultados(titulo, año_publicacion, id_tipo_publicacion, revista, autores, web) 
+    $sql = "INSERT INTO resultados(titulo, anyo_publicacion, id_tipo_publicacion, revista, autores, web) 
     VALUES(?, ?, ?, ? , ?, ?)";
 
-    $result = $base_datos->consulta_segura($sql,'siisss',array($titulo, $año_publicacion, $id_tipo_publicacion, $revista , $autores , $web));
+    $result = $base_datos->consulta_segura($sql,'siisss',array($titulo, $anyo_publicacion, $id_tipo_publicacion, $revista , $autores , $web));
     if(!$result)
     {
         echo json_encode(['result' => 'error']);
